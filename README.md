@@ -1,58 +1,23 @@
-![](https://raw.githubusercontent.com/EyreFree/EFResume/master/assets/EFResume.png)
+# 个人简历
+- 汪小祯，男，1996年生
+- 本科学历，湖南工业大学计算机学院，2019年毕业
+- 手机号码:17608450050
+- Email:wxz@wxz.name
+- 个人博客:[wxz.name](https://wxz.name)
+- Github:[isnine](https://github.com/isnine)
+- 求职意向:iOS开发工程师
 
-<p align="center">
-<a href="https://github.com/apple/swift"><img src="https://img.shields.io/badge/language-swift-orange.svg"></a>
-<a href="https://raw.githubusercontent.com/EyreFree/EFResume/master/LICENSE"><img src="https://img.shields.io/badge/license-GPLv3-000000.svg"></a>
-<a href="https://twitter.com/EyreFree777"><img src="https://img.shields.io/badge/twitter-@EyreFree777-blue.svg?style=flat"></a>
-<a href="http://weibo.com/eyrefree777"><img src="https://img.shields.io/badge/weibo-@EyreFree-red.svg?style=flat"></a>
-<img src="https://img.shields.io/badge/made%20with-%3C3-orange.svg">
-</p>
+# 本科经历
+- 2015年9月加入创新实验室-移动应用方向
+- 2016年5月获蓝桥杯团队赛全国选拔赛二等奖(全国Top36%)
+- 2016年9月获湖南省程序设计大赛三等奖(全省TOP55%)
+- 2016年9月~2017年7月担任Let's try开发社社长
+- 2016年9月~2017年7月担任创新实验室副组长
+- 2017年8月参加Apple iOS Club夏令营
+- 2017年9月获湖南省程序设计大赛二等奖(全省TOP35%)
 
-EFResume is a normal resume templete, in Swift. It is inspired by [zresume](https://github.com/izuolan/zresume), because zresume is based on Docker, but I know nothing about this technology unfortunately, and it is really very very beautiful, so I make it to a static templete on my own, 😂. The design if come from [FREE Resume Template](https://www.behance.net/gallery/15677411/FREE-Resume-Template). Issue and PR are welcome, wish to improve this resume with you, please press `Star` button above if EFResume has brought you convenience, 🙏, you can contact me if there is any problem.
-
-> [中文介绍](https://github.com/EyreFree/EFResume/blob/master/README_CN.md)
-
-## Overview
-
-![](https://raw.githubusercontent.com/EyreFree/EFResume/master/assets/preview.jpg)
-
-## Example
-
-[https://eyrefree.github.io/EFResume/](https://eyrefree.github.io/EFResume/)
-
-## Requirements
-
-- XCode 8.0+
-- Swift 3.0+
-
-## Installation
-
-0. Emmmmmmmmmn, install Xcode first;
-1. Clone the repo with `git clone` command;
-2. Open `EFResume.xcworkspace` with Xcode in `core` folder and run.
-
-Or you can run the following command in terminal:
-
-```bash
-git clone git@github.com:EyreFree/EFResume.git; cd EFResume/core; open EFResume.xcworkspace
-```
-
-## Usage
-
-1. Open project with Xcode;
-2. Open `main.swift` source file，edit text in the function `input`，change it to your own information；
-3. Run this project;
-4. Open `index.html` file in `docs` folder can have a preview;
-5. Commit and push local change to remote;
-6. Go to GitHub and open `GitHub Pages` in setting, use `/docs` as the root path, then you can get your online resume and get the URL at the same time.
-7. Good luck & Enjoy it，👍
-
-## Author
-
-EyreFree, eyrefree@eyrefree.org
-
-## License
-
-![](https://www.gnu.org/graphics/gplv3-127x51.png)
-
-EFResume is available under the GPLv3 license. See the LICENSE file for more info.
+# 作品展示 - 工大助手
+- 一款校园应用，包含Web,Android,iOS,Win10,微信小程序端，总用户量16k，其中iOS端4K，日活跃1K+
+- 包含课表，考试查询，成绩查询，二手市场，校园说说，视频专栏，即时聊天，网上作业，校园推送等一系列功能
+- 于2016年9月起独立负责iOS端开发与维护，并于2017年7月起负责团队产品设计
+- 已在[App Store](https://itunes.apple.com/cn/app/gong-da-zhu-shou-hu-nan-gong/id1164848835)上架，[作品源码展示](https://github.com/isnine/HutHelper-Open)

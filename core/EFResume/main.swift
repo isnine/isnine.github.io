@@ -40,28 +40,28 @@ func main() {
 
 func input(templete: inout EFTemplete) {
     // 页面属性
-    templete.pageTitle.set("普通的简历")
-    templete.pageDescription.set("EyreFree 的个人简历")
+    templete.pageTitle.set("汪小祯的个人简历")
+    templete.pageDescription.set("汪小祯的个人简历")
 
     // 基本信息
-    templete.name.set("EyreFree")
-    templete.description.set("普通的 iOS 开发")
+    templete.name.set("汪小祯")
+    templete.description.set("iOS开发")
     templete.basicInfo.set(
         [
             "基本信息": [
-                "年龄：24",
+                "年龄：21",
                 "性别：男",
-                "城市：上海"
+                "大学：湖南工业大学"
             ],
             "联系方式": [
-                "QQ：1795179491",
-                "邮箱：i@eyrefree.org",
-                "手机：18352505161"
+                "QQ：245328522",
+                "邮箱：wxz@wxz.name",
+                "手机：17608450050"
             ],
             "社交账号": [
-                "微博：" + "@eyrefree777".a(link: "https://weibo.com/eyrefree777"),
-                "Twitter: " + "@eyrefree777".a(link: "https://twitter.com/EyreFree777"),
-                "GitHub：" + "EyreFree".a(link: "https://github.com/EyreFree")
+                "微博：" + "九九不会写代码".a(link: "http://weibo.com/u/5665224565"),
+                "博客: " + "isnine".a(link: "https://www.wxz.name"),
+                "GitHub：" + "isnine".a(link: "https://github.com/isnine")
             ]
         ]
     )
@@ -69,22 +69,22 @@ func input(templete: inout EFTemplete) {
     // 个人简介
     templete.information.set(
         [
-            "目前就职于饿了么，主要负责\("蜂鸟商家版".a(link: "https://itunes.apple.com/cn/app/feng-niao-shang-jia-ban/id1203543592?mt=8"))的开发、维护及小组管理工作，同时也负责管理物流 iOS 开发组的 GitHub 组织和维护本组的技术博客。",
-            "自 2015 年开始接触 iOS 开发，至今已有 2 年时间，熟练掌握 Swift、Objective-C 代码的编写。熟悉大部分 iOS 开发与调试工具，理解 iOS App 结构与运行机制，注重代码质量与执行效率。",
-            "了解常见移动 App 架构，长期使用 Swift 与 Objective-C 进行混合开发，熟悉各类常用第三方库的使用。",
-            "熟悉 iOS 库的开发与发布，了解怎样利用 CocoaPods／Swift Package Manager／Cathage 进行打包与集成，业余时间热爱编写开源代码。熟悉持续集成，能够编写 Jenkins、Travis CI 等持续集成工具的配置。",
-            "熟悉 Git Flow 工作流程，有较好的 Git 使用习惯。有良好的代码风格与清晰的文档结构，遵循团队开发规范。",
-            "当前主要学习 Swift 语言，能够开发一定程度的 Android 程序，也会写一些简单的前端页面和 MFC／Qt 桌面端应用。",
-            "寻觅一份 iOS 开发的全职正式工作，也可以根据具体情况考虑其它相关岗位。".strong()
+            "目前就读于湖南工业大学计算机学院，大学期间独立完成\("工大助手iOS端".a(link: "https://itunes.apple.com/cn/app/gong-da-zhu-shou-hu-nan-gong/id1164848835"))的开发、维护及团队协调工作，热爱程序开发，在校期间除周末外每日均在实验室。关注开源社区，",
+            "2016年5月 获蓝桥杯团队赛全国选拔赛二等奖(全国Top36%,团队负责人)",
+            "2016年9月 获湖南省程序设计大赛三等奖(全省TOP55%,独立参赛)",
+            "2016年9月 任Let's try开发社社长",
+            "2016年9月 任创新实验室副组长",
+            "2017年9月 获湖南省程序设计大赛二等奖(全省TOP35%,团队负责人)",
+            "寻觅一份 iOS 开发的实习工作，也可以根据具体情况考虑其它相关岗位。".strong()
         ]
     )
 
     // 技能专长
     templete.specialities.set(
         [
-            "Swift": 70,
-            "Objective-C": 45,
-            "C/C++": 30
+            "计算机网络": 10,
+            "操作系统": 10,
+            "Objective-C": 40
         ]
     )
 
@@ -92,14 +92,11 @@ func input(templete: inout EFTemplete) {
     templete.skillsList.set(
         [
             "iOS": 5,
-            "Swift": 6,
+            "Swift": 1,
             "Objective-C": 4,
-            "Kotlin/Android": 2,
-            "Shell": 1,
-            "HTML & CSS": 3,
-            "Javascript": 3,
-            "C/C++/Qt/VC": 4,
-            "Markdown": 7
+            "Markdown": 3,
+            "Git": 3,
+            "Linux": 2
         ]
     )
     templete.skillsDescription.set(
@@ -117,12 +114,11 @@ func input(templete: inout EFTemplete) {
     )
 
     // 社区经验
-    templete.GitHubID.set("EyreFree")
+    templete.GitHubID.set("isnine")
     templete.community.set(
         [
-            "iOS": "开发、维护和推广 \("GitHub".a(link: "https://github.com/EyreFree")) 上的 iOS 开源库。",
-            "翻译": "作为 \("SwiftGG".a(link: "http://swift.gg/")) 翻译组成员，参与翻译组的日常翻译、校对工作；参与饿了么大前端 Node 面试题（\("ElemeFE/node-interview".a(link: "https://github.com/ElemeFE/node-interview"))）中译英工作；提交英译中文档 PR 到 \("SwiftLint".a(link: "https://github.com/realm/SwiftLint")) 等开源项目。",
-            "其它": "作为 \("T 沙龙".a(link: "http://t.swift.gg/"))上海组委会成员负责组织上海地区的 iOS 线下技术分享交流活动；管理饿了么物流 iOS 开发组 GitHub 组织并维护小组技术博客。"
+            "iOS": "开发、维护和推广 \("GitHub".a(link: "https://github.com/isnine")) 上的 iOS 开源库。",
+            "开发": "作为 \("工大助手".a(link: "http://hugongda.com:8888/res/index")) 团队成员，参与工大助手的开发,并维护工大助手的\("开源版本".a(link: "https://github.com/isnine/HutHelper-Open"))"
         ]
     )
 
@@ -131,13 +127,13 @@ func input(templete: inout EFTemplete) {
         [
             "2": [
                 "2 年 iOS 开发经验；",
-                "了解移动开发原理；",
-                "热衷 iOS 应用开发。"
+                "独立维护并开发",
+                "线上App项目"
             ],
             "3": [
-                "3 年软件开发经验；",
-                "长期进行各种开发；",
-                "熟悉各类开发工具调试的使用。"
+                "3 年基础学习；",
+                "在大学实验室3年；",
+                "注重基础"
             ]
         ]
     )
@@ -146,37 +142,12 @@ func input(templete: inout EFTemplete) {
     templete.project.set(
         [
             [
-                "category": "饿了么（2016.12 — 至今）",
-                "pro_name": "iOS 团队开发和小组管理经验：蜂鸟商家版，饿了么物流 iOS 开发组博客",
+                "category": "工大助手（2016.9 — 至今）",
+                "pro_name": "独立维护并开发工大助手iOS端,参与策划新功能，协调团队成员关系",
                 "pro_desc": [
-                    "从 1.2.0 上架 AppStore 开始参与开发和维护工作至今，主要完成了新模块的开发、部分旧模块的重构、RN 热更新接入、项目 Swift 化等工作；",
-                    "作为蜂鸟商家版 iOS 端小组负责人参与日常技术方案选型、业务迭代排期、线上异常监控、BUG 修复等工作；",
-                    "维护物流 iOS 开发组 GitHub 组织，同时维护开发组技术博客。"
-                ]
-            ],
-            [
-                "category": "上海极塔客信息科技有限公司（2016.05 — 2016.12）",
-                "pro_name": "iOS 独立开发经验：玛沙多拉-动漫周边代购商城，玛沙娘-表情包",
-                "pro_desc": [
-                    "使用 Swift 2.3 完成整个 App 从无到有的开发、上架以及后续的升级维护工作，基本实现了一个电商 App 功能；",
-                    "研究 iOS 10 新特性，尝试开发了 iOS 表情包 App 并向公司提出建议，然后上架。"
-                ]
-            ],
-            [
-                "category": "无锡乐骐科技有限公司（2015.03 — 2016.05）",
-                "pro_name": "iOS 维护和重构经验：智能证件照，KeepCap-人物相机，多来美发",
-                "pro_desc": [
-                    "从加入公司开始学习 iOS 开发，积累了一定的 iOS 开发和维护经验；",
-                    "利用 Swift 2.3 独立对原有 App 进行了重构并完成上架。"
-                ]
-            ],
-            [
-                "category": "无锡力捷丰科技有限公司（2014.09 — 2015.01）",
-                "pro_name": "VC 业务迭代和维护经验：力捷丰高速编程器/烧录器 PC 控制软件，力捷丰科技官方网站",
-                "pro_desc": [
-                    "利用 VS 等开发工具维护基于 MFC 的上位机控制软件；",
-                    "利用 PS 等工具制作公司宣传单和其他材料；",
-                    "利用 WordPress 搭建公司网站。"
+                    "从上架 \("AppStore".a(link: "https://itunes.apple.com/cn/app/gong-da-zhu-shou-hu-nan-gong/id1164848835")) 开始独立开发和维护工作至今，主要完成了新模块的开发、用户数量4000+,AppStore综合评分4.5+星",
+                    "参与团队协调以及策划新功能，团队包括Android、iOS、UI、前端、后台，全平台总用户在2W8人左右",
+                    "实现了课程表,考试成绩,考试计划,校园说说,二手市场,电费查询,失物招领等校园中一系列的功能。"
                 ]
             ]
         ]
@@ -186,23 +157,23 @@ func input(templete: inout EFTemplete) {
     templete.openSource.set(
         [
             [
-                "name": "二维码",
-                "title": "EFQRCode（1800+ Star）",
-                "description": "EFQRCode 是一个轻量级的、用来生成和识别二维码的纯 Swift 库，可根据输入的水印图和图标产生艺术二维码，基于 CoreImage 进行开发。EFQRCode 为你提供了一种更好的在你的 App 中操作二维码的方式。",
-                "link": "https://github.com/EyreFree/EFQRCode"
+                "name": "工大助手",
+                "title": "HutHelper-Open（50+ Star）",
+                "description": "HutHelper-Open是工大助手的开源版本，移除了线上接口，其他代码全部与线上版本相同。实现了课程表,考试成绩,考试计划,校园说说,二手市场,电费查询,失物招领等校园中一系列的功能",
+                "link": "https://github.com/isnine/HutHelper-Open"
             ]
         ]
     )
 
-    // 扩展技能
-    templete.interests.set(
-        [
-            "翻译": "fi-pencil",
-            "前端": "fi-html5",
-            "设计": "fi-paint-bucket",
-            "桌面": "fi-folder"
-        ]
-    )
+//    // 扩展技能
+//    templete.interests.set(
+//        [
+//            "翻译": "fi-pencil",
+//            "前端": "fi-html5",
+//            "设计": "fi-paint-bucket",
+//            "桌面": "fi-folder"
+//        ]
+//    )
 }
 
 main()
