@@ -19,6 +19,6 @@
 # 作品展示 - 工大助手
 - __独立开发和维护 iOS 端__ ，完成了新模块的开发并多次进行重构
 - iOS端用户数量 6k+ ,日活 3k+,__AppStore综合评分 4.8 星__
-- 负责团队协调以及策划新功能，团队成员包括Android、iOS、UI、前端、后台，全平台 __总用户 3W ,日活跃 1W3__
+- 负责团队协调以及产品策划，团队成员包括Android、iOS、UI、前端、后台，全平台 __总用户 3W ,日活跃 1W3__
 - 实现了课表，考试查询，成绩查询，二手市场，校园说说，视频专栏，即时聊天，网上作业，校园推送等一系列功能
 - 已在[App Store](https://itunes.apple.com/cn/app/gong-da-zhu-shou-hu-nan-gong/id1164848835)上架，[作品源码展示](https://github.com/isnine/HutHelper-Open)
