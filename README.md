@@ -1,10 +1,10 @@
 # 个人简历
-- 汪小祯，男，1996年生
+- 汪小祯，男，1996年
 - 本科学历，湖南工业大学计算机学院，2019年毕业
 - 手机号码: 17608450050
 - Email: wxz@wxz.name
 - 个人博客: [wxz.name](https://wxz.name)
-- Github: [isnine](https://github.com/isnine)
+- __Github: [isnine](https://github.com/isnine)__
 - 求职意向: iOS开发实习生
 
 # 本科经历
