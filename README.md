@@ -5,7 +5,7 @@
 - Email: wxz@wxz.name
 - 个人博客: [wxz.name](https://wxz.name)
 - Github: [isnine](https://github.com/isnine)
-- 求职意向: iOS开发工程师
+- 求职意向: iOS开发实习生
 
 # 本科经历
 - 2015年9月加入创新实验室
