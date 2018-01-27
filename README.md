@@ -16,7 +16,7 @@
 # 项目经历
 ### 工大助手 - 属于你我的校园助手
 - 一款基于 iOS,Android,Web三平台的校园助手，由工大助手团队完成，本人 __独立完成iOS端上全部的开发工作__
-- 累计用户 30000 人，日活 13000 ，其中 iOS 端日活 3000 ，[AppStore](https://itunes.apple.com/cn/app/gong-da-zhu-shou-hu-nan-gong/id1164848835)评分4.8星，[作品源码展示](https://github.com/isnine/HutHelper-Open)
+- 累计用户 30000 人，日活 13000 ，其中 iOS 端日活 3000 ，[AppStore](https://itunes.apple.com/cn/app/gong-da-zhu-shou-hu-nan-gong/id1164848835) 评分4.8星，[作品源码展示](https://github.com/isnine/HutHelper-Open)
 - iOS端采用Objective-C开发，团队其他成员包括Android、iOS、前端、后端、UI，皆为在校学生
 - 实现了课表，考试查询，成绩查询，二手市场，校园说说，视频专栏，即时聊天，网上作业，校园推送等一系列功能
 
