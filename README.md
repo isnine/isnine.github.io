@@ -22,7 +22,7 @@
 #### 工大助手 - 属于你我的校园助手(2016.10 - 至今)
 - 概况
   - 一款基于 iOS,Android,Web三平台的校园助手，由工大助手团队完成，本人独立完成iOS端上全部的开发工作
-  - 累计用户 30000 人，日活 21000 , [AppStore](https://itunes.apple.com/cn/app/gong-da-zhu-shou-hu-nan-gong/id1164848835) 评分4.8星，[作品源码展示](https://github.com/isnine/HutHelper-Open)
+  - 累计用户 30000 人，日活 21000 , [AppStore](https://itunes.apple.com/cn/app/gong-da-zhu-shou-hu-nan-gong/id1164848835) 评分4.8星，[作品源码展示](https://github.com/isnine/HutHelper-Open)
   - 实现了课表，考试查询，成绩查询，二手市场，校园说说，视频专栏，即时聊天，网上作业，校园推送等一系列功能，得到了在校师生的一致认可。
   - 从大二开始，边学边开发，全程为本人自学完成，无他人指导
 - 所用技术
