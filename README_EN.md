@@ -23,8 +23,8 @@
 ## Project Experience
 #### Hunan University of Technology Helper(2016.10 - nowadays)
 - Overview:
-  - A campus assistant based on iOS,Android and Web platform;completed by the Engineering Assistant team;
-  - completed iOS side R&D independently (Cumulative users :30000; Daily in users:21000 ;
+  - A campus assistant based on iOS,Android and Web platform;completed by the Engineering Assistant team
+  - completed iOS side R&D independently (Cumulative users :30000; Daily in users:21000 
   - AppStore rating 4.8;Works display with source)
 - Function:
   - School Timetable;Examination Query System;Query Results;Flea Market;Post Campus;Video;IM;Online Homework;Campus news and so on 
