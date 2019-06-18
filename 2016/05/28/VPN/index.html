@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        如何姿态优雅的翻墙｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2016/05/28/VPN/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>如何姿态优雅的翻墙</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2016-05-28
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#翻墙"
+                           title="翻墙">翻墙</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            如何姿态优雅的翻墙
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>本篇主要介绍翻墙相关名词以及利用修改hosts达到翻墙目的方法<br><a id="more"></a></p>
+<ul>
+<li><p>科普名词一—翻墙</p>
+<p> 所谓翻墙，是指绕过相应的IP封锁、内容过滤、域名劫持、流量限制等，实现对网络内容的访问。</p>
+</li>
+<li><p>科普名词二—国家防火墙（GFW）</p>
+<p>   防火长城（英文名称Great Firewall of China，简写为Great Firewall，缩写GFW），也称中国防火墙或中国国家防火墙，指中华人民共和国政府在其管辖因特网内部建立的多套网络审查系统的总称，包括相关行政审查系统。 首要设计者为北京邮电大学原校长方滨兴，被称为“国家防火墙之父”<br>   GFW中的主要技术包括国家入口网关的IP封锁、主干路由器的关键字过滤阻断、域名劫持和HTTPS证书过滤等4种。那些被限制的网站，根本原因是因为其网站上发布了中国政府不能接受的政治等方面的内容，有些综合性或技术性的网站只是含有少量的或可能牵涉到这些信息也会被整体封锁。</p>
+<!--more--></li>
+<li><p>科普名词三—虚拟专用网络（VPN）</p>
+<p> 虚拟专用网络的功能是：在公用网络上建立专用网络，进行加密通讯。<br>为什么我们需要翻墙？<br>政府需要管理全世界近四分之一的人口，网络又是实现人与人之间相隔万里也可以正常沟通。所以对于国外Facebook，Google，youtueb,推特等网站予以封锁。<br>如何才能翻墙？<br>常见的手段有VPN，另外一般VPN软件都需要收费，或者是免费使用但是植入广告，毕竟搭建VPN需要费用，总不能让开发者做慈善吧。<br>手机平台建议直接下载软件 Netpas云墙 ，初期会赠送一大笔流量，够上上Facebook了 后面通过签到可以得到免费流量<br>电脑平台也一样可以搭建VPN进行翻墙，方法各有千秋 有点麻烦。</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>如何利用修改hosts文件进行翻墙？</li>
+</ul>
+<p>翻墙原理：</p>
+<ul>
+<li>网址与IP</li>
+</ul>
+<p>我们知道，每一个网站都有一个网址，而每一个网址呢，都对应着一个IP地址。<br>IP地址才是网站的真正地址，我们访问一个网站，必须知道它的IP地址才行。</p>
+<ul>
+<li>DNS服务器</li>
+</ul>
+<p>因为我们输入网址以后，并不是直接通过网址去连你的网站，而是通过另外一个工具，将网址“还原”成真实的IP地址，再通过IP地址，去连接你要­访问的网站。<br>这个工具呢，就叫做DNS服务器（domain name server），著名的DNS服务器有Google Public DNS和OpenDNS。<br>说白了就是DNS解析</p>
+<ul>
+<li>为什么有的网站上不了？</li>
+</ul>
+<p>对应方式一旦改变了，或者被某种方式切断了，我们就无法通过网址，得到真实的IP从而访问网站。<br>这是某些网站上不了的原因之一，专业术语叫做DNS劫持和DNS污染（两者不是一回事）。<br>这个时候，我们就要人为地去建立这种对应关系。</p>
+<ul>
+<li>hosts文件的作用</li>
+</ul>
+<p>那怎样建立这种对应关系呢？这就要用到我们今天要讲的hosts文件了。<br>hosts文件，通俗地说，就是一个记录对应关系的小本子。<br>当你要上某个网站，如twitter的时候，系统会先查hosts文件，如果里面有twitter对应的IP地址，它则会主动去连这个IP，这个时候，不管是DNS劫持和DNS污染，对你上网都是没有影响的。<br>所以，我们只要能在hosts里面，建立起这种正确的对应关系，就可以避­开DNS引起的问题。</p>
+<hr>
+<p>下面，我们就讲讲如何修改hosts文件。<br>利用修改hosts文件进行翻墙</p>
+<ul>
+<li>Windows环境下：</li>
+</ul>
+<blockquote>
+<p>1.下载目前最新的hosts文件(2016年1月6日):   <a href="http://www.wxz.name/other/hosts">www.wxz.name/other/hosts</a><br>2.备份C:\WINDOWS\system32\drivers\etc\hosts（将原来的hosts保存到其他地方，以免出错后还原）<br>3.将下载的hosts文件复制到C:\WINDOWS\system32\drivers\etc覆盖<br>4.可以尽情的出入于长城内外了</p>
+</blockquote>
+<ul>
+<li>LInux环境下：</li>
+</ul>
+<blockquote>
+<p>1.下载目前最新的hosts文件(2016年1月6日):   <a href="http://www.wxz.name/other/hosts">www.wxz.name/other/hosts</a><br>2.输入指令 sudo gedit /etc/hosts<br>3.复制下载的hosts文件到以前hosts文件下面（不要覆盖）<br>4.可以尽情的出入于长城内外了</p>
+</blockquote>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/05/29/Wordpress-Build/" data-toggle="tooltip" data-placement="top"
+                           title="Wordpress的搭建">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/05/28/Sqlite-Android/" data-toggle="tooltip" data-placement="top"
+                           title="关于Sqlite数据库连接Android">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#翻墙"
+                           title="翻墙">翻墙</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

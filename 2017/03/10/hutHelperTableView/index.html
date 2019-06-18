@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        工大助手Tableview优化｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2017/03/10/hutHelperTableView/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>工大助手Tableview优化</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2017-03-10
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            工大助手Tableview优化
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>寒假的时候写完了iOS端的校园说说部分，因为当时技术有限，很多部分不完善，尤其体现在高速滑动时，界面卡顿很严重。开学大概一个月时，自己技术也有了一定提高，对tableview进行了重构，并在这里写下思路。<br><a id="more"></a></p>
+<h1 id="老版本"><a href="#老版本" class="headerlink" title="老版本"></a>老版本</h1><p>因为当时只会使用xib+tableview，所以用了一个很取巧的地方。<br>一个说说模块，因为高度等问题，我实际上是由于四个row部分组成的。<br>见下图红框部分。<br><img src="https://img.wxz.name/IMG_0480-1.png?imageView2/2/w/300/h/600/interlace/0/q/41" alt="IMG_0480"></p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><p>每条说说采用了4个不同的xib文件和tableViewCell来实现，分别对应四个红框</p>
+<h3 id="第一个红框"><a href="#第一个红框" class="headerlink" title="第一个红框"></a>第一个红框</h3><p>在这个部分是固定的头像，昵称，以及学号，这个部分不用进行任何高度适配，是最简单的。</p>
+<h3 id="第二个红框"><a href="#第二个红框" class="headerlink" title="第二个红框"></a>第二个红框</h3><p>这个部分是文本内容，这里需要根据行数进行高度适配，而当文本高度改变后，因为在xib界面中设置了Autoresizing，所以文本自然也会继续充满</p>
+<h3 id="第三个红框"><a href="#第三个红框" class="headerlink" title="第三个红框"></a>第三个红框</h3><p>这里显示说说的评论数目，因为也是固定的尺寸，所以不需要更改</p>
+<h3 id="第四个红框"><a href="#第四个红框" class="headerlink" title="第四个红框"></a>第四个红框</h3><p>这里也需要适配高度，每加入一行都要适配一次。</p>
+<h2 id="问题所在"><a href="#问题所在" class="headerlink" title="问题所在"></a>问题所在</h2><p>正如上述所说的，这种方式在第一次初设计时只考虑使用效果而没有考虑到运行效率，在后来的用户反馈中，我开始重视这个问题，并使用Instruments进行测试<br>性能测试从一进入界面起就开始不停的往下滑，那么利用<a href="https://github.com/yehot/YYFPSLabel" target="_blank" rel="external">YYFPS</a>测试到了的结果如下<br><img src="https://img.wxz.name/FPS%E6%9C%AA%E4%BC%98%E5%8C%96.png" alt="FPS未优化"><br>可以看到在满帧数为60的真机测试中，平均FPS只有30左右。<br>我接着开始测试每条代码运行时间<br><img src="https://img.wxz.name/%E6%9C%AA%E4%BC%98%E5%8C%96%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F2.png" alt="未优化加载方式2"><br>同样可以看到在代码加载中消耗了大量的时间。</p>
+<h2 id="我对此的思考"><a href="#我对此的思考" class="headerlink" title="我对此的思考"></a>我对此的思考</h2><p>在优化中，我尝试了很多方式，但我发现最关键的问题FPS的帧数还是没有解决，思考后，研究了<a href="https://github.com/johnil/VVeboTableViewDemo" target="_blank" rel="external">VVeboTableViewDemo</a>，决定自己用代码重构一遍校园说说</p>
+<h1 id="重构后"><a href="#重构后" class="headerlink" title="重构后"></a>重构后</h1><p>先放界面<br><img src="https://img.wxz.name/IMG_0528.png?imageView2/2/w/300/h/600/interlace/0/q/41" alt="IMG_0528"><br>再者放FPS测试图<br><img src="https://img.wxz.name/%E5%8A%A0%E5%85%A5%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD.png" alt="加入按需加载"><br>测试结果如上，可以看到在高速滑动中，FPS从之前的30左右已经提升到50左右。下一步我从加载图片中的方式入手，这样如果在高速滑动中不加载图片，只在低速或者点击屏幕时加载平均FPS可以达到55.</p>
+<h2 id="优化过程"><a href="#优化过程" class="headerlink" title="优化过程"></a>优化过程</h2><p><img src="https://img.wxz.name/TableView-2.png" alt="TableVie"><br>首先我新建了两个Model类，分别用来处理说说的数据，和评论的数据<br>从主界面进入到说说界面，首先会从MomentsViewController的viewDidLoad方法，加载momentsTableView类<br><figure class="highlight c"><table><tr><td class="code"><pre><div class="line">momentsTableView = [[MomentsTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];</div><div class="line">[self.view addSubview:momentsTableView];</div></pre></td></tr></table></figure></p>
+<p>在momentsTableView初始化中会调用[self loadData:JSONDic];方法，加载之前使用get请求从服务端得到了说说数据，接着将每组数据传给MomentsCell，并调用其draw方法绘制界面<br><figure class="highlight c"><table><tr><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)drawCell:(MomentsCell *)cell withIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    MomentsModel *data = [datas objectAtIndex:indexPath.section];</div><div class="line">    cell.selectionStyle = UITableViewCellSelectionStyleNone;</div><div class="line">    cell.LikesData = likeDatas;</div><div class="line">    cell.data = data;</div><div class="line">    [cell draw];</div><div class="line">    [cell loadPhoto];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>关于高度适配的问题，因为是在momentsTableView的初始化方法中用Model解析了数据，在数据解析的时候，我也一并在Model中计算了每条说说的高度，所以在heightForRowAtIndexPath方法中，我直接可以设置好每行的高度，在方法中也不用进行逻辑判断高度<br><figure class="highlight c"><table><tr><td class="code"><pre><div class="line">- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    MomentsModel *momentsModel=datas[indexPath.section];</div><div class="line">    <span class="keyword">return</span> SYReal(<span class="number">70</span>)+momentsModel.textHeight+momentsModel.photoHeight+SYReal(<span class="number">40</span>)+momentsModel.commentsHeight;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>关于不同屏幕大小的问题，我用了一个宏，会以iphone 6plus屏幕分辨率为基准进行计算<br><figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SYReal(value) ((value)/414.0f*[UIScreen mainScreen].bounds.size.width)</span></div></pre></td></tr></table></figure></p>
+<h2 id="后续的想法"><a href="#后续的想法" class="headerlink" title="后续的想法"></a>后续的想法</h2><p>虽然优化达到了自己满意的效果，但是觉得知识体系上还有很多欠缺，主要集中在多线程GCD等方式中，还不能达到稳定60FPS的效果，争取在知识有一定积累后再来进行优化。</p>
+<p><a href="https://github.com/isnine/HutHelper-Open.git" target="_blank" rel="external">工大助手源代码</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/03/27/SSandVpn/" data-toggle="tooltip" data-placement="top"
+                           title="从OSI模型浅谈SS和VPN">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/02/05/LeetCode202/" data-toggle="tooltip" data-placement="top"
+                           title="202. Happy Number">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#老版本"><span class="toc-text">老版本</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方式"><span class="toc-text">实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一个红框"><span class="toc-text">第一个红框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二个红框"><span class="toc-text">第二个红框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三个红框"><span class="toc-text">第三个红框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第四个红框"><span class="toc-text">第四个红框</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题所在"><span class="toc-text">问题所在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#我对此的思考"><span class="toc-text">我对此的思考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#重构后"><span class="toc-text">重构后</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#优化过程"><span class="toc-text">优化过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后续的想法"><span class="toc-text">后续的想法</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

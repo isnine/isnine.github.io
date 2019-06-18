@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        建站记录｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2016/06/20/Web-build/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>建站记录</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2016-06-20
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            建站记录
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>这里写着Nine’s Blog的成长日志.<br><a id="more"></a></p>
+<h2 id="首先"><a href="#首先" class="headerlink" title="首先"></a>首先</h2><h3 id="Nine是谁"><a href="#Nine是谁" class="headerlink" title="Nine是谁"></a>Nine是谁</h3><p><a href="/about/">Nine</a></p>
+<h3 id="这里有什么"><a href="#这里有什么" class="headerlink" title="这里有什么"></a>这里有什么</h3><p>这里写着一只热爱旅游的程序员的成长生活，你会在这里看到一个人从大一开始成长的心得，看到他的所见所闻，以及对很多很幼稚的问题的思考，哦对了，还有他的努力和那个矫情的词语梦想。</p>
+<h2 id="建站日程"><a href="#建站日程" class="headerlink" title="建站日程"></a>建站日程</h2><h3 id="第一阶段-2015-11-2015-12"><a href="#第一阶段-2015-11-2015-12" class="headerlink" title="第一阶段 2015.11-2015.12"></a>第一阶段 2015.11-2015.12</h3><ul>
+<li>服务器：阿里云</li>
+<li>域名：nine.ac.cn</li>
+<li>平台：Wordpress<h3 id="第二阶段-2015-12-2016-5"><a href="#第二阶段-2015-12-2016-5" class="headerlink" title="第二阶段 2015.12-2016.5"></a>第二阶段 2015.12-2016.5</h3></li>
+<li>服务器：腾讯云</li>
+<li>域名：wxz.name</li>
+<li>平台：Wordpress<h3 id="第四阶段-2016-5-2016-6"><a href="#第四阶段-2016-5-2016-6" class="headerlink" title="第四阶段 2016.5-2016.6"></a>第四阶段 2016.5-2016.6</h3></li>
+<li>服务器：Github</li>
+<li>域名：isnine.me</li>
+<li>平台：Hexo<h3 id="第五阶段-2016-6-至今"><a href="#第五阶段-2016-6-至今" class="headerlink" title="第五阶段 2016.6-至今"></a>第五阶段 2016.6-至今</h3></li>
+<li>服务器：腾讯云</li>
+<li>域名：isnine.me &amp; wxz.name</li>
+<li>平台：Hexo</li>
+</ul>
+<h2 id="建站日志"><a href="#建站日志" class="headerlink" title="建站日志"></a>建站日志</h2><h3 id="服务器的选择"><a href="#服务器的选择" class="headerlink" title="服务器的选择"></a>服务器的选择</h3><p>  最开始使用阿里云原因是因为学生9.9优惠，后来选择腾讯云的原因是因为腾讯云只要1块钱（学生就是这么穷哈哈，毕竟一个月9.9，四年就是500了）</p>
+<h3 id="平台的选择"><a href="#平台的选择" class="headerlink" title="平台的选择"></a>平台的选择</h3><p>   之前选择Wordpress因为好操作，后来使用Hexo喜欢自己折腾，在代码框里面控制，有种极客的感觉，而且感觉Wordpress插件太多了，影响服务器速度。</p>
+<h3 id="为什么先使用Github-pages又放弃了"><a href="#为什么先使用Github-pages又放弃了" class="headerlink" title="为什么先使用Github pages又放弃了"></a>为什么先使用Github pages又放弃了</h3><p>  其实Github pages真的很不错，但是因为经常会被墙，对比国内的速度太慢了，所以放弃了<br>  具体见<a href="/2016-06-19/博客迁移至腾讯云/">博客迁移至腾讯云</a><br>  其实最大的原因还是因为服务器好折腾哈哈</p>
+<p>  也尝试过Coding国内的平台But太贵了！！！！</p>
+<p>  还是腾讯云的服务器价格对学生友好</p>
+<h3 id="为什么使用SSL，开启全站Https"><a href="#为什么使用SSL，开启全站Https" class="headerlink" title="为什么使用SSL，开启全站Https?"></a>为什么使用SSL，开启全站Https?</h3><p>  我觉得在这个时代，网络的安全（逼格）是一件十分重要的事情，像百度知乎等网站已经开始全面支持Https了，作为新时代的个人博客，当然也要增强安全（提升逼格）</p>
+<h2 id="博客主题"><a href="#博客主题" class="headerlink" title="博客主题"></a>博客主题</h2><h3 id="2016-6-19支持SSl"><a href="#2016-6-19支持SSl" class="headerlink" title="2016.6.19支持SSl"></a>2016.6.19支持SSl</h3><p> 原来的博客主题用了大量的外链，导致无法开启ssl，在https中许多用http外链的js全部失效，博客一片混乱，所以用了大量的精力查看主题js代码，将里面的代码修改，现在已经可以在ssl环境中使用了。<br> 下载见<br> <a href="https://github.com/isnine/ssl_spfk" target="_blank" rel="external">ssl_spfk主题下载</a></p>
+<h3 id="2016-6-20修改了多说"><a href="#2016-6-20修改了多说" class="headerlink" title="2016.6.20修改了多说"></a>2016.6.20修改了多说</h3><p> 多说中的头像引用是用http操作的，会使https的绿色小锁失效，想了很多办法最后终于让头像从https中访问解决了。<br> 但是评论表情功能因为也是http中走得，不过因为我都不喜欢表情，所以所有的表情我都禁用了<br> 此外还有ws接口被我改成wss了，同样的原因。具体代码中在 <a href="https://github.com/isnine/ssl_spfk" target="_blank" rel="external">ssl_spfk主题下载</a>可以找到<br> 单独需要的人可以直接在主题中找到ssl_spfk\source\js\embed.js复制出来替换自己的</p>
+<h3 id="2016-7-2增加了照片墙"><a href="#2016-7-2增加了照片墙" class="headerlink" title="2016.7.2增加了照片墙"></a>2016.7.2增加了照片墙</h3><p> 采用了node.js的方式在本地生成照片目录<br> 然后将照片上传至七牛云<br> 接着通过photo.js将照片墙生成</p>
+<h3 id="2016-7-3增加了搜索功能"><a href="#2016-7-3增加了搜索功能" class="headerlink" title="2016.7.3增加了搜索功能"></a>2016.7.3增加了搜索功能</h3><p> 一直想要的搜索功能终于加上去了<br> 博主真是操碎了心</p>
+<h3 id="2016-7-4修改了搜索功能的BUG"><a href="#2016-7-4修改了搜索功能的BUG" class="headerlink" title="2016.7.4修改了搜索功能的BUG"></a>2016.7.4修改了搜索功能的BUG</h3>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/06/20/10kmJogging/" data-toggle="tooltip" data-placement="top"
+                           title="10km Jogging">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/06/19/SSL/" data-toggle="tooltip" data-placement="top"
+                           title="关于博客开启SSL">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#首先"><span class="toc-text">首先</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nine是谁"><span class="toc-text">Nine是谁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#这里有什么"><span class="toc-text">这里有什么</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建站日程"><span class="toc-text">建站日程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一阶段-2015-11-2015-12"><span class="toc-text">第一阶段 2015.11-2015.12</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二阶段-2015-12-2016-5"><span class="toc-text">第二阶段 2015.12-2016.5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第四阶段-2016-5-2016-6"><span class="toc-text">第四阶段 2016.5-2016.6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第五阶段-2016-6-至今"><span class="toc-text">第五阶段 2016.6-至今</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建站日志"><span class="toc-text">建站日志</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器的选择"><span class="toc-text">服务器的选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#平台的选择"><span class="toc-text">平台的选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么先使用Github-pages又放弃了"><span class="toc-text">为什么先使用Github pages又放弃了</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么使用SSL，开启全站Https"><span class="toc-text">为什么使用SSL，开启全站Https?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#博客主题"><span class="toc-text">博客主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2016-6-19支持SSl"><span class="toc-text">2016.6.19支持SSl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2016-6-20修改了多说"><span class="toc-text">2016.6.20修改了多说</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2016-7-2增加了照片墙"><span class="toc-text">2016.7.2增加了照片墙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2016-7-3增加了搜索功能"><span class="toc-text">2016.7.3增加了搜索功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2016-7-4修改了搜索功能的BUG"><span class="toc-text">2016.7.4修改了搜索功能的BUG</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

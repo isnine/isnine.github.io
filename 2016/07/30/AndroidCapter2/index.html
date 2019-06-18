@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Android第一行代码-探究活动｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2016/07/30/AndroidCapter2/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Android第一行代码-探究活动</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2016-07-30
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Android第一行代码"
+                           title="Android第一行代码">Android第一行代码</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Android第一行代码-探究活动
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h2 id="活动初始化"><a href="#活动初始化" class="headerlink" title="活动初始化"></a>活动初始化</h2><p>新建一个项目，首先要输入的代码便是<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">	<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>自己去网上搜索了下这行代码，网上给出的解释如下</p>
+<blockquote>
+<p>每个activity都要进行一些必要的初始化，而这些初始化就是通过调用父类的构造函数来进行的，举个例子，生成一个空白的activity,起码有一个标题，这个标题是怎样关联和生成的，就是通过构造函数来处理的啦。<br>事实上，如果没有这行代码，程序启动时会发生崩溃。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="活动中加载布局"><a href="#活动中加载布局" class="headerlink" title="活动中加载布局"></a>活动中加载布局</h2><p>.class文件里面会写程序的代码，而.xml界面文件里面则会保存APP的外观，在我个人看来，就像肉与灵魂的关系，.xml文件里修改外表，而.class文件里面决定每一个部件会发生什么行为<br>加载布局<br>在Oncrete函数中写<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">setContentView(R.layout.first_layout);</div></pre></td></tr></table></figure></p>
+<h2 id="在AndroidManifest文件中注册"><a href="#在AndroidManifest文件中注册" class="headerlink" title="在AndroidManifest文件中注册"></a>在AndroidManifest文件中注册</h2><p>完成了.class文件和.xml文件的关联后，我们还需要在AndroidMainfest.xml文件中进行注册<br><figure class="highlight"><table><tr><td class="code"><pre><div class="line"></div><div class="line">&lt;activity</div><div class="line">    android:name="com.example.activitylifecycletest.MainActivity"</div><div class="line">    android:label="@string/app_name" &gt;</div><div class="line">    &lt;intent-filter&gt;</div><div class="line">        &lt;action android:name="android.intent.action.MAIN" /&gt;</div><div class="line"></div><div class="line">        &lt;category android:name="android.intent.category.LAUNCHER" /&gt;</div><div class="line">    &lt;/intent-filter&gt;</div><div class="line">&lt;/activity&gt;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>每一个Android项目都会包含一个AndroidManifest.xml文件，这个文件包含了APK所需的系统权限等。<br>  开发文档：The manifest tag is the root of an AndroidManifest.xml file, describing the contents of an Android package (.apk) file. One attribute must always be supplied: package gives a unique name for the package, using a Java-style naming convention to avoid name collisions. For example, applications published by Google could have names of the form com.google.app.appname<br>Inside of the manifest tag, may appear the following tags in any order: permission, permission-group, permission-tree, uses-sdk, uses-permission, uses-configuration, application, instrumentation, uses-feature.</p>
+</blockquote>
+<h2 id="隐藏标题栏"><a href="#隐藏标题栏" class="headerlink" title="隐藏标题栏"></a>隐藏标题栏</h2><p>有的时候我们往往需要将标题栏隐藏，可以在Oncreate函数中加入以下代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">	<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">	requestWindowFeature(Window.FEATURE_NO_TITLE);</div><div class="line">	setContentView(R.layout.first_layout);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>特别注意代码需要在<strong>setContentView(R.layout.first_layout);</strong>之前加    </p>
+</blockquote>
+<h2 id="使用Toast"><a href="#使用Toast" class="headerlink" title="使用Toast"></a>使用Toast</h2><p>Toash是一种很好的提醒方式，一般小的信息我们都会用Toast进行提示</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Toast.makeText(<span class="keyword">this</span>, <span class="string">"You clicked Add"</span>, Toast.LENGTH_SHORT).show();</div></pre></td></tr></table></figure>
+<h2 id="使用Menu"><a href="#使用Menu" class="headerlink" title="使用Menu"></a>使用Menu</h2><h3 id="新建一个menu文件"><a href="#新建一个menu文件" class="headerlink" title="新建一个menu文件"></a>新建一个menu文件</h3><p>res文件夹中New-Folder新建一个文件夹menu，然后在这个文件夹中新建一个名叫main的菜单文件，New-Android XML File,在新建的文件中输入以下代码<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">&lt;item</div><div class="line">    android:id=<span class="string">"@+id/add_item"</span></div><div class="line">    android:title=<span class="string">"Add"</span>/&gt;</div><div class="line">&lt;item</div><div class="line">    android:id=<span class="string">"@+id/remove_item"</span></div><div class="line">    android:title=<span class="string">"Remove"</span>/&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="调用menu菜单"><a href="#调用menu菜单" class="headerlink" title="调用menu菜单"></a>调用menu菜单</h3><p>然后回到.class文件中，重写onCreateOptionMenu()方法，代码如下:<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</div><div class="line">	getMenuInflater().inflate(R.menu.main, menu);</div><div class="line">	<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>通过getMenuInflater()方法得到MenuInflater对象，再调用它的inflate()方法就可以给当前活动创建菜单，两个参数，第一个为我们的菜单，第二个为添加到哪一个Menu对象，使用onCreateOptionsMenu()方法传入的menu参数，然后返回true，如果返回false则无法显示。</p>
+</blockquote>
+<h3 id="添加菜单响应事件"><a href="#添加菜单响应事件" class="headerlink" title="添加菜单响应事件"></a>添加菜单响应事件</h3><p>在.class文件中，重写onOptionsItemSelected()方法:<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</div><div class="line">	<span class="keyword">switch</span> (item.getItemId()) &#123;</div><div class="line">	<span class="keyword">case</span> R.id.add_item:</div><div class="line">		Toast.makeText(<span class="keyword">this</span>, <span class="string">"You clicked Add"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">		<span class="keyword">break</span>;</div><div class="line">	<span class="keyword">case</span> R.id.remove_item:</div><div class="line">		Toast.makeText(<span class="keyword">this</span>, <span class="string">"You clicked Remove"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">		<span class="keyword">break</span>;</div><div class="line">	<span class="keyword">default</span>:</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="销毁活动"><a href="#销毁活动" class="headerlink" title="销毁活动"></a>销毁活动</h2><p>效果类似于按一下Back键<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">finish();</div></pre></td></tr></table></figure></p>
+<h2 id="打开新窗口"><a href="#打开新窗口" class="headerlink" title="打开新窗口"></a>打开新窗口</h2><h3 id="使用显示Intent"><a href="#使用显示Intent" class="headerlink" title="使用显示Intent"></a>使用显示Intent</h3><h4 id="在AndroidMainfest-xml中"><a href="#在AndroidMainfest-xml中" class="headerlink" title="在AndroidMainfest.xml中"></a>在AndroidMainfest.xml中</h4><p>为SecondActivity注册<br><figure class="highlight"><table><tr><td class="code"><pre><div class="line">&lt;activity</div><div class="line">           android:name=".SecondActivity"</div><div class="line">&lt;/activity&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="在-class文件中"><a href="#在-class文件中" class="headerlink" title="在.class文件中"></a>在.class文件中</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(FirstActivity.<span class="keyword">this</span>, SecondActivity.class);</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>FirstActivity.this是当前类，SecondActivity.class是要打开的类。</p>
+</blockquote>
+<h3 id="使用隐式Intent"><a href="#使用隐式Intent" class="headerlink" title="使用隐式Intent"></a>使用隐式Intent</h3><h4 id="在AndroidMainfest-xml中-1"><a href="#在AndroidMainfest-xml中-1" class="headerlink" title="在AndroidMainfest.xml中"></a>在AndroidMainfest.xml中</h4><p>注册<br><figure class="highlight"><table><tr><td class="code"><pre><div class="line">&lt;intent-filter&gt;</div><div class="line">              &lt;action android:name="com.example.activitytest.ACTION_START" /&gt;</div><div class="line">              &lt;category android:name="android.intent.category.DEFAULT" /&gt;</div><div class="line">          &lt;/intent-filter&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="在-class文件中-1"><a href="#在-class文件中-1" class="headerlink" title="在.class文件中"></a>在.class文件中</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">"com.example.activitytest.ACTION_START"</span>);</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+<h3 id="隐式Intent打开网站"><a href="#隐式Intent打开网站" class="headerlink" title="隐式Intent打开网站"></a>隐式Intent打开网站</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);</div><div class="line">intent.setData(Url.parse(<span class="string">"https://www.baidu.com"</span>));</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+<h3 id="隐式Intent拨打电话"><a href="#隐式Intent拨打电话" class="headerlink" title="隐式Intent拨打电话"></a>隐式Intent拨打电话</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_DIAL);</div><div class="line">intent.setData(Url.parse(<span class="string">"tel:10086"</span>));</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+<h3 id="向下一个活动传递数据"><a href="#向下一个活动传递数据" class="headerlink" title="向下一个活动传递数据"></a>向下一个活动传递数据</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(FirstActivity.<span class="keyword">this</span>, SecondActivity.class);</div><div class="line">intent.putExtra(<span class="string">"param1"</span>, <span class="string">"data1"</span>);</div><div class="line">intent.putExtra(<span class="string">"param2"</span>, <span class="string">"data2"</span>);			startActivity(intent);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>putExtra方法中第一个参数是键，用于后面从Intent中取值，第二个参数才是真正传递的数据。</p>
+</blockquote>
+<h4 id="从下个活动中取出传递的数据"><a href="#从下个活动中取出传递的数据" class="headerlink" title="从下个活动中取出传递的数据"></a>从下个活动中取出传递的数据</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Intent intent = getIntent();  </div><div class="line">String data = intent.getStringExtra(<span class="string">"param1"</span>);</div><div class="line"></div><div class="line">Log.d(<span class="string">"SecondActivity"</span>,data);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>传递的Int数据则用getIntExtra()方法，布尔型数据则用getBooleanExtra()方法.</p>
+</blockquote>
+<h3 id="返回数据给上一个活动"><a href="#返回数据给上一个活动" class="headerlink" title="返回数据给上一个活动"></a>返回数据给上一个活动</h3><h4 id="在第一个-class中"><a href="#在第一个-class中" class="headerlink" title="在第一个.class中"></a>在第一个.class中</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(FirstActivity.<span class="keyword">this</span>, SecondActivity.class);</div><div class="line">startActivityForResult(intent,<span class="number">1</span>);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>第二个参数是请求值，这里设为1，只要是唯一值就好了</p>
+</blockquote>
+<h4 id="在第二个-class中"><a href="#在第二个-class中" class="headerlink" title="在第二个.class中"></a>在第二个.class中</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent();</div><div class="line">intent.putExtra(<span class="string">"data_return"</span>, <span class="string">"Hello FirstActivity"</span>);</div><div class="line">setResult(RESULT_OK,intent);</div><div class="line">finish();</div></pre></td></tr></table></figure>
+<blockquote>
+<p>setResult()方法中有两个值，第一个参数一般只用RESULT_OK，第二个参数是返回的值</p>
+</blockquote>
+<h4 id="在第一个-class中重写onActivtyResult-方法来得到返回的数据"><a href="#在第一个-class中重写onActivtyResult-方法来得到返回的数据" class="headerlink" title="在第一个.class中重写onActivtyResult()方法来得到返回的数据"></a>在第一个.class中重写onActivtyResult()方法来得到返回的数据</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</div><div class="line">	<span class="keyword">switch</span> (requestCode) &#123;</div><div class="line">	<span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">		<span class="keyword">if</span> (resultCode == RESULT_OK) &#123;</div><div class="line">			String returnedData = data.getStringExtra(<span class="string">"data_return"</span>);</div><div class="line">			Log.d(<span class="string">"FirstActivity"</span>, returnedData);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">break</span>;</div><div class="line">	<span class="keyword">default</span>:</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>为了确保用户在按Back键回到上一个界面时也会返回数据应该在onBackPressed()方法中也添加倒数的二个模块中的代码</p>
+</blockquote>
+<h2 id="活动状态"><a href="#活动状态" class="headerlink" title="活动状态"></a>活动状态</h2><p>每个活动在生命周期中最多四个状态</p>
+<h3 id="1-运行状态"><a href="#1-运行状态" class="headerlink" title="1.运行状态"></a>1.运行状态</h3><p>  当一个活动在返回栈栈顶时，则处于运动状态。</p>
+<h3 id="2-暂停状态"><a href="#2-暂停状态" class="headerlink" title="2.暂停状态"></a>2.暂停状态</h3><p>  不处于栈顶，但仍可见。比如对话框</p>
+<h3 id="3-停止状态"><a href="#3-停止状态" class="headerlink" title="3.停止状态"></a>3.停止状态</h3><p>  当一个活动不再栈顶，并且不可见，则停止。如果其他地方需要内存，则有可能被系统回收。</p>
+<h3 id="4-销毁状态"><a href="#4-销毁状态" class="headerlink" title="4.销毁状态"></a>4.销毁状态</h3><p>  当一个活动从返回栈移除后，则变成销毁状态。系统最倾向回收这个状态的活动，以保证手机内存充足。</p>
+<h2 id="活动的生存期"><a href="#活动的生存期" class="headerlink" title="活动的生存期"></a>活动的生存期</h2><p>  <img src="https://o90qqsid7.qnssl.com/QQ20160801.png" alt="QQ20160801"></p>
+<h3 id="onCreate"><a href="#onCreate" class="headerlink" title="onCreate()"></a>onCreate()</h3><p>在活动的第一次被创建，在这个方法中完成活动的初始化，比如加载布局，绑定事件。</p>
+<h3 id="onStart"><a href="#onStart" class="headerlink" title="onStart()"></a>onStart()</h3><p>活动由不可见变成可见时调用</p>
+<h3 id="onResumen"><a href="#onResumen" class="headerlink" title="onResumen()"></a>onResumen()</h3><h3 id="onPause"><a href="#onPause" class="headerlink" title="onPause()"></a>onPause()</h3><h3 id="onStop"><a href="#onStop" class="headerlink" title="onStop()"></a>onStop()</h3><h3 id="onDestroy"><a href="#onDestroy" class="headerlink" title="onDestroy()"></a>onDestroy()</h3><p>销毁之前调用，之后活动的状态将变成销毁状态</p>
+<h3 id="onRestart"><a href="#onRestart" class="headerlink" title="onRestart()"></a>onRestart()</h3><h2 id="三种生存期"><a href="#三种生存期" class="headerlink" title="三种生存期"></a>三种生存期</h2><h3 id="完整生存期"><a href="#完整生存期" class="headerlink" title="完整生存期"></a>完整生存期</h3><p>在onCreate()方法和onDestroy()方法之间所经历的</p>
+<h3 id="可见生存期"><a href="#可见生存期" class="headerlink" title="可见生存期"></a>可见生存期</h3><p>在onStart()方法和onStop()方法之间经历的</p>
+<h3 id="前台生存期"><a href="#前台生存期" class="headerlink" title="前台生存期"></a>前台生存期</h3><p>活动在onResume()方法和onPause()方法之间经历的</p>
+<h2 id="保存临时数据"><a href="#保存临时数据" class="headerlink" title="保存临时数据"></a>保存临时数据</h2><p>当活动处于停止状态时，是有可能被系统回收的，那么为了保存临时的数据，Activity提供了一个onSaceInstanceState()方法解决活动呗回收时临时数据得不到保存的问题。</p>
+<h3 id="重写onSaveInstanceState-方法"><a href="#重写onSaveInstanceState-方法" class="headerlink" title="重写onSaveInstanceState()方法"></a>重写onSaveInstanceState()方法</h3><p>这个方法将在停止的活动被系统销毁前调用<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span></span>&#123;</div><div class="line">	<span class="keyword">super</span>.onSaveInstanceState(outState);</div><div class="line">	outState.putString(<span class="string">"data_key"</span>,<span class="string">"传值"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="修改onCreate-方法"><a href="#修改onCreate-方法" class="headerlink" title="修改onCreate()方法"></a>修改onCreate()方法</h3><p>可以看到onCreate方法中有个Bundle类型的参数，在平时这个参数会为null，但是当活动在被系统回收前有通过onSaveInstanceState()方法保存参数的话，这个参数会带有之前保存的全部数据。<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">	<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">	setContentView(R.layout.normal_layout)</div><div class="line">	<span class="keyword">if</span>(savedInstanceState!=<span class="keyword">null</span>)&#123;</div><div class="line">		String tempData=savedInstanceState.getString(<span class="string">"data_key"</span>);</div><div class="line">	&#125;	&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="活动的四种启动模式"><a href="#活动的四种启动模式" class="headerlink" title="活动的四种启动模式"></a>活动的四种启动模式</h2><h3 id="standard"><a href="#standard" class="headerlink" title="standard"></a>standard</h3><p>默认启动模式，在不进行指定的情况下，所有活动都会自动以这种模式。<br>每启动一个新的活动，就会在返回栈中入栈，并位于栈顶位置。</p>
+<blockquote>
+<p>对于使用standard模式的活动，系统不会在乎是否已经在返回栈中存在，每次启动都会创建一个新的实例</p>
+</blockquote>
+<h3 id="singleTop"><a href="#singleTop" class="headerlink" title="singleTop"></a>singleTop</h3><p>当返回栈栈顶已经为该活动时，不会再新建一个实例<br>使用方法，在AndroidMain.xml中的启动模式中设置。<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:launchMode=<span class="string">"singleTop"</span></div></pre></td></tr></table></figure></p>
+<h3 id="singleTask"><a href="#singleTask" class="headerlink" title="singleTask"></a>singleTask</h3><p>当返回栈中已经存在该活动时，不再新建一个实例，而是将活动之上的所有活动统统出栈。<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:launchMode=<span class="string">"singleTask"</span></div></pre></td></tr></table></figure></p>
+<h3 id="singleInstance"><a href="#singleInstance" class="headerlink" title="singleInstance"></a>singleInstance</h3><p>启动一个新的返回栈来管理活动<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:launchMode=<span class="string">"singleInstance"</span></div></pre></td></tr></table></figure></p>
+<h2 id="源码地址"><a href="#源码地址" class="headerlink" title="源码地址"></a>源码地址</h2><p><a href="https://github.com/isnine/AndroidWork/tree/master/Android第一行代码源码/第2章/ActivityTest" target="_blank" rel="external">https://github.com/isnine/AndroidWork/tree/master/Android第一行代码源码/第2章/ActivityTest</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/08/04/AndroidCapter3/" data-toggle="tooltip" data-placement="top"
+                           title="Android第一行代码-UI界面">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/07/27/acmac/" data-toggle="tooltip" data-placement="top"
+                           title="杭电ACM机器人">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#活动初始化"><span class="toc-text">活动初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#活动中加载布局"><span class="toc-text">活动中加载布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在AndroidManifest文件中注册"><span class="toc-text">在AndroidManifest文件中注册</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#隐藏标题栏"><span class="toc-text">隐藏标题栏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Toast"><span class="toc-text">使用Toast</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Menu"><span class="toc-text">使用Menu</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新建一个menu文件"><span class="toc-text">新建一个menu文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调用menu菜单"><span class="toc-text">调用menu菜单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加菜单响应事件"><span class="toc-text">添加菜单响应事件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#销毁活动"><span class="toc-text">销毁活动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打开新窗口"><span class="toc-text">打开新窗口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用显示Intent"><span class="toc-text">使用显示Intent</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在AndroidMainfest-xml中"><span class="toc-text">在AndroidMainfest.xml中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在-class文件中"><span class="toc-text">在.class文件中</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用隐式Intent"><span class="toc-text">使用隐式Intent</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在AndroidMainfest-xml中-1"><span class="toc-text">在AndroidMainfest.xml中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在-class文件中-1"><span class="toc-text">在.class文件中</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#隐式Intent打开网站"><span class="toc-text">隐式Intent打开网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#隐式Intent拨打电话"><span class="toc-text">隐式Intent拨打电话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向下一个活动传递数据"><span class="toc-text">向下一个活动传递数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#从下个活动中取出传递的数据"><span class="toc-text">从下个活动中取出传递的数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#返回数据给上一个活动"><span class="toc-text">返回数据给上一个活动</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在第一个-class中"><span class="toc-text">在第一个.class中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在第二个-class中"><span class="toc-text">在第二个.class中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在第一个-class中重写onActivtyResult-方法来得到返回的数据"><span class="toc-text">在第一个.class中重写onActivtyResult()方法来得到返回的数据</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#活动状态"><span class="toc-text">活动状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-运行状态"><span class="toc-text">1.运行状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-暂停状态"><span class="toc-text">2.暂停状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-停止状态"><span class="toc-text">3.停止状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-销毁状态"><span class="toc-text">4.销毁状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#活动的生存期"><span class="toc-text">活动的生存期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#onCreate"><span class="toc-text">onCreate()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onStart"><span class="toc-text">onStart()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onResumen"><span class="toc-text">onResumen()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onPause"><span class="toc-text">onPause()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onStop"><span class="toc-text">onStop()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onDestroy"><span class="toc-text">onDestroy()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onRestart"><span class="toc-text">onRestart()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三种生存期"><span class="toc-text">三种生存期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#完整生存期"><span class="toc-text">完整生存期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可见生存期"><span class="toc-text">可见生存期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前台生存期"><span class="toc-text">前台生存期</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存临时数据"><span class="toc-text">保存临时数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#重写onSaveInstanceState-方法"><span class="toc-text">重写onSaveInstanceState()方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改onCreate-方法"><span class="toc-text">修改onCreate()方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#活动的四种启动模式"><span class="toc-text">活动的四种启动模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#standard"><span class="toc-text">standard</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#singleTop"><span class="toc-text">singleTop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#singleTask"><span class="toc-text">singleTask</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#singleInstance"><span class="toc-text">singleInstance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源码地址"><span class="toc-text">源码地址</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Android第一行代码"
+                           title="Android第一行代码">Android第一行代码</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

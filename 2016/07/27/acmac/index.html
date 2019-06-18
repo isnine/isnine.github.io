@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        杭电ACM机器人｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2016/07/27/acmac/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>杭电ACM机器人</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2016-07-27
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#爬虫"
+                           title="爬虫">爬虫</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            杭电ACM机器人
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>首先放效果图，爬虫放在自己的VPS上面运行了一下午，Rank从25W到了22名，全站4700道题其中一共AC掉2000+题<br><img src="http://img.wxz.name/acmacrobot-1.png" alt="acmacrobot"></p>
+<a id="more"></a>
+<h2 id="相关连接"><a href="#相关连接" class="headerlink" title="相关连接"></a>相关连接</h2><p>源码作者的博客<a href="http://bigballon.github.io/python/2016/05/15/python_crawler-12.html" target="_blank" rel="external">听说你叫爬虫(11) —— 也写个AC自动机</a><br>杭电的OJ:<a href="http://acm.hdu.edu.cn" target="_blank" rel="external">杭电ACM</a><br>题解数据来源:<a href="http://so.csdn.net/so/" target="_blank" rel="external">CSDN搜索</a></p>
+<h2 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h2><p>模拟登录-爬取题目-搜索-提取代码-提交-成功下一题/失败继续搜索</p>
+<h2 id="测试情况"><a href="#测试情况" class="headerlink" title="测试情况"></a>测试情况</h2><p>首先自己将作者代码放在VPS上面测试，发现对于有些题目，正则表达式没有考虑全，会发生错误<br>而且默认是1000直接到最后一题</p>
+<h2 id="修改情况"><a href="#修改情况" class="headerlink" title="修改情况"></a>修改情况</h2><p>自己根据情况，对异常进行了一个catch处理，这样保证发生了异常后跳过继续运行<br>对代码可以自行设置初始题号和终止题号</p>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><h3 id="运行在Python2-7，需要安装相关类"><a href="#运行在Python2-7，需要安装相关类" class="headerlink" title="运行在Python2.7，需要安装相关类"></a>运行在Python2.7，需要安装相关类</h3><pre><code class="python"><span class="comment"># coding='utf-8'</span>
+<span class="keyword">import</span> requests, re, os, HTMLParser, time, getpass
+
+host_url = <span class="string">'http://acm.hdu.edu.cn'</span>
+post_url = <span class="string">'http://acm.hdu.edu.cn/userloginex.php?action=login'</span>
+sub_url = <span class="string">'http://acm.hdu.edu.cn/submit.php?action=submit'</span>
+csdn_url = <span class="string">'http://so.csdn.net/so/search/s.do'</span>
+head = {
+    <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'</span>}
+html_parser = HTMLParser.HTMLParser()
+s = requests.session()
+
+
+<span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(usr, psw)</span>:</span>
+    s.get(host_url);
+    data = {<span class="string">'username'</span>: usr, <span class="string">'userpass'</span>: psw, <span class="string">'login'</span>: <span class="string">'Sign In'</span>}
+    r = s.post(post_url, data=data)
+
+
+<span class="function"><span class="keyword">def</span> <span class="title">check_lan</span><span class="params">(lan)</span>:</span>
+    <span class="keyword">if</span> <span class="string">'java'</span> <span class="keyword">in</span> lan:
+        <span class="keyword">return</span> <span class="string">'5'</span>
+    <span class="keyword">return</span> <span class="string">'0'</span>
+
+
+<span class="function"><span class="keyword">def</span> <span class="title">parser_code</span><span class="params">(code)</span>:</span>
+    <span class="keyword">return</span> html_parser.unescape(code).encode(<span class="string">'utf-8'</span>)
+
+
+<span class="function"><span class="keyword">def</span> <span class="title">is_ac</span><span class="params">(pid, usr)</span>:</span>
+    tmp = requests.get(<span class="string">'http://acm.hdu.edu.cn/userstatus.php?user='</span> + usr).text
+    accept = re.search(
+        <span class="string">'List of solved problems&lt;/font&gt;&lt;/h3&gt;.*?&lt;p align=left&gt;&lt;script language=javascript&gt;(.*?)&lt;/script&gt;&lt;br&gt;&lt;/p&gt;'</span>, tmp,
+        re.S)
+    <span class="keyword">if</span> pid <span class="keyword">in</span> accept.group(<span class="number">1</span>):
+        <span class="keyword">print</span> <span class="string">'%s was solved'</span> % pid
+        <span class="keyword">return</span> <span class="keyword">True</span>
+    <span class="keyword">else</span>:
+        <span class="keyword">return</span> <span class="keyword">False</span>
+
+
+<span class="function"><span class="keyword">def</span> <span class="title">search_csdn</span><span class="params">(PID, usr)</span>:</span>
+    get_data = {<span class="string">'q'</span>: <span class="string">'HDU '</span> + PID, <span class="string">'t'</span>: <span class="string">'blog'</span>, <span class="string">'o'</span>: <span class="string">''</span>, <span class="string">'s'</span>: <span class="string">''</span>, <span class="string">'l'</span>: <span class="string">'null'</span>}
+    search_html = requests.get(csdn_url, params=get_data).text
+    linklist = re.findall(<span class="string">'&lt;dd class="search-link"&gt;&lt;a href="(.*?)" target="_blank"&gt;'</span>, search_html, re.S)
+    <span class="keyword">for</span> l <span class="keyword">in</span> linklist:
+        <span class="keyword">print</span> l
+        tm_html = requests.get(l, headers=head).text;
+        title = re.search(<span class="string">'&lt;title&gt;(.*?)&lt;/title&gt;'</span>, tm_html, re.S).group(<span class="number">1</span>).lower()
+        <span class="keyword">if</span> PID <span class="keyword">not</span> <span class="keyword">in</span> title:
+            <span class="keyword">continue</span>
+        <span class="keyword">if</span> <span class="string">'hdu'</span> <span class="keyword">not</span> <span class="keyword">in</span> title:
+            <span class="keyword">continue</span>
+        tmp = re.search(<span class="string">'name="code" class="(.*?)"&gt;(.*?)&lt;/pre&gt;'</span>, tm_html, re.S)
+        <span class="keyword">if</span> tmp == <span class="keyword">None</span>:
+            <span class="keyword">print</span> <span class="string">'code not find'</span>
+            <span class="keyword">continue</span>
+        LAN = check_lan(tmp.group(<span class="number">1</span>))
+        CODE = parser_code(tmp.group(<span class="number">2</span>))
+        <span class="keyword">if</span> <span class="string">r'include'</span> <span class="keyword">in</span> CODE:
+            <span class="keyword">pass</span>
+        <span class="keyword">elif</span> <span class="string">r'import java'</span> <span class="keyword">in</span> CODE:
+            <span class="keyword">pass</span>
+        <span class="keyword">else</span>:
+            <span class="keyword">continue</span>
+        <span class="keyword">print</span> PID, LAN
+        <span class="keyword">print</span> <span class="string">'--------------'</span>
+        submit_data = {<span class="string">'check'</span>: <span class="string">'0'</span>, <span class="string">'problemid'</span>: PID, <span class="string">'language'</span>: LAN, <span class="string">'usercode'</span>: CODE}
+        s.post(sub_url, headers=head, data=submit_data)
+        time.sleep(<span class="number">5</span>)
+        <span class="keyword">if</span> is_ac(PID, usr):
+            <span class="keyword">break</span>
+
+
+<span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    usr = raw_input(<span class="string">'input your username:'</span>)
+    psw = getpass.getpass(<span class="string">'input your password:'</span>)
+    start = input(<span class="string">'start problem(1000-5762):'</span>)
+    end = input(<span class="string">'end problem:'</span>)
+    login(usr, psw)
+    pro_cnt = start
+    <span class="keyword">while</span> pro_cnt &lt;= end:
+        PID = str(pro_cnt)
+        <span class="keyword">if</span> is_ac(PID, usr):
+            pro_cnt += <span class="number">1</span>
+            <span class="keyword">continue</span>
+        <span class="keyword">try</span>:
+           search_csdn(PID, usr)
+        <span class="keyword">except</span>:
+           <span class="keyword">continue</span>
+        pro_cnt += <span class="number">1</span>
+</code></pre>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/07/30/AndroidCapter2/" data-toggle="tooltip" data-placement="top"
+                           title="Android第一行代码-探究活动">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/07/08/book-think/" data-toggle="tooltip" data-placement="top"
+                           title="摘录">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#相关连接"><span class="toc-text">相关连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#整体思路"><span class="toc-text">整体思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试情况"><span class="toc-text">测试情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改情况"><span class="toc-text">修改情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源码"><span class="toc-text">源码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#运行在Python2-7，需要安装相关类"><span class="toc-text">运行在Python2.7，需要安装相关类</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#爬虫"
+                           title="爬虫">爬虫</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

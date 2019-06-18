@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        对hexo博客添加站内搜索功能｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2016/07/04/addfind/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>对hexo博客添加站内搜索功能</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2016-07-04
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Hexo"
+                           title="Hexo">Hexo</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            对hexo博客添加站内搜索功能
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>花了几天的时间终于把博客搜索功能给添加了上去，整理了一下修改记录，把修改方式放在这里，亲测可以使用，希望能对有需要的人有帮助。<br><a id="more"></a></p>
+<h2 id="需要修改的文件列表"><a href="#需要修改的文件列表" class="headerlink" title="需要修改的文件列表"></a>需要修改的文件列表</h2><h4 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h4><h4 id="layout-partial-left-col-ejs"><a href="#layout-partial-left-col-ejs" class="headerlink" title="layout/_partial/left-col.ejs"></a>layout/_partial/left-col.ejs</h4><h4 id="source-css-partial-search-styl"><a href="#source-css-partial-search-styl" class="headerlink" title="source/css/_partial/search.styl"></a>source/css/_partial/search.styl</h4><h4 id="source-css-style-styl"><a href="#source-css-style-styl" class="headerlink" title="source/css/style.styl"></a>source/css/style.styl</h4><h4 id="source-js-search-js"><a href="#source-js-search-js" class="headerlink" title="source/js/search.js"></a>source/js/search.js</h4><h4 id="layout-partial-after-footer-ejs"><a href="#layout-partial-after-footer-ejs" class="headerlink" title="layout/_partial/after-footer.ejs"></a>layout/_partial/after-footer.ejs</h4><h4 id="安装插件hexo-generator-search"><a href="#安装插件hexo-generator-search" class="headerlink" title="安装插件hexo-generator-search"></a>安装插件hexo-generator-search</h4><h2 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm install --save hexo-generator-search</div></pre></td></tr></table></figure>
+<h2 id="文件修改"><a href="#文件修改" class="headerlink" title="文件修改"></a>文件修改</h2><h3 id="config-yml-添加"><a href="#config-yml-添加" class="headerlink" title="_config.yml 添加"></a>_config.yml 添加</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">search:</div><div class="line">  on: true</div><div class="line">  onload: false</div></pre></td></tr></table></figure>
+<h3 id="layout-partial-left-col-ejs修改-添加"><a href="#layout-partial-left-col-ejs修改-添加" class="headerlink" title="layout/_partial/left-col.ejs修改/添加"></a>layout/_partial/left-col.ejs修改/添加</h3><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">&lt;% <span class="keyword">if</span> (theme.search.on)&#123; %&gt;</div><div class="line">    <span class="xml"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"search-form"</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"local-search-input"</span> <span class="attr">name</span>=<span class="string">"q"</span> <span class="attr">results</span>=<span class="string">"0"</span> <span class="attr">placeholder</span>=<span class="string">"search..."</span> <span class="attr">class</span>=<span class="string">"search form-control"</span> <span class="attr">autocomplete</span>=<span class="string">"off"</span> <span class="attr">autocorrect</span>=<span class="string">"off"</span> <span class="attr">searchonload</span>=<span class="string">"&lt;%= theme.search.onload %&gt;"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-times"</span> <span class="attr">onclick</span>=<span class="string">"resetSearch()"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"local-search-result"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">'no-result'</span>&gt;</span>No results found <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">'fa fa-spinner fa-pulse'</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%&#125;%</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="source-css-partial-search-styl-新建一个文件"><a href="#source-css-partial-search-styl-新建一个文件" class="headerlink" title="source/css/_partial/search.styl 新建一个文件"></a>source/css/_partial/search.styl 新建一个文件</h3><figure class="highlight"><table><tr><td class="code"><pre><div class="line">.search</div><div class="line">    width 68%</div><div class="line">    height 18px</div><div class="line">    margin-top 1px</div><div class="line">    padding 0</div><div class="line">    font-family inherit</div><div class="line">    border 2px solid transparent</div><div class="line">    border-bottom 2px solid lightgray</div><div class="line">    border-radius 2px</div><div class="line">    opacity .65</div><div class="line">    background none</div><div class="line">    &amp;:hover</div><div class="line">        border 2px solid lightgray</div><div class="line">        opacity 1</div><div class="line">        box-shadow 0 0 10px rgba(0, 0, 0, .3)</div><div class="line"></div><div class="line">#search-form .fa-times</div><div class="line">    display none</div><div class="line">    padding 1px .7em</div><div class="line">    box-shadow: 0 0 3px rgba(0, 0, 0, .15)</div><div class="line">    cursor pointer</div><div class="line">    color gray</div><div class="line">    &amp;:active</div><div class="line">        background lightgray</div><div class="line">    &amp;:hover</div><div class="line">        zoom 1.1</div><div class="line">        padding 1px .6em</div><div class="line">        border: 1px solid lightgray</div><div class="line">        box-shadow: 0 0 6px rgba(0, 0, 0, .25)</div><div class="line"></div><div class="line">#local-search-result</div><div class="line">    margin auto -12% auto -6%</div><div class="line">    font-size .9rem</div><div class="line">    text-align left</div><div class="line">    word-break break-all</div><div class="line">    ul.search-result-list li:hover</div><div class="line">        font-weight normal</div><div class="line">    li</div><div class="line">        margin .5em auto</div><div class="line">        border-bottom 2px solid lightgray</div><div class="line">    .search-result-list li:hover</div><div class="line">        background rgba(158,188,226,0.21)</div><div class="line">        box-shadow 0 0 5px rgba(0, 0, 0, .2)</div><div class="line">    a.search-result-title</div><div class="line">        line-height 1.2</div><div class="line">        font-weight bold</div><div class="line">        color #708090</div><div class="line">    p.search-result</div><div class="line">        margin .4em auto</div><div class="line">        line-height 1.2rem</div><div class="line">        max-height @line-height * 3rem</div><div class="line">        overflow hidden</div><div class="line">        font-size .8rem</div><div class="line">        text-align justify</div><div class="line">        color gray</div><div class="line">    em.search-keyword</div><div class="line">        color #f58e90</div><div class="line">        border-bottom: 1px dashed @color</div><div class="line">        font-weight: bold</div><div class="line">        font-size .85rem</div><div class="line"></div><div class="line">p.no-result</div><div class="line">    display none</div><div class="line">    margin 2em 0 2em 6%</div><div class="line">    padding-bottom .5em</div><div class="line">    text-align left</div><div class="line">    color gray</div><div class="line">    font-family font-serif serif</div><div class="line">    border-bottom 2px solid lightgray</div></pre></td></tr></table></figure>
+<h3 id="source-css-style-styl添加，没有的话搜索样式会错误"><a href="#source-css-style-styl添加，没有的话搜索样式会错误" class="headerlink" title="source/css/style.styl添加，没有的话搜索样式会错误"></a>source/css/style.styl添加，没有的话搜索样式会错误</h3><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> search</div><div class="line">    @<span class="keyword">import</span> <span class="string">"_partial/search"</span></div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">### source/js/pc.js添加</div><div class="line"></div><div class="line">         var search = function()&#123;</div><div class="line">        require([yiliaConfig.rootUrl + 'js/search.js'], function()&#123;</div><div class="line">            var inputArea = document.querySelector("#local-search-input");</div><div class="line">            var $HideWhenSearch = $("#toc, #tocButton, .post-list, #post-nav-button a:nth-child(2)");</div><div class="line">            var $resetButton = $("#search-form .fa-times");</div><div class="line">            var $resultArea = $("#local-search-result");</div><div class="line"></div><div class="line">            var getSearchFile = function()&#123;</div><div class="line">                var search_path = "search.xml";</div><div class="line">                var path = yiliaConfig.rootUrl + search_path;</div><div class="line">                searchFunc(path, 'local-search-input', 'local-search-result');</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            var getFileOnload = inputArea.getAttribute('searchonload');</div><div class="line">            if (yiliaConfig.search &amp;&amp; getFileOnload === "true") &#123;</div><div class="line">                getSearchFile();</div><div class="line">            &#125; else &#123;</div><div class="line">                inputArea.onfocus = function()&#123; getSearchFile() &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            var HideTocArea = function()&#123;</div><div class="line">                $HideWhenSearch.css("visibility","hidden");</div><div class="line">                $resetButton.show();</div><div class="line">            &#125;</div><div class="line">            inputArea.oninput = function()&#123; HideTocArea() &#125;</div><div class="line">            inputArea.onkeydown = function()&#123; if(event.keyCode==13) return false&#125;</div><div class="line"></div><div class="line">            resetSearch = function()&#123;</div><div class="line">                $HideWhenSearch.css("visibility","initial");</div><div class="line">                $resultArea.html("");</div><div class="line">                document.querySelector("#search-form").reset();</div><div class="line">                $resetButton.hide();</div><div class="line">                $(".no-result").hide();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            $resultArea.bind("DOMNodeRemoved DOMNodeInserted", function(e) &#123;</div><div class="line">                if (!$(e.target).text()) &#123;</div><div class="line">                    $(".no-result").show(200);</div><div class="line">                &#125; else &#123;</div><div class="line">                  $(".no-result").hide();</div><div class="line">                &#125;</div><div class="line">            &#125;)</div><div class="line">        &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>在最下面的return函数中添加<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">search();</div></pre></td></tr></table></figure></p>
+<h3 id="source-js-search-js添加"><a href="#source-js-search-js添加" class="headerlink" title="source/js/search.js添加"></a>source/js/search.js添加</h3><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">     <span class="comment">// A local search script with the help of [hexo-generator-search](https://github.com/PaicHyperionDev/hexo-generator-search)</span></div><div class="line"><span class="comment">// Copyright (C) 2015 </span></div><div class="line"><span class="comment">// Joseph Pan &lt;http://github.com/wzpan&gt;</span></div><div class="line"><span class="comment">// Shuhao Mao &lt;http://github.com/maoshuhao&gt;</span></div><div class="line"><span class="comment">// Edited by MOxFIVE &lt;http://github.com/MOxFIVE&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> searchFunc = <span class="function"><span class="keyword">function</span>(<span class="params">path, search_id, content_id</span>) </span>&#123;</div><div class="line"><span class="meta">    'use strict'</span>;</div><div class="line">    $.ajax(&#123;</div><div class="line">        <span class="attr">url</span>: path,</div><div class="line">        <span class="attr">dataType</span>: <span class="string">"xml"</span>,</div><div class="line">        <span class="attr">success</span>: <span class="function"><span class="keyword">function</span>(<span class="params"> xmlResponse </span>) </span>&#123;</div><div class="line">            <span class="comment">// get the contents from search data</span></div><div class="line">            <span class="keyword">var</span> datas = $( <span class="string">"entry"</span>, xmlResponse ).map(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">return</span> &#123;</div><div class="line">                    <span class="attr">title</span>: $( <span class="string">"title"</span>, <span class="keyword">this</span> ).text(),</div><div class="line">                    <span class="attr">content</span>: $(<span class="string">"content"</span>,<span class="keyword">this</span>).text(),</div><div class="line">                    <span class="attr">url</span>: $( <span class="string">"url"</span> , <span class="keyword">this</span>).text()</div><div class="line">                &#125;;</div><div class="line">            &#125;).get();</div><div class="line">            <span class="keyword">var</span> $input = <span class="built_in">document</span>.getElementById(search_id);</div><div class="line">            <span class="keyword">var</span> $resultContent = <span class="built_in">document</span>.getElementById(content_id);</div><div class="line">            $input.addEventListener(<span class="string">'input'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">                <span class="keyword">var</span> str=<span class="string">'&lt;ul class=\"search-result-list\"&gt;'</span>;                </div><div class="line">                <span class="keyword">var</span> keywords = <span class="keyword">this</span>.value.trim().toLowerCase().split(<span class="regexp">/[\s\-]+/</span>);</div><div class="line">                $resultContent.innerHTML = <span class="string">""</span>;</div><div class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.value.trim().length &lt;= <span class="number">0</span>) &#123;</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="comment">// perform local searching</span></div><div class="line">                datas.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">                    <span class="keyword">var</span> isMatch = <span class="literal">true</span>;</div><div class="line">                    <span class="keyword">var</span> content_index = [];</div><div class="line">                    <span class="keyword">var</span> data_title = data.title.trim().toLowerCase();</div><div class="line">                    <span class="keyword">var</span> data_content = data.content.trim().replace(<span class="regexp">/&lt;[^&gt;]+&gt;/g</span>,<span class="string">""</span>).toLowerCase();</div><div class="line">                    <span class="keyword">var</span> data_url = data.url;</div><div class="line">                    <span class="keyword">var</span> index_title = <span class="number">-1</span>;</div><div class="line">                    <span class="keyword">var</span> index_content = <span class="number">-1</span>;</div><div class="line">                    <span class="keyword">var</span> first_occur = <span class="number">-1</span>;</div><div class="line">                    <span class="comment">// only match artiles with not empty titles and contents</span></div><div class="line">                    <span class="keyword">if</span>(data_title != <span class="string">''</span> &amp;&amp; data_content != <span class="string">''</span>) &#123;</div><div class="line">                        keywords.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">keyword, i</span>) </span>&#123;</div><div class="line">                            index_title = data_title.indexOf(keyword);</div><div class="line">                            index_content = data_content.indexOf(keyword);</div><div class="line">                            <span class="keyword">if</span>( index_title &lt; <span class="number">0</span> &amp;&amp; index_content &lt; <span class="number">0</span> )&#123;</div><div class="line">                                isMatch = <span class="literal">false</span>;</div><div class="line">                            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                                <span class="keyword">if</span> (index_content &lt; <span class="number">0</span>) &#123;</div><div class="line">                                    index_content = <span class="number">0</span>;</div><div class="line">                                &#125;</div><div class="line">                                <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</div><div class="line">                                    first_occur = index_content;</div><div class="line">                                &#125;</div><div class="line">                            &#125;</div><div class="line">                        &#125;);</div><div class="line">                    &#125;</div><div class="line">                    <span class="comment">// show search results</span></div><div class="line">                    <span class="keyword">if</span> (isMatch) &#123;</div><div class="line">                        str += <span class="string">"&lt;li&gt;&lt;a href='"</span>+ data_url +<span class="string">"' class='search-result-title' target='_blank'&gt;"</span>+ <span class="string">"&gt; "</span> + data_title +<span class="string">"&lt;/a&gt;"</span>;</div><div class="line">                        <span class="keyword">var</span> content = data.content.trim().replace(<span class="regexp">/&lt;[^&gt;]+&gt;/g</span>,<span class="string">""</span>);</div><div class="line">                        <span class="keyword">if</span> (first_occur &gt;= <span class="number">0</span>) &#123;</div><div class="line">                            <span class="comment">// cut out characters</span></div><div class="line">                            <span class="keyword">var</span> start = first_occur - <span class="number">6</span>;</div><div class="line">                            <span class="keyword">var</span> end = first_occur + <span class="number">6</span>;</div><div class="line">                            <span class="keyword">if</span>(start &lt; <span class="number">0</span>)&#123;</div><div class="line">                                start = <span class="number">0</span>;</div><div class="line">                            &#125;</div><div class="line">                            <span class="keyword">if</span>(start == <span class="number">0</span>)&#123;</div><div class="line">                                end = <span class="number">10</span>;</div><div class="line">                            &#125;</div><div class="line">                            <span class="keyword">if</span>(end &gt; content.length)&#123;</div><div class="line">                                end = content.length;</div><div class="line">                            &#125;</div><div class="line">                            <span class="keyword">var</span> match_content = content.substr(start, end); </div><div class="line">                            <span class="comment">// highlight all keywords</span></div><div class="line">                            keywords.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">keyword</span>)</span>&#123;</div><div class="line">                                <span class="keyword">var</span> regS = <span class="keyword">new</span> <span class="built_in">RegExp</span>(keyword, <span class="string">"gi"</span>);</div><div class="line">                                match_content = match_content.replace(regS, <span class="string">"&lt;em class=\"search-keyword\"&gt;"</span>+keyword+<span class="string">"&lt;/em&gt;"</span>);</div><div class="line">                            &#125;);</div><div class="line">                            </div><div class="line">                            str += <span class="string">"&lt;p class=\"search-result\"&gt;"</span> + match_content +<span class="string">"...&lt;/p&gt;"</span></div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">                $resultContent.innerHTML = str;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="layout-partial-after-footer-ejs添加"><a href="#layout-partial-after-footer-ejs添加" class="headerlink" title="layout/_partial/after-footer.ejs添加"></a>layout/_partial/after-footer.ejs添加</h3><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">&lt;script&gt; </div><div class="line">yiliaConfig.search = <span class="xml"><span class="tag">&lt;<span class="name">%=</span> <span class="attr">theme.search.on</span> %&gt;</span>;</span></div><div class="line">yiliaConfig.rootUrl = "\/";</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>本文参照了MOxFIVE的方法，链接在这<a href="http://moxfive.xyz/2016/05/31/hexo-local-search/" target="_blank" rel="external">让 Hexo 博客支持本地站内搜索-MOxFIVE</a><br>博主为了给博客添加搜索功能，真是操碎了心，不停改代码都没实现，最后是在MOxFIVE帮助下，实现了功能，特别感谢，并在此整理了这篇文章，希望能对人有用。</p>
+<h2 id="完整的代码修改记录"><a href="#完整的代码修改记录" class="headerlink" title="完整的代码修改记录"></a>完整的代码修改记录</h2><p><a href="https://github.com/isnine/hexo-theme-yilia/commit/1b915ef08707bc8808000c1d032689286dc84dde" target="_blank" rel="external">Nine’s Github</a><br><a href="https://github.com/isnine/hexo-theme-yilia" target="_blank" rel="external">添加修改功能的yilia主题</a><br>已知试用于yilia主题，spfk主题，以及从yilia主题修改出来的其他主题。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/07/04/addfindthink/" data-toggle="tooltip" data-placement="top"
+                           title="添加网站功能的一些感想">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/07/03/photobuild/" data-toggle="tooltip" data-placement="top"
+                           title="照片墙的制作">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#需要修改的文件列表"><span class="toc-text">需要修改的文件列表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#config-yml"><span class="toc-text">_config.yml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#layout-partial-left-col-ejs"><span class="toc-text">layout/_partial/left-col.ejs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#source-css-partial-search-styl"><span class="toc-text">source/css/_partial/search.styl</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#source-css-style-styl"><span class="toc-text">source/css/style.styl</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#source-js-search-js"><span class="toc-text">source/js/search.js</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#layout-partial-after-footer-ejs"><span class="toc-text">layout/_partial/after-footer.ejs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装插件hexo-generator-search"><span class="toc-text">安装插件hexo-generator-search</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插件安装"><span class="toc-text">插件安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件修改"><span class="toc-text">文件修改</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#config-yml-添加"><span class="toc-text">_config.yml 添加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#layout-partial-left-col-ejs修改-添加"><span class="toc-text">layout/_partial/left-col.ejs修改/添加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#source-css-partial-search-styl-新建一个文件"><span class="toc-text">source/css/_partial/search.styl 新建一个文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#source-css-style-styl添加，没有的话搜索样式会错误"><span class="toc-text">source/css/style.styl添加，没有的话搜索样式会错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#source-js-search-js添加"><span class="toc-text">source/js/search.js添加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#layout-partial-after-footer-ejs添加"><span class="toc-text">layout/_partial/after-footer.ejs添加</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-text">最后</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完整的代码修改记录"><span class="toc-text">完整的代码修改记录</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Hexo"
+                           title="Hexo">Hexo</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

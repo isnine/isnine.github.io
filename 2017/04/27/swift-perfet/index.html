@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        switf服务端环境配置｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2017/04/27/swift-perfet/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>switf服务端环境配置</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2017-04-27
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#swift"
+                           title="swift">swift</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            switf服务端环境配置
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>本来想直接java+spring搭服务器环境的，后面觉得这样学的太杂了不好。<br>就直接用swift+perfect搭服务端好了。以后想做些App，简单的也可以自己写后端。<br><a id="more"></a></p>
+<h1 id="安装Ubuntu16-04"><a href="#安装Ubuntu16-04" class="headerlink" title="安装Ubuntu16.04"></a>安装Ubuntu16.04</h1><p>之前用ubuntu14.04，但是在最后build时候提示要clang 3.6<br><img src="https://img.wxz.name/14933038275205.jpg" alt=""></p>
+<h1 id="服务器环境配置"><a href="#服务器环境配置" class="headerlink" title="服务器环境配置"></a>服务器环境配置</h1><h2 id="连接服务器"><a href="#连接服务器" class="headerlink" title="连接服务器"></a>连接服务器</h2><p>xxx为你服务器的ip地址，接着输入密码。<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">ssh ubuntu@xxxxxxx</div></pre></td></tr></table></figure></p>
+<h2 id="拿到root权限"><a href="#拿到root权限" class="headerlink" title="拿到root权限"></a>拿到root权限</h2><p>为了方便以后步骤的进行<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo -s</div></pre></td></tr></table></figure></p>
+<p>## </p>
+<h2 id="更新软件包列表"><a href="#更新软件包列表" class="headerlink" title="更新软件包列表"></a>更新软件包列表</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">apt-get update</div></pre></td></tr></table></figure>
+<h2 id="安装依赖库"><a href="#安装依赖库" class="headerlink" title="安装依赖库"></a>安装依赖库</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">apt-get install make git clang libicu-dev libmysqlclient-dev libpq-dev sqlite3 libsqlite3-dev apache2-dev pkg-config libssl-dev libsasl2-dev libcurl4-openssl-dev uuid-dev wget</div></pre></td></tr></table></figure>
+<h2 id="安装MongoDB"><a href="#安装MongoDB" class="headerlink" title="安装MongoDB"></a>安装MongoDB</h2><blockquote>
+<p>MongoDB是一个基于分布式文件存储的数据库。由C++语言编写</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cd /usr/src/</div><div class="line">wget https://github.com/mongodb/mongo-c-driver/releases/download/1.3.5/mongo-c-driver-1.3.5.tar.gz</div></pre></td></tr></table></figure>
+<p>解压<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">gunzip mongo-c-driver-1.3.5.tar.gz</div></pre></td></tr></table></figure></p>
+<p>展开源代码<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">tar -xvf mongo-c-driver-1.3.5.tar</div></pre></td></tr></table></figure></p>
+<p>删除档案包<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">rm mongo-c-driver-1.3.5.tar</div></pre></td></tr></table></figure></p>
+<p>在编译 MongoDB 源代码前首先执行配置命令：<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cd mongo-c-driver-1.3.5/</div><div class="line">./configure --enable-sasl=yes</div></pre></td></tr></table></figure></p>
+<p>编译 MongoDB:<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">make</div></pre></td></tr></table></figure></p>
+<p>安装MongoDB<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">make install</div></pre></td></tr></table></figure></p>
+<h2 id="安装swift"><a href="#安装swift" class="headerlink" title="安装swift"></a>安装swift</h2><p>当前是swift3.1.1最新版本，具体安装什么版本以官网最新为标准<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cd /usr/src/</div><div class="line">wget https://swift.org/builds/swift-3.1.1-release/ubuntu1604/swift-3.1.1-RELEASE/swift-3.1.1-RELEASE-ubuntu16.04.tar.gz</div></pre></td></tr></table></figure></p>
+<p>安装<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">gunzip &lt; swift-3.1.1-RELEASE-ubuntu16.04.tar.gz | tar -C / -xv --strip-components 1</div></pre></td></tr></table></figure></p>
+<p>删除安装包<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">rm swift-3.1.1-RELEASE-ubuntu16.04.tar.gz</div></pre></td></tr></table></figure></p>
+<h2 id="运行PerfectTemplate"><a href="#运行PerfectTemplate" class="headerlink" title="运行PerfectTemplate"></a>运行PerfectTemplate</h2><p>下载<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">git clone https://github.com/PerfectlySoft/PerfectTemplate</div></pre></td></tr></table></figure></p>
+<p>编译<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cd PerfectTemplate</div><div class="line">swift build</div></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">.build/debug/PerfectTemplate --port 80</div></pre></td></tr></table></figure></p>
+<p><img src="https://img.wxz.name/14933054998405.jpg" alt=""></p>
+<h2 id="swift运行环境完成"><a href="#swift运行环境完成" class="headerlink" title="swift运行环境完成"></a>swift运行环境完成</h2><p>在你本地的电脑输入即可看到环境已经安装完毕了<br><a href="http://IP:8080" target="_blank" rel="external">http://IP:8080</a><br><img src="https://img.wxz.name/14933055777667.jpg" alt=""></p>
+<h1 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h1><p>只是有swift运行环境还不够，自己网站都不好配置，所以接下来安装nginx。<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo apt-get install nginx</div></pre></td></tr></table></figure></p>
+<p>安装完毕后可以输入<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo lsof -i :80</div></pre></td></tr></table></figure></p>
+<p>发现80端口已经被nginx使用了<br>如果想要配置的话<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">vim /etc/nginx/sites-available/default</div></pre></td></tr></table></figure></p>
+<p>最后网站的目录文件在/var/www/html</p>
+<h1 id="安装vsftp"><a href="#安装vsftp" class="headerlink" title="安装vsftp"></a>安装vsftp</h1><p>安装ftp<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install vsftpd</div></pre></td></tr></table></figure></p>
+<p>新建用户www，把/var/www作为主目录，并设置密码<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo mkdir /var/www</div><div class="line">sudo useradd -d /var/www -s /bin/bash www</div><div class="line">sudo passwd www</div></pre></td></tr></table></figure></p>
+<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo vi /etc/vsftpd.conf</div></pre></td></tr></table></figure>
+<p>添加<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#userlist_deny=NO</div><div class="line">#userlist_enable=YES</div><div class="line">#userlist_file=/etc/allowed_users</div><div class="line">seccomp_sandbox=NO</div><div class="line">write_enable=YES</div></pre></td></tr></table></figure></p>
+<p>如果需要限制用户范围<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">chroot_local_user=YES</div><div class="line">chroot_list_enable=YES</div><div class="line">chroot_list_file=/etc/vsftpd.chroot_list</div></pre></td></tr></table></figure></p>
+<p>其中例外的用户(不受限制)在/etc/vsftpd.chroot_list</p>
+<h2 id="添加可登陆用户名"><a href="#添加可登陆用户名" class="headerlink" title="添加可登陆用户名"></a>添加可登陆用户名</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo vi /etc/allowed_users</div></pre></td></tr></table></figure>
+<p>输入www然后按esc再输入:wq保存</p>
+<h2 id="Ftp完成"><a href="#Ftp完成" class="headerlink" title="Ftp完成"></a>Ftp完成</h2><p>现在可以通过ftp连接了。如果不行，重启下服务器</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="https://github.com/PerfectlySoft/PerfectDocs/blob/master/guide/deployment-Ubuntu1510.md" target="_blank" rel="external">Producing an Ubuntu 15.10 Base Image for Swift 3 and Perfect 2</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/05/17/interview-meituan/" data-toggle="tooltip" data-placement="top"
+                           title="面试和反思">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/03/27/SSandVpn/" data-toggle="tooltip" data-placement="top"
+                           title="从OSI模型浅谈SS和VPN">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Ubuntu16-04"><span class="toc-text">安装Ubuntu16.04</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#服务器环境配置"><span class="toc-text">服务器环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#连接服务器"><span class="toc-text">连接服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拿到root权限"><span class="toc-text">拿到root权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新软件包列表"><span class="toc-text">更新软件包列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装依赖库"><span class="toc-text">安装依赖库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装MongoDB"><span class="toc-text">安装MongoDB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装swift"><span class="toc-text">安装swift</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行PerfectTemplate"><span class="toc-text">运行PerfectTemplate</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#swift运行环境完成"><span class="toc-text">swift运行环境完成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装nginx"><span class="toc-text">安装nginx</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装vsftp"><span class="toc-text">安装vsftp</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改配置文件"><span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加可登陆用户名"><span class="toc-text">添加可登陆用户名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ftp完成"><span class="toc-text">Ftp完成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文档"><span class="toc-text">参考文档</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#swift"
+                           title="swift">swift</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

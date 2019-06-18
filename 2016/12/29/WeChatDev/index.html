@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        微信小程序开发尝试｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2016/12/29/WeChatDev/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>微信小程序开发尝试</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2016-12-29
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Web"
+                           title="Web">Web</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            微信小程序开发尝试
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h1 id="相关资源"><a href="#相关资源" class="headerlink" title="相关资源"></a>相关资源</h1><p>官网教程:<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/?t=20161222" target="_blank" rel="external">https://mp.weixin.qq.com/debug/wxadoc/dev/?t=20161222</a></p>
+<p>开发工具:<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html?t=20161222" target="_blank" rel="external">https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html?t=20161222</a></p>
+<p>正式上线时间:2016年1月9日<br><a id="more"></a></p>
+<h1 id="1-注册相关"><a href="#1-注册相关" class="headerlink" title="1.注册相关"></a>1.注册相关</h1><p>首先需要注意的<br><strong>个人用户无法申请微信小程序</strong></p>
+<h2 id="1-1-允许申请的主体类型"><a href="#1-1-允许申请的主体类型" class="headerlink" title="1.1.允许申请的主体类型"></a>1.1.允许申请的主体类型</h2><p>企业，政府，媒体，其他组织</p>
+<p>目前看来，和个人关联最大的应该是企业-个体工商户<br>需要提交营业执照进行注册<br><img src="https://img.wxz.name/14829898891211.jpg" alt=""></p>
+<h1 id="2-使用相关"><a href="#2-使用相关" class="headerlink" title="2.使用相关"></a>2.使用相关</h1><p><strong>1.首先先确认一点，二维码必须通过扫才有效，从相册读取是无效</strong><br><strong>2.其次，平板端的微信无法运行小程序</strong></p>
+<blockquote>
+<p>以上为公测时的结果，至于正式上线后，会不会在手机应用列表里面也出现个应用图标，可以直接打开还未知。</p>
+</blockquote>
+<p><img src="https://img.wxz.name/14829907170320.jpg" alt=""></p>
+<h2 id="2-1-打开小程序"><a href="#2-1-打开小程序" class="headerlink" title="2.1.打开小程序"></a>2.1.打开小程序</h2><p>打开微信-扫一扫-扫描二维码即可直接打开<br><img src="https://img.wxz.name/14829911098201.jpg" alt=""></p>
+<blockquote>
+<p>首先弹出一个加载动画，这个加载动画为商家的商标<br>每个商家注册后会有一个Appid，通过这个id开发的所有程序，加载动画都会为这个商标<br>然后加载完毕后(0.5-3s),会直接弹出</p>
+</blockquote>
+<h2 id="2-2-小程序的界面"><a href="#2-2-小程序的界面" class="headerlink" title="2.2.小程序的界面"></a>2.2.小程序的界面</h2><p><img src="https://img.wxz.name/14829913479794.jpg" alt=""></p>
+<p>看起来和原生的App相同，但是不同的是 <strong>左滑会直接返回微信</strong><br>另外感觉不及原生的App一样流畅<br>但从已知开放的接口来看<br>做一个点菜小程序，买票小程序，结合自带的微信支付，是很简单的事情</p>
+<h1 id="3-开发相关"><a href="#3-开发相关" class="headerlink" title="3.开发相关"></a>3.开发相关</h1><p>首先下载<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html?t=20161222" target="_blank" rel="external">开发工具</a>，目前仅支持Win平台和Mac平台，对Linux不支持。</p>
+<p>开发工具的名称是微信Web开发者工具<br>打开后首先需要扫码，用自己的微信账号登录，无论是否注册为开发者都可以登录<br><img src="https://img.wxz.name/14829916687653.jpg" alt=""><br>以上有图标的，是以注册的Appid导入的项目，没有图标以&lt;/&gt;显示的，是以无Appid导入的项目<br>两者不同的一点是，前者可以生成二维码在真机上扫码运行，后者不可</p>
+<h2 id="3-1-添加项目"><a href="#3-1-添加项目" class="headerlink" title="3.1.添加项目"></a>3.1.添加项目</h2><p>点击添加项目后，会出现以下的界面<br><img src="https://img.wxz.name/14829917471743.jpg" alt=""></p>
+<blockquote>
+<p>需要注意的一点是，第一行AppID，首先需要商家将你的微信号添加为开发者<br>然后需要填写商家注册的Appid。<br><img src="https://img.wxz.name/14829919055869.jpg" alt=""></p>
+</blockquote>
+<h2 id="3-2-开发界面"><a href="#3-2-开发界面" class="headerlink" title="3.2.开发界面"></a>3.2.开发界面</h2><p>新建一个最基本的界面，以下每个文件的用法在官网的简易教程中有。<br><img src="https://img.wxz.name/14829919804138.jpg" alt=""></p>
+<h2 id="3-3-浏览项目"><a href="#3-3-浏览项目" class="headerlink" title="3.3.浏览项目"></a>3.3.浏览项目</h2><p>如果我们已经是开发者，即可点击项目-浏览<br><img src="https://img.wxz.name/14829920604151.jpg" alt=""></p>
+<h3 id="扫码"><a href="#扫码" class="headerlink" title="扫码"></a>扫码</h3><p>此时为生成一个二维码，开发者用手机直接扫码即可打开微信小程序<br><img src="https://img.wxz.name/14829920930336.jpg" alt=""></p>
+<h3 id="默认的HelloWorld工程"><a href="#默认的HelloWorld工程" class="headerlink" title="默认的HelloWorld工程"></a>默认的HelloWorld工程</h3><p><img src="https://img.wxz.name/14829921578187.jpg" alt=""></p>
+<h1 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h1><p>首先，个人用户无法申请小程序，那么小程序最小的运营单位也是团体，而不是个人。<br>其次，小程序无法推送数据，按照张小龙的说法，适用的场所是即用既走，而二维码只能扫描不能从相册读取也说明了这点。<br>基于以上两点，我认为最普遍的使用场景应该是以下<br>对于政府，企业来说，取<a href="https://img.wxz.name/" target="_blank" rel="external">https://img.wxz.name/</a><br>对于个体经营商来说，只需要在桌面上放一个二维码，客户即可扫码，然后打开菜单点餐，接着用微信支付付款买单。轻松方便</p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录:"></a>附录:</h1><p>部分微信小程序界面浏览<br><img src="https://img.wxz.name/14829939575920.jpg" alt=""><br><img src="https://img.wxz.name/14829939648406.jpg" alt=""><br><img src="https://img.wxz.name/14829939713349.jpg" alt=""><br><img src="https://img.wxz.name/14829939975292.jpg" alt=""><br><img src="https://img.wxz.name/14829940246574.jpg" alt=""></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/01/09/LeetCode136/" data-toggle="tooltip" data-placement="top"
+                           title="136. Single Number">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/12/08/iOS-privacy-cn/" data-toggle="tooltip" data-placement="top"
+                           title="App 隐私政策网址(URL)">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#相关资源"><span class="toc-text">相关资源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-注册相关"><span class="toc-text">1.注册相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-允许申请的主体类型"><span class="toc-text">1.1.允许申请的主体类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-使用相关"><span class="toc-text">2.使用相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-打开小程序"><span class="toc-text">2.1.打开小程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-小程序的界面"><span class="toc-text">2.2.小程序的界面</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-开发相关"><span class="toc-text">3.开发相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-添加项目"><span class="toc-text">3.1.添加项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-开发界面"><span class="toc-text">3.2.开发界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-浏览项目"><span class="toc-text">3.3.浏览项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#扫码"><span class="toc-text">扫码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#默认的HelloWorld工程"><span class="toc-text">默认的HelloWorld工程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-总结"><span class="toc-text">4.总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录"><span class="toc-text">附录:</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Web"
+                           title="Web">Web</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

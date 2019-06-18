@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Android第一行代码-UI界面｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2016/08/04/AndroidCapter3/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Android第一行代码-UI界面</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2016-08-04
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Android第一行代码"
+                           title="Android第一行代码">Android第一行代码</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Android第一行代码-UI界面
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>龟速的学习进度终于到第三章了，上午学驾照，下午学Android，晚上计划计划旅行/看直播/娱乐。<br>嗯，认真的码学习笔记。</p>
+<h2 id="TextView"><a href="#TextView" class="headerlink" title="TextView"></a>TextView</h2><p>文字对齐<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:gravity=<span class="string">"center"</span></div></pre></td></tr></table></figure></p>
+<p>字体大小与颜色<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:textSize=<span class="string">"24sp"</span></div><div class="line">android:textColor=<span class="string">"#00ff00"</span></div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h2><h3 id="方法一-注册监听器的方法"><a href="#方法一-注册监听器的方法" class="headerlink" title="方法一-注册监听器的方法"></a>方法一-注册监听器的方法</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">private</span> Button button;</div><div class="line">	<span class="meta">@Override</span> </div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">		button=(Button)findViewById(R.id.button);</div><div class="line">		button.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">			   <span class="comment">//添加事件</span></div><div class="line">		  	   &#125;</div><div class="line">			   &#125;);</div><div class="line">		&#125;</div></pre></td></tr></table></figure>
+<h3 id="方法二-接口的方式注册"><a href="#方法二-接口的方式注册" class="headerlink" title="方法二-接口的方式注册"></a>方法二-接口的方式注册</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> <span class="keyword">implements</span> <span class="title">OnClickListener</span></span>&#123;</div><div class="line"><span class="keyword">private</span> Button button;		</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">		button=(Button)findViewById(R.id.button);</div><div class="line">		button.setOnClickListener(<span class="keyword">this</span>)</div><div class="line">		&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span></span>&#123;</div><div class="line">	<span class="keyword">switch</span>(v.getId())&#123;</div><div class="line">	<span class="keyword">case</span> R.id.button:</div><div class="line">	  <span class="comment">//添加事件</span></div><div class="line">	  <span class="keyword">break</span>;</div><div class="line">	<span class="keyword">default</span>:</div><div class="line">	  <span class="keyword">break</span>;</div><div class="line">	  &#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h2 id="EditText"><a href="#EditText" class="headerlink" title="EditText"></a>EditText</h2><p>隐藏字体<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:hint=<span class="string">"Type something here"</span></div></pre></td></tr></table></figure></p>
+<p>设置行数<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:maxLines=<span class="string">"2"</span></div></pre></td></tr></table></figure></p>
+<p>获得编辑框内容<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">private</span> EditText editText;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">     editText = (EditText)findViewById(R.id.edit_text);</div><div class="line">     String inputText=editText.getText().toString();</div><div class="line">     &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="ImageView"><a href="#ImageView" class="headerlink" title="ImageView"></a>ImageView</h2><h3 id="显示图片"><a href="#显示图片" class="headerlink" title="显示图片"></a>显示图片</h3> <figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:src=<span class="string">"@drawable/ic_launcher"</span></div></pre></td></tr></table></figure>
+<h3 id="加载图片"><a href="#加载图片" class="headerlink" title="加载图片"></a>加载图片</h3> <figure class="highlight java"><table><tr><td class="code"><pre><div class="line"> <span class="keyword">private</span> ImageView imageView;</div><div class="line"> 	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">     imageView = (ImageView)findViewById(R.id.image_view);</div><div class="line">     imageView.setImageResource(R.drawable.jelly_bean);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="ProgressBar"><a href="#ProgressBar" class="headerlink" title="ProgressBar"></a>ProgressBar</h2><p>进度条控件</p>
+<h3 id="静态设置可见属性"><a href="#静态设置可见属性" class="headerlink" title="静态设置可见属性"></a>静态设置可见属性</h3><p>三种模式,visible-可见，invisible-不可见但占位置,gone-不可见且不占位置<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:visibility=<span class="string">"visible"</span></div></pre></td></tr></table></figure></p>
+<h3 id="动态设置可见属性"><a href="#动态设置可见属性" class="headerlink" title="动态设置可见属性"></a>动态设置可见属性</h3><figure class="highlight"><table><tr><td class="code"><pre><div class="line"> ``` java</div><div class="line"> private ProgressBar progressBar;</div><div class="line"> 	@Override</div><div class="line">	protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">		super.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">     progressBar = (ProgressBar)findViewById(R.id.progressBar_bar);</div><div class="line">     if(progressBar.getVisibility()==View.VISIBLE)&#123;</div><div class="line">          progressBar.setVisibility(View.VISIBLE);</div><div class="line">     &#125;     </div><div class="line">&#125;</div><div class="line">### 切换样式</div><div class="line">将圈形切换成条形</div><div class="line">``` java</div><div class="line">        android:max="100"</div><div class="line">        style="?android:attr/progressBarStyleHorizontal"</div></pre></td></tr></table></figure>
+<h3 id="进度条进度"><a href="#进度条进度" class="headerlink" title="进度条进度"></a>进度条进度</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">int</span> progress=progressBar.getProgress();</div><div class="line">progress=progress + <span class="number">10</span>;</div><div class="line">progressBar.setProgress(progress);</div></pre></td></tr></table></figure>
+<h2 id="AlertDialog"><a href="#AlertDialog" class="headerlink" title="AlertDialog"></a>AlertDialog</h2><p>AlertDialog可以在当前的界面弹出一个对话框，这个对话框是置顶于所有界面元素之上。<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">AlertDialog.Builder dialog = <span class="keyword">new</span> AlertDialog.Builder(MainActivity.<span class="keyword">this</span>);</div><div class="line">dialog.setTitle(<span class="string">"标题"</span>);</div><div class="line">dialog.setMessage(<span class="string">"正文"</span>);</div><div class="line">dialog.setCancelable(<span class="keyword">false</span>);</div><div class="line">dialog.setPositiveButton(<span class="string">"OK"</span>,<span class="keyword">new</span> DialogInterface.OnClickListener()&#123;</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog,<span class="keyword">int</span> which)</span></span>&#123;</div><div class="line"><span class="comment">//OK按钮事件</span></div><div class="line">&#125;&#125;);</div><div class="line">dialog.setNegativeButton(<span class="string">"Cancel"</span>,<span class="keyword">new</span> DialogInterface.OnClickListener()&#123;</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog,<span class="keyword">int</span> which)</span></span>&#123;</div><div class="line"><span class="comment">//取消按钮事件</span></div><div class="line">&#125;&#125;);</div><div class="line">dialog.show();</div></pre></td></tr></table></figure></p>
+<h2 id="ProgressDialog"><a href="#ProgressDialog" class="headerlink" title="ProgressDialog"></a>ProgressDialog</h2><p>ProgressDialog和AlertDialog类似，不同的是ProgressDialog会显示一个进度条。<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">ProgressDialog progressDialog = <span class="keyword">new</span> ProgressDialog(MainActivity.<span class="keyword">this</span>);</div><div class="line">progressDialog.setTitle(<span class="string">"This is ProgressDialog"</span>);</div><div class="line">progressDialog.setMessage(<span class="string">"Loading..."</span>);</div><div class="line">progressDialog.setCancelable(<span class="keyword">true</span>);</div><div class="line">progressDialog.show();</div></pre></td></tr></table></figure></p>
+<h2 id="四种基本布局"><a href="#四种基本布局" class="headerlink" title="四种基本布局"></a>四种基本布局</h2><h3 id="LinearLayout"><a href="#LinearLayout" class="headerlink" title="LinearLayout"></a>LinearLayout</h3><p>线性布局，可以通过android:orientation属性指定排列方向，垂直vertical,水平horizontal<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:orientation=<span class="string">"horizontal"</span></div></pre></td></tr></table></figure></p>
+<h3 id="控件参数"><a href="#控件参数" class="headerlink" title="控件参数"></a>控件参数</h3><p>android:layout_width  - 宽度，可以设置铺满”match_parent”,适当”wrap_content”，自定”2px”<br>android:layout_height - 高度，可以设置铺满”match_parent”,适当”wrap_content”，自定”2px”<br>android:layout_gravity - 设置控件在布局中对齐方式，可以设置”top”,”center_vertical”,”bottom”<br>android:layout_weight - 按照比例的方式指定控件大小<br>使用方法，两个控件都这样设置，会按1:1比例分割<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:layout_width = “<span class="number">0</span>dp”</div><div class="line">android:layout_weight = <span class="string">"1"</span></div></pre></td></tr></table></figure></p>
+<h2 id="RelativeLayout"><a href="#RelativeLayout" class="headerlink" title="RelativeLayout"></a>RelativeLayout</h2><p>相对布局，用的比较多，用法比较多，代码就先略过了</p>
+<h2 id="FrameLayout"><a href="#FrameLayout" class="headerlink" title="FrameLayout"></a>FrameLayout</h2><p>所有的控件都放在左上角</p>
+<h2 id="TableLayout"><a href="#TableLayout" class="headerlink" title="TableLayout"></a>TableLayout</h2><p>允许我们使用表格的方式来排列控件<br>例子:<br><figure class="highlight"><table><tr><td class="code"><pre><div class="line">&lt;TableLayout xmlns:android="http://schemas.android.com/apk/res/android"</div><div class="line">    android:layout_width="match_parent"</div><div class="line">    android:layout_height="match_parent"</div><div class="line">    android:stretchColumns="1" &gt;</div><div class="line">    &lt;TableRow&gt;</div><div class="line">        &lt;TextView</div><div class="line">            android:layout_height="wrap_content"</div><div class="line">            android:text="Account:" /&gt;</div><div class="line">        &lt;EditText</div><div class="line">            android:id="@+id/account"</div><div class="line">            android:layout_height="wrap_content"</div><div class="line">            android:hint="Input your account" /&gt;</div><div class="line">    &lt;/TableRow&gt;</div><div class="line">    &lt;TableRow&gt;</div><div class="line">        &lt;Button</div><div class="line">            android:id="@+id/login"</div><div class="line">            android:layout_height="wrap_content"</div><div class="line">            android:layout_span="2"</div><div class="line">            android:text="Login" /&gt;</div><div class="line">    &lt;/TableRow&gt;</div><div class="line">&lt;/TableLayout&gt;</div></pre></td></tr></table></figure></p>
+<p>在TableLayout中每加入一个TableRow就表示在表格中添加了一行，然后在TableRow中每加入一个控件就表示在该行中加入了一列。TableRow中的控件是不能指定宽度的。<br>可以使用android:layout_span=”2”让登陆按钮占两行，使用android:inputType=”textPassword”让其变成密码输入框。<br>使表格占满整个屏幕宽度。<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">android:stretchColumns=<span class="string">"1"</span></div></pre></td></tr></table></figure></p>
+<h2 id="自定义控件"><a href="#自定义控件" class="headerlink" title="自定义控件"></a>自定义控件</h2><p>这里以自定义标题为例子</p>
+<h3 id="新建一个title-xml"><a href="#新建一个title-xml" class="headerlink" title="新建一个title.xml"></a>新建一个title.xml</h3><p>两个Button，一个TextView构成一个标题栏</p>
+<h3 id="新建一个TitleLayout继承LinearLayout"><a href="#新建一个TitleLayout继承LinearLayout" class="headerlink" title="新建一个TitleLayout继承LinearLayout"></a>新建一个TitleLayout继承LinearLayout</h3><p>这里写自定义标题栏的事件代码<br>列子代码：<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TitleLayout</span> <span class="keyword">extends</span> <span class="title">LinearLayout</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TitleLayout</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(context, attrs);</div><div class="line">		LayoutInflater.from(context).inflate(R.layout.title, <span class="keyword">this</span>);</div><div class="line">		Button titleBack = (Button) findViewById(R.id.title_back);</div><div class="line">		Button titleEdit = (Button) findViewById(R.id.title_edit);</div><div class="line">		titleBack.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">				((Activity) getContext()).finish();</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		titleEdit.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">				Toast.makeText(getContext(), <span class="string">"You clicked Edit button"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="在activity-main-xml引入控件"><a href="#在activity-main-xml引入控件" class="headerlink" title="在activity_main.xml引入控件"></a>在activity_main.xml引入控件</h3><figure class="highlight"><table><tr><td class="code"><pre><div class="line">&lt;com.example.uicustomviews.TitleLayout</div><div class="line">    android:layout_width="match_parent"</div><div class="line">    android:layout_height="wrap_content"</div><div class="line">    &gt;&lt;/com.example.uicustomviews.TitleLayout&gt;</div></pre></td></tr></table></figure>
+<h2 id="单位和尺寸"><a href="#单位和尺寸" class="headerlink" title="单位和尺寸"></a>单位和尺寸</h2><p>px - 像素<br>pt - 磅，一般作为字体单位<br>dp - 密度，会根据手机分辨率自动调节</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/08/07/AndroidCapter4/" data-toggle="tooltip" data-placement="top"
+                           title="Android第一行代码-碎片">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/07/30/AndroidCapter2/" data-toggle="tooltip" data-placement="top"
+                           title="Android第一行代码-探究活动">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#TextView"><span class="toc-text">TextView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Button"><span class="toc-text">Button</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一-注册监听器的方法"><span class="toc-text">方法一-注册监听器的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二-接口的方式注册"><span class="toc-text">方法二-接口的方式注册</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EditText"><span class="toc-text">EditText</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ImageView"><span class="toc-text">ImageView</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#显示图片"><span class="toc-text">显示图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加载图片"><span class="toc-text">加载图片</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ProgressBar"><span class="toc-text">ProgressBar</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#静态设置可见属性"><span class="toc-text">静态设置可见属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态设置可见属性"><span class="toc-text">动态设置可见属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进度条进度"><span class="toc-text">进度条进度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AlertDialog"><span class="toc-text">AlertDialog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ProgressDialog"><span class="toc-text">ProgressDialog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四种基本布局"><span class="toc-text">四种基本布局</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LinearLayout"><span class="toc-text">LinearLayout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#控件参数"><span class="toc-text">控件参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RelativeLayout"><span class="toc-text">RelativeLayout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FrameLayout"><span class="toc-text">FrameLayout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TableLayout"><span class="toc-text">TableLayout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义控件"><span class="toc-text">自定义控件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新建一个title-xml"><span class="toc-text">新建一个title.xml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新建一个TitleLayout继承LinearLayout"><span class="toc-text">新建一个TitleLayout继承LinearLayout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在activity-main-xml引入控件"><span class="toc-text">在activity_main.xml引入控件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单位和尺寸"><span class="toc-text">单位和尺寸</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Android第一行代码"
+                           title="Android第一行代码">Android第一行代码</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        block kvc 多线程 一些整理｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2017/11/07/block/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>block kvc 多线程 一些整理</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2017-11-07
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#iOS"
+                           title="iOS">iOS</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            block kvc 多线程 一些整理
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>自用，还没来得及组织语言<br><a id="more"></a><br>最近在看《objective-C 高级编程》，深刻的体会到代码虐我千百倍，我待代码如初念的感觉。block这部分的实现真的是看巨多的次数，这里做这个学习的整理记录.</p>
+<h1 id="Block是什么？形式是什么样的"><a href="#Block是什么？形式是什么样的" class="headerlink" title="Block是什么？形式是什么样的"></a>Block是什么？形式是什么样的</h1><p>带自动变量(局部变量)的匿名函数，在<a href="http://fuckingblocksyntax.com" target="_blank" rel="external">这里</a>可以看到block的用法</p>
+<h1 id="Block的实现是什么样的？"><a href="#Block的实现是什么样的？" class="headerlink" title="Block的实现是什么样的？"></a>Block的实现是什么样的？</h1><p>用clang重写一段后(这里我直接复制参考文章中的代码，在末尾附录)<br><figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo_</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">2</span>;</div><div class="line">    NSNumber *num = @<span class="number">3</span>;</div><div class="line"> </div><div class="line">    <span class="keyword">long</span> (^myBlock)(<span class="keyword">void</span>) = ^<span class="keyword">long</span>() &#123;</div><div class="line">        <span class="keyword">return</span> i * num.intValue;</div><div class="line">    &#125;;</div><div class="line"> </div><div class="line">    <span class="keyword">long</span> r = myBlock();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>再出来的代码中，我们找到关键的部分<br><figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">block_impl</span> &#123;</span></div><div class="line">    <span class="keyword">void</span> *isa;</div><div class="line">    <span class="keyword">int</span> Flags;</div><div class="line">    <span class="keyword">int</span> Reserved;</div><div class="line">    <span class="keyword">void</span> *FuncPtr;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">foo_block_desc_0</span> &#123;</span></div><div class="line">    <span class="keyword">size_t</span> reserved;</div><div class="line">    <span class="keyword">size_t</span> Block_size;</div><div class="line">    <span class="keyword">void</span> (*copy)(struct __foo_block_impl_0*, struct __foo_block_impl_0*);</div><div class="line">    <span class="keyword">void</span> (*dispose)(struct __foo_block_impl_0*);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//myBlock的数据结构定义</span></div><div class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">foo_block_impl_0</span> &#123;</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> __<span class="title">block_impl</span> <span class="title">impl</span>;</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> __<span class="title">foo_block_desc_0</span>* <span class="title">Desc</span>;</span></div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    NSNumber *num;</div><div class="line">&#125;;</div><div class="line"> </div><div class="line"><span class="comment">//block数据的描述</span></div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> __<span class="title">foo_block_desc_0</span> __<span class="title">foo_block_desc_0_DATA</span> = &#123;</span></div><div class="line">    <span class="number">0</span>,</div><div class="line">    <span class="keyword">sizeof</span>(struct __foo_block_impl_0),</div><div class="line">    __foo_block_copy_0,</div><div class="line">    __foo_block_dispose_0</div><div class="line">&#125;;</div><div class="line"> </div><div class="line"><span class="comment">//block中的方法</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">long</span> __foo_block_func_0(struct __foo_block_impl_0 *__cself) &#123;</div><div class="line">    <span class="keyword">int</span> i = __cself-&gt;i; <span class="comment">// bound by copy</span></div><div class="line">    NSNumber *num = __cself-&gt;num; <span class="comment">// bound by copy</span></div><div class="line"> </div><div class="line">    <span class="keyword">return</span> i * num.intValue;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">2</span>;</div><div class="line">    NSNumber *num = @<span class="number">3</span>;</div><div class="line"> </div><div class="line">    <span class="class"><span class="keyword">struct</span> __<span class="title">foo_block_impl_0</span> <span class="title">myBlockT</span>;</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> __<span class="title">foo_block_impl_0</span> *<span class="title">myBlock</span> = &amp;<span class="title">myBlockT</span>;</span></div><div class="line">    myBlock-&gt;impl.isa = &amp;_NSConcreteStackBlock;</div><div class="line">    myBlock-&gt;impl.Flags = <span class="number">570425344</span>;</div><div class="line">    myBlock-&gt;impl.FuncPtr = __foo_block_func_0;</div><div class="line">    myBlock-&gt;Desc = &amp;__foo_block_desc_0_DATA;</div><div class="line">    myBlock-&gt;i = i;</div><div class="line">    myBlock-&gt;num = num;</div><div class="line"> </div><div class="line">    <span class="keyword">long</span> r = myBlock-&gt;impl.FuncPtr(myBlock);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到创建block时，会初始化一个结构体struct，并初始化该struct的成员。<br>而在执行block的时候，就是把这个struct的指针传递过去。<br><img src="https://img.wxz.name/15100667517612.jpg" alt=""></p>
+<p>可以看到这个结构体的名称叫做<strong>foo_block_impl_0<br>foo代表我们的函数名称，如果是main函数中的block就叫做</strong>main_block_impl_0<br>最后那个数字表示这个函数中第几个block，如果有第二个block就叫做__foo_block_impl_1</p>
+<h1 id="Block怎么捕获的变量"><a href="#Block怎么捕获的变量" class="headerlink" title="Block怎么捕获的变量"></a>Block怎么捕获的变量</h1><p>首先要知道block的主要三种类是</p>
+<ul>
+<li>_NSConcreteStackBlock     栈上创建的block</li>
+<li>_NSConcreteMallocBlock  堆上创建的block</li>
+<li>_NSConcreteGlobalBlock   作为全局变量的block</li>
+</ul>
+<p>当struct第一次被创建时，存在该函数的栈帧上。其捕获的变量是会赋值到结构体的成员上，所以当block初始化完成后，捕获到的变量不能更改。<br>当函数返回时，函数的栈帧被销毁，这个block的内存也会被清除。所以在函数结束后仍然需要这个block时，就必须用Block_copy()方法将它拷贝到堆上。</p>
+<p>而在截获自动变量值得时候，会首先把变量追加到<strong>foo_block_imp_o的结构体中。并且在</strong>foo_block_func_0中访问结构体中的这个变量对齐赋值。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://blog.ibireme.com/2013/11/27/objc-block/" target="_blank" rel="external">objc中的block</a></p>
+<h1 id="KVC-和-KVO"><a href="#KVC-和-KVO" class="headerlink" title="KVC 和 KVO"></a>KVC 和 KVO</h1><!--more-->
+<h1 id="KVC的使用方法"><a href="#KVC的使用方法" class="headerlink" title="KVC的使用方法"></a>KVC的使用方法</h1><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">User *user=[[User alloc]init];</div><div class="line">[user setValue:@&quot;123&quot; forKey:@&quot;TrueName&quot;];</div></pre></td></tr></table></figure>
+<h1 id="KVO的使用方法"><a href="#KVO的使用方法" class="headerlink" title="KVO的使用方法"></a>KVO的使用方法</h1><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">User *user=[[User alloc]init];</div><div class="line">[user addObserver:self forKeyPath:@&quot;TrueName&quot; options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:nil];</div><div class="line"></div><div class="line">-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void *)context&#123;</div><div class="line">    </div><div class="line">    NSLog(@&quot;%@&quot;,change);</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="http://www.jianshu.com/p/ab54161d4bab" target="_blank" rel="external">IOS 中 KVO,KVC 的区别与联系 KVO 底层实现机制</a></p>
+<h1 id="多线程总结"><a href="#多线程总结" class="headerlink" title="多线程总结"></a>多线程总结</h1><h1 id="NSOperation"><a href="#NSOperation" class="headerlink" title="NSOperation"></a>NSOperation</h1><h1 id="队列组"><a href="#队列组" class="headerlink" title="队列组"></a>队列组</h1><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">        dispatch_group_t group = dispatch_group_create();</div><div class="line">        dispatch_queue_t q = dispatch_get_global_queue(0, 0);</div><div class="line">        //A队列</div><div class="line">        dispatch_group_async(group, q, ^&#123;</div><div class="line">            dispatch_group_enter(group);</div><div class="line">            </div><div class="line">            dispatch_group_leave(group);</div><div class="line">             &#125;);</div><div class="line">          //B队列   </div><div class="line">         dispatch_group_async(group, q, ^&#123;</div><div class="line">            dispatch_group_enter(group);</div><div class="line">            </div><div class="line">            dispatch_group_leave(group);</div><div class="line">             &#125;);</div><div class="line">             //队列完成后</div><div class="line">dispatch_group_notify(group, dispatch_get_main_queue(), ^&#123;</div><div class="line"> &#125;);</div></pre></td></tr></table></figure>
+<h2 id="GCD-串行（一个接一个，排队跑步，保持队形）队列"><a href="#GCD-串行（一个接一个，排队跑步，保持队形）队列" class="headerlink" title="GCD 串行（一个接一个，排队跑步，保持队形）队列"></a>GCD 串行（一个接一个，排队跑步，保持队形）队列</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)gcdDemo1</div><div class="line">&#123;</div><div class="line">    // 将操作放在队列中</div><div class="line">    // 在C语言函数中，定义类型，绝大多数的结尾是_t或者ref</div><div class="line">    // 使用串行队列，的异步任务非常非常非常有用！新建子线程是有开销的，不能无休止新建线程</div><div class="line">    // 即可以保证效率（新建一个子线程），用能够实现并发</div><div class="line">    // 应用案例：</div><div class="line">    // 1&gt; 从网络上上下载图片</div><div class="line">    // 2&gt; 滤镜（高光，红眼...）</div><div class="line"></div><div class="line">    dispatch_queue_t q = dispatch_queue_create(&quot;com.yoferzhang.gcddemo&quot;, DISPATCH_QUEUE_SERIAL);</div><div class="line"></div><div class="line">    // 非ARC开发时，千万别忘记release</div><div class="line">//    dispatch_release(q);</div><div class="line"></div><div class="line">    // 串行行队列的同步任务，同样会在主线程上运行</div><div class="line">    // 提示：在开发中极少用d</div><div class="line">    // 面试中有可能会问！</div><div class="line">    for (int i = 0; i &lt; 10; ++i) &#123;</div><div class="line">        // 同步任务顺序执行</div><div class="line">        dispatch_sync(q, ^&#123;</div><div class="line">            NSLog(@&quot;%@ %d&quot;, [NSThread currentThread], i);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    for (int i = 0; i &lt; 10; ++i) &#123;</div><div class="line">        // 异步任务，并发执行，但是如果在串行队列中，仍然会依次顺序执行</div><div class="line">        dispatch_async(q, ^&#123;</div><div class="line">            // [NSThread currentThread] 可以在开发中，跟踪当前线程</div><div class="line">            // num = 1，表示主线程</div><div class="line">            // num = 2，表示第2个子线程。。。</div><div class="line">            NSLog(@&quot;%@ %d&quot;, [NSThread currentThread], i);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="GCD-并行（并排跑，类似于赛跑）"><a href="#GCD-并行（并排跑，类似于赛跑）" class="headerlink" title="GCD 并行（并排跑，类似于赛跑）"></a>GCD 并行（并排跑，类似于赛跑）</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)gcdDemo2</div><div class="line">&#123;</div><div class="line">    // 特点：没有队形，执行顺序程序员不能控制！</div><div class="line">    // 应用场景：并发执行任务，没有先后顺序关系</div><div class="line">    // 并行队列容易出错！并行队列不能控制新建线程的数量！</div><div class="line">    dispatch_queue_t q = dispatch_queue_create(&quot;com.yoferzhang.gcd2&quot;, DISPATCH_QUEUE_CONCURRENT);</div><div class="line">    </div><div class="line">        for (int i = 0; i &lt; 10; ++i) &#123;</div><div class="line">            // 异步任务</div><div class="line">            dispatch_async(q, ^&#123;</div><div class="line">                // [NSThread currentThread] 可以在开发中，跟踪当前线程</div><div class="line">                // num = 1，表示主线程</div><div class="line">                // num = 2，表示第2个子线程。。。</div><div class="line">                NSLog(@&quot;异步%@ %d&quot;, [NSThread currentThread], i);</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    </div><div class="line">    for (int i = 0; i &lt; 10; ++i) &#123;</div><div class="line">        // 同步任务顺序执行</div><div class="line">        dispatch_sync(q, ^&#123;</div><div class="line">            NSLog(@&quot;同步%@ %d&quot;, [NSThread currentThread], i);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="全局队列（苹果为了方便多线程的设计，提供一个全局队列，供所有的APP共同使用）"><a href="#全局队列（苹果为了方便多线程的设计，提供一个全局队列，供所有的APP共同使用）" class="headerlink" title="全局队列（苹果为了方便多线程的设计，提供一个全局队列，供所有的APP共同使用）"></a>全局队列（苹果为了方便多线程的设计，提供一个全局队列，供所有的APP共同使用）</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)gcdDemo3</div><div class="line">&#123;</div><div class="line">    // 全局队列与并行队列的区别</div><div class="line">    // 1&gt; 不需要创建，直接GET就能用</div><div class="line">    // 2&gt; 两个队列的执行效果相同</div><div class="line">    // 3&gt; 全局队列没有名称，调试时，无法确认准确队列</div><div class="line">    </div><div class="line">    // 记住：在开发中永远用DISPATCH_QUEUE_PRIORITY_DEFAULT</div><div class="line">    // 多线程的优先级反转！低优先级的线程阻塞了高优先级的线程！</div><div class="line">    dispatch_queue_t q =dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div><div class="line">    </div><div class="line">    for (int i = 0; i &lt; 10; ++i) &#123;</div><div class="line">        // 同步任务顺序执行</div><div class="line">        dispatch_sync(q, ^&#123;</div><div class="line">            NSLog(@&quot;%@ %d&quot;, [NSThread currentThread], i);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    for (int i = 0; i &lt; 10; ++i) &#123;</div><div class="line">        // 异步任务，并发执行，但是如果在穿行队列中，仍然会依次顺序执行</div><div class="line">        dispatch_async(q, ^&#123;</div><div class="line">            // [NSThread currentThread] 可以在开发中，跟踪当前线程</div><div class="line">            // num = 1，表示主线程</div><div class="line">            // num = 2，表示第2个子线程。。。</div><div class="line">            NSLog(@&quot;%@ %d&quot;, [NSThread currentThread], i);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="主-线程-队列，保证操作在主线程上执行"><a href="#主-线程-队列，保证操作在主线程上执行" class="headerlink" title="主(线程)队列，保证操作在主线程上执行"></a>主(线程)队列，保证操作在主线程上执行</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)gcdDemo4</div><div class="line">&#123;</div><div class="line">    // 每一个应用程序都只有一个主线程</div><div class="line">    // 为什么需要在主线程上工作呢？</div><div class="line">    // 在iOS开发中，所有UI的更新工作，都必须在主线程上执行！</div><div class="line">    dispatch_queue_t q = dispatch_get_main_queue();</div><div class="line">    </div><div class="line">    // 主线程是由工作的，而且除非将程序杀掉，否则主线程的工作永远不会结束！</div><div class="line">    // 阻塞了！！！</div><div class="line">//    dispatch_sync(q, ^&#123;</div><div class="line">//        NSLog(@&quot;come here baby!&quot;);</div><div class="line">//    &#125;);</div><div class="line">    </div><div class="line">    // 异步任务，在主线程上运行，同时是保持队形的</div><div class="line">    for (int i = 0; i &lt; 10; ++i) &#123;</div><div class="line">        dispatch_async(q, ^&#123;</div><div class="line">            NSLog(@&quot;%@ - %d&quot;, [NSThread currentThread], i);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="超出父类响应方法"><a href="#超出父类响应方法" class="headerlink" title="超出父类响应方法"></a>超出父类响应方法</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//重写hitTest处理</div><div class="line">override public func hitTest(_ point: CGPoint, with event: UIEvent?) -&gt; UIView? &#123;</div><div class="line">    var view = super.hitTest(point, with: event)</div><div class="line">    if view == nil &#123;</div><div class="line">        for subView in self.subviews.reversed() &#123;</div><div class="line">            let tp = subView.convert(point, from: self)</div><div class="line">            if subView.bounds.contains(tp) &#123;</div><div class="line">                print(subView)</div><div class="line">                view = subView</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return view</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="参考文章-1"><a href="#参考文章-1" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="http://www.jianshu.com/p/0b0d9b1f1f19" target="_blank" rel="external">关于iOS多线程，你看我就够了</a><br><a href="http://blog.csdn.net/zyq522376829/article/details/52373154" target="_blank" rel="external"> iOS并发编程对比总结,NSThread,NSOperation,GCD - iOS</a><br><a href="http://ios.jobbole.com/82622/" target="_blank" rel="external">GCD 死锁分析</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/12/30/summary-2017/" data-toggle="tooltip" data-placement="top"
+                           title="做什么都是因为喜欢 - 2017小结">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/11/05/copyvsstrong/" data-toggle="tooltip" data-placement="top"
+                           title="关于Copy和Strong关键词">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Block是什么？形式是什么样的"><span class="toc-text">Block是什么？形式是什么样的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Block的实现是什么样的？"><span class="toc-text">Block的实现是什么样的？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Block怎么捕获的变量"><span class="toc-text">Block怎么捕获的变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#KVC-和-KVO"><span class="toc-text">KVC 和 KVO</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#KVC的使用方法"><span class="toc-text">KVC的使用方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#KVO的使用方法"><span class="toc-text">KVO的使用方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#多线程总结"><span class="toc-text">多线程总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NSOperation"><span class="toc-text">NSOperation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#队列组"><span class="toc-text">队列组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GCD-串行（一个接一个，排队跑步，保持队形）队列"><span class="toc-text">GCD 串行（一个接一个，排队跑步，保持队形）队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GCD-并行（并排跑，类似于赛跑）"><span class="toc-text">GCD 并行（并排跑，类似于赛跑）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全局队列（苹果为了方便多线程的设计，提供一个全局队列，供所有的APP共同使用）"><span class="toc-text">全局队列（苹果为了方便多线程的设计，提供一个全局队列，供所有的APP共同使用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主-线程-队列，保证操作在主线程上执行"><span class="toc-text">主(线程)队列，保证操作在主线程上执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#超出父类响应方法"><span class="toc-text">超出父类响应方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文章-1"><span class="toc-text">参考文章</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#iOS"
+                           title="iOS">iOS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

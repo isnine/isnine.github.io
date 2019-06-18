@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        通过IpaPatch分析Wechat界面｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2018/01/14/IpaPatch-Wechat/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>通过IpaPatch分析Wechat界面</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2018-01-14
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#逆向"
+                           title="逆向">逆向</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            通过IpaPatch分析Wechat界面
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>因为某个侧滑功能希望能参照微信来做，但是手上又木有越狱机，所以这里主要通过IpaPatch+Reveal来进行分析。</p>
+<h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2><p><a href="https://revealapp.com" target="_blank" rel="external">Reveal</a><br><a href="https://github.com/Naituw/IPAPatch" target="_blank" rel="external">IpaPatch</a><br><a href="https://www.25pp.com" target="_blank" rel="external">PP助手</a></p>
+<h2 id="准备一个微信APP"><a href="#准备一个微信APP" class="headerlink" title="准备一个微信APP"></a>准备一个微信APP</h2><p>首先需要强调的是，AppStore上下载的iPA是加密过的，所以这里我们通过<a href="https://www.25pp.com" target="_blank" rel="external">PP助手</a>来下载已经砸壳过后的IPA文件。<br><img src="https://img.wxz.name/15159380872900.jpg" alt=""></p>
+<h2 id="克隆好IpaPatch工程"><a href="#克隆好IpaPatch工程" class="headerlink" title="克隆好IpaPatch工程"></a>克隆好IpaPatch工程</h2><p>IpaPatch是一个 免越狱调试、修改第三方App 的工具，主要过程分为这几部</p>
+<ol>
+<li>解压 IPA 文件</li>
+<li>用 IPA 文件的内容，替换掉 Xcode 生成的 .app 的内容</li>
+<li>通过 OPTOOL，将你代码生成的 Framework 及其他外部 Framework，注入到二进制文件中</li>
+<li>对这些文件进行重新签名 </li>
+</ol>
+<h2 id="配置IpaPatch工程"><a href="#配置IpaPatch工程" class="headerlink" title="配置IpaPatch工程"></a>配置IpaPatch工程</h2><p>1.在我们克隆完毕后，我们将我们在pp助手上下载好的微信.ipa重命名为app.ipa然后复制到工程的IPAPatch/Assets/中替换掉原来的app.ipa<br><img src="https://img.wxz.name/15159382651784.jpg" alt=""></p>
+<p>2.接着我们需要将Reveal中的framework文件复制到Assets/Frameworks/RevealServer.framework中<br><img src="https://img.wxz.name/15159384937355.jpg" alt=""></p>
+<p>3.修改Display Name和Bundle Identifier。Display Name将加在原app名称之前，可与之前的app共存。<br><img src="https://img.wxz.name/15159385259266.jpg" alt=""></p>
+<h2 id="调试界面"><a href="#调试界面" class="headerlink" title="调试界面"></a>调试界面</h2><ol>
+<li>点击 Build 后就可以在我们真机上看到啦，然后打开Reveal，就可以看到微信的界面了<br> <img src="https://img.wxz.name/15159387058492.jpg" alt=""></li>
+</ol>
+<h2 id="开始分析"><a href="#开始分析" class="headerlink" title="开始分析"></a>开始分析</h2><h3 id="从层级开始分析"><a href="#从层级开始分析" class="headerlink" title="从层级开始分析"></a>从层级开始分析</h3><p>整体是一个tableview的界面，每个cell中，消息部分作为一个view与滑动部分的view所并列<br><img src="https://img.wxz.name/Lark20180114221705.png" alt="Lark20180114221705"><br>在一整个滑动view中，又是分为两个button，其中尺寸如第二条所分析<br><img src="https://img.wxz.name/15159396834913.jpg" alt=""></p>
+<h3 id="从尺寸分析"><a href="#从尺寸分析" class="headerlink" title="从尺寸分析"></a>从尺寸分析</h3><p>首先我的手机是iphone7 Plus,屏幕尺寸为 414 <em> 736，在微信设置的滑动view的大小为 175 </em> 68，其中</p>
+<ul>
+<li>滑动view的大小为 175 * 68</li>
+<li>“标为未读”按钮的宽度为116.6</li>
+<li>“删除”按钮的宽度为75.9</li>
+<li>其中两个按钮中有重叠部分，应该是为了动画效果而保留的。</li>
+</ul>
+<p><img src="https://img.wxz.name/15159392238970.jpg" alt=""></p>
+<h3 id="从动画分析"><a href="#从动画分析" class="headerlink" title="从动画分析"></a>从动画分析</h3><h4 id="1-刚开始滑动—-gt-滑动完成"><a href="#1-刚开始滑动—-gt-滑动完成" class="headerlink" title="1. 刚开始滑动—&gt;滑动完成"></a>1. 刚开始滑动—&gt;滑动完成</h4><p>   开始滑动的那一刻立即创建两个button，同时两者随手势向左侧滑动。但是第二个“删除”按钮<strong>滑动速度较慢</strong>。<br>   左侧聊天信息的view紧临“标为未读”的button。同时父视图cell位置不变<br> <img src="https://img.wxz.name/15159398498752.jpg" alt=""></p>
+<h4 id="2-滑动完成，到达稳定的状态"><a href="#2-滑动完成，到达稳定的状态" class="headerlink" title="2. 滑动完成，到达稳定的状态"></a>2. 滑动完成，到达稳定的状态</h4><p>cell的位置没变<br>但cell子视图的聊天view左移了，并且紧邻滑动view为同一层级<br>滑动view中又分为两个button，并且<strong>位置有一定的重叠</strong><br><img src="https://img.wxz.name/15159402686411.jpg" alt=""></p>
+<h4 id="3-返回过程"><a href="#3-返回过程" class="headerlink" title="3. 返回过程"></a>3. 返回过程</h4><p>   为之前动画的逆过程，不再赘述</p>
+<h4 id="4-长拖效果"><a href="#4-长拖效果" class="headerlink" title="4. 长拖效果"></a>4. 长拖效果</h4><p>  拖动按钮时，按钮会随着一起拖动。<br>  分析层级，发现滑动view的位置并没有感觉。<br>  实际上<strong>改变的是两个button的长度</strong>，他们超过了父view，显示出了这样一个效果。<br><img src="https://img.wxz.name/15159405300287.jpg" alt=""></p>
+<h4 id="5-删除效果"><a href="#5-删除效果" class="headerlink" title="5. 删除效果"></a>5. 删除效果</h4><p>  <strong>之前的“标为未读”按钮被删除了</strong>，全部只剩下了“删除”按钮。动画过程，因为真机显示太快我还木有抓到。<br><img src="https://img.wxz.name/2.png" alt="2"></p>
+<h4 id="6-删除返回"><a href="#6-删除返回" class="headerlink" title="6. 删除返回"></a>6. 删除返回</h4><p>  随着手势的返回，将<strong>“删除”按钮位置右移</strong>，聊天view紧邻删除button，但主要的是<strong>删除button的父view位置是不动的</strong><br><img src="https://img.wxz.name/15159410586968.jpg" alt=""></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>关于微信滑动的实现，几个关键的点</p>
+<ol>
+<li>首先层级是cell最上，包含聊天view和滑动view。其中滑动view在没有开始滑动时是不创建的，滑动开始立刻创建，收回后立即销毁。</li>
+<li>滑动动画上，像抽屉的效果是<strong>通过移速不同</strong>，“标为未读”在“删除”下面，这样拖动和拖回产生了一个折叠的效果</li>
+<li>自始至终，<strong>cell的位置是不变得</strong>，这也就保证了，无论的滑动view还是聊天view都不会因为父视图超过自身位置，因为响应链的原因而不响应。</li>
+</ol>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2018/04/30/create-private-pod-private/" data-toggle="tooltip" data-placement="top"
+                           title="创建自己的CocoaPods库">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/12/30/summary-2017/" data-toggle="tooltip" data-placement="top"
+                           title="做什么都是因为喜欢 - 2017小结">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工具"><span class="toc-text">准备工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备一个微信APP"><span class="toc-text">准备一个微信APP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#克隆好IpaPatch工程"><span class="toc-text">克隆好IpaPatch工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置IpaPatch工程"><span class="toc-text">配置IpaPatch工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试界面"><span class="toc-text">调试界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始分析"><span class="toc-text">开始分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从层级开始分析"><span class="toc-text">从层级开始分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从尺寸分析"><span class="toc-text">从尺寸分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从动画分析"><span class="toc-text">从动画分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-刚开始滑动—-gt-滑动完成"><span class="toc-text">1. 刚开始滑动—>滑动完成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-滑动完成，到达稳定的状态"><span class="toc-text">2. 滑动完成，到达稳定的状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-返回过程"><span class="toc-text">3. 返回过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-长拖效果"><span class="toc-text">4. 长拖效果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-删除效果"><span class="toc-text">5. 删除效果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-删除返回"><span class="toc-text">6. 删除返回</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#逆向"
+                           title="逆向">逆向</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Android第一行代码-存储｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2016/08/11/AndroidCapter6/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Android第一行代码-存储</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2016-08-11
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Android第一行代码"
+                           title="Android第一行代码">Android第一行代码</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Android第一行代码-存储
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>感觉现在开始码笔记都是晚上了，练车真是一个耗时的项目。</p>
+<h1 id="文本存储"><a href="#文本存储" class="headerlink" title="文本存储"></a>文本存储</h1><p>这方面就是JAVA，没什么好讲的，直接上代码。</p>
+<h2 id="save-方法"><a href="#save-方法" class="headerlink" title="save()方法"></a>save()方法</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(String inputText)</span> </span>&#123;</div><div class="line">	FileOutputStream out = <span class="keyword">null</span>;</div><div class="line">	BufferedWriter writer = <span class="keyword">null</span>;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		out = openFileOutput(<span class="string">"data"</span>, Context.MODE_PRIVATE);</div><div class="line">		writer = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> OutputStreamWriter(out));</div><div class="line">		writer.write(inputText);</div><div class="line">	&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">		e.printStackTrace();</div><div class="line">	&#125; <span class="keyword">finally</span> &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (writer != <span class="keyword">null</span>) &#123;</div><div class="line">				writer.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="load-方法"><a href="#load-方法" class="headerlink" title="load()方法"></a>load()方法</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">load</span><span class="params">()</span> </span>&#123;</div><div class="line">	FileInputStream in = <span class="keyword">null</span>;</div><div class="line">	BufferedReader reader = <span class="keyword">null</span>;</div><div class="line">	StringBuilder content = <span class="keyword">new</span> StringBuilder();</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		in = openFileInput(<span class="string">"data"</span>);</div><div class="line">		reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</div><div class="line">		String line = <span class="string">""</span>;</div><div class="line">		<span class="keyword">while</span> ((line = reader.readLine()) != <span class="keyword">null</span>) &#123;</div><div class="line">			content.append(line);</div><div class="line">		&#125;</div><div class="line">	&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">		e.printStackTrace();</div><div class="line">	&#125; <span class="keyword">finally</span> &#123;</div><div class="line">		<span class="keyword">if</span> (reader != <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				reader.close();</div><div class="line">			&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">				e.printStackTrace();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> content.toString();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="修改onCreate-方法"><a href="#修改onCreate-方法" class="headerlink" title="修改onCreate()方法"></a>修改onCreate()方法</h2><p>APP启动时检测文本文件，如果不为空则读取内容，并且将光标移至文本末尾<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">	<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">	setContentView(R.layout.activity_main);</div><div class="line">	edit = (EditText) findViewById(R.id.edit);</div><div class="line">	String inputText = load();</div><div class="line">	<span class="keyword">if</span> (!TextUtils.isEmpty(inputText)) &#123;</div><div class="line">		edit.setText(inputText);</div><div class="line">		edit.setSelection(inputText.length());</div><div class="line">		Toast.makeText(<span class="keyword">this</span>, <span class="string">"Restoring succeeded"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="onDestroy-方法"><a href="#onDestroy-方法" class="headerlink" title="onDestroy()方法"></a>onDestroy()方法</h2><p>在APP关闭时执行save方法保存<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">super</span>.onDestroy();</div><div class="line">	String inputText = edit.getText().toString();</div><div class="line">	save(inputText);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>我真是越来越懒了 逃<del>记得新建一个EditText控件，巴拉巴拉</del>~</p>
+</blockquote>
+<h1 id="SharedPreferences存储"><a href="#SharedPreferences存储" class="headerlink" title="SharedPreferences存储"></a>SharedPreferences存储</h1><p>第一次知道还有这种存储方式的，真是孤陋寡闻了，快点码完我去看诛仙了TAT</p>
+<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">SharedPreferences.Editor editor = getSharedPreferences(<span class="string">"data"</span>, MODE_PRIVATE).edit();</div><div class="line">editor.putString(<span class="string">"name"</span>, <span class="string">"Tom"</span>);</div><div class="line">editor.putInt(<span class="string">"age"</span>, <span class="number">28</span>);</div><div class="line">editor.putBoolean(<span class="string">"married"</span>, <span class="keyword">false</span>);</div><div class="line">editor.commit();</div></pre></td></tr></table></figure>
+<p>会在/data/data/&lt;包名&gt;/shared_prefs中新建一个data.xml的文件，里面的内容是这样的<br><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">&lt;?xml version='1.0' encoding='utf-8' standalone='yes' ?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">map</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"name"</span>&gt;</span>Tom<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">int</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"28"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">boolean</span> <span class="attr">name</span>=<span class="string">"married"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">map</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h2 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">SharedPreferences pref = getSharedPreferences(<span class="string">"data"</span>, MODE_PRIVATE);</div><div class="line">String name = pref.getString(<span class="string">"name"</span>, <span class="string">""</span>);</div><div class="line"><span class="keyword">int</span> age = pref.getInt(<span class="string">"age"</span>, <span class="number">0</span>);</div><div class="line"><span class="keyword">boolean</span> married = pref.getBoolean(<span class="string">"married"</span>, <span class="keyword">false</span>);</div><div class="line">Log.d(<span class="string">"MainActivity"</span>, <span class="string">"name is "</span> + name);</div><div class="line">Log.d(<span class="string">"MainActivity"</span>, <span class="string">"age is "</span> + age);</div><div class="line">Log.d(<span class="string">"MainActivity"</span>, <span class="string">"married is "</span> + married);</div></pre></td></tr></table></figure>
+<p>简洁明白，嗯我先去看诛仙，回来再来码，就这么决定了</p>
+<h1 id="SQLite数据库存储"><a href="#SQLite数据库存储" class="headerlink" title="SQLite数据库存储"></a>SQLite数据库存储</h1><p>心情不好，继续码笔记</p>
+<h2 id="新建数据库"><a href="#新建数据库" class="headerlink" title="新建数据库"></a>新建数据库</h2><p>新建一个继承SQLiteOpenHelper的MyDatabaseHelper类<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyDatabaseHelper</span> <span class="keyword">extends</span> <span class="title">SQLiteOpenHelper</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="comment">//创建一个BOOK表</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String CREATE_BOOK = <span class="string">"create table Book ("</span></div><div class="line">			+ <span class="string">"id integer primary key autoincrement, "</span> </div><div class="line">			+ <span class="string">"author text, "</span></div><div class="line">			+ <span class="string">"price real, "</span> </div><div class="line">			+ <span class="string">"pages integer, "</span> </div><div class="line">			+ <span class="string">"name text)"</span>;</div><div class="line">	<span class="comment">//创建一个Category表</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String CREATE_CATEGORY = <span class="string">"create table Category ("</span></div><div class="line">			+ <span class="string">"id integer primary key autoincrement, "</span></div><div class="line">			+ <span class="string">"category_name text, "</span></div><div class="line">			+ <span class="string">"category_code integer)"</span>;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> Context mContext;</div><div class="line"><span class="comment">//name是数据库名，Factory一般传入null，version是版本号</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyDatabaseHelper</span><span class="params">(Context context, String name,</span></span></div><div class="line">			CursorFactory factory, <span class="keyword">int</span> version) &#123;</div><div class="line">		<span class="keyword">super</span>(context, name, factory, version);</div><div class="line">		mContext = context;</div><div class="line">	&#125;</div><div class="line"><span class="comment">//执行语句创建数据库，其实你直接输也行</span></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(SQLiteDatabase db)</span> </span>&#123;</div><div class="line">		db.execSQL(CREATE_BOOK);</div><div class="line">		db.execSQL(CREATE_CATEGORY);</div><div class="line">		Toast.makeText(mContext, <span class="string">"Create succeeded"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">	&#125;</div><div class="line"><span class="comment">//就是SQL语句</span></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUpgrade</span><span class="params">(SQLiteDatabase db, <span class="keyword">int</span> oldVersion, <span class="keyword">int</span> newVersion)</span> </span>&#123;</div><div class="line">		db.execSQL(<span class="string">"drop table if exists Book"</span>);</div><div class="line">		db.execSQL(<span class="string">"drop table if exists Category"</span>);</div><div class="line">		onCreate(db);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在MainActivity中加入以下代码<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">dbHelper = <span class="keyword">new</span> MyDatabaseHelper(<span class="keyword">this</span>, <span class="string">"BookStore.db"</span>, <span class="keyword">null</span>, <span class="number">1</span>);</div><div class="line">   dbHelper.getWritableDatabase();</div></pre></td></tr></table></figure></p>
+<h2 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">SQLiteDatabase db = dbHelper.getWritableDatabase();</div><div class="line">ContentValues values = <span class="keyword">new</span> ContentValues();</div><div class="line"><span class="comment">//开始第一条数据</span></div><div class="line">values.put(<span class="string">"name"</span>, <span class="string">"The Da Vinci Code"</span>);</div><div class="line">values.put(<span class="string">"author"</span>, <span class="string">"Dan Brown"</span>);</div><div class="line">values.put(<span class="string">"pages"</span>, <span class="number">454</span>);</div><div class="line">values.put(<span class="string">"price"</span>, <span class="number">16.96</span>);</div><div class="line">db.insert(<span class="string">"Book"</span>, <span class="keyword">null</span>, values);</div><div class="line">values.clear();</div><div class="line"><span class="comment">//开始第二条数据</span></div><div class="line">values.put(<span class="string">"name"</span>, <span class="string">"The Lost Symbol"</span>);</div><div class="line">values.put(<span class="string">"author"</span>, <span class="string">"Dan Brown"</span>);</div><div class="line">values.put(<span class="string">"pages"</span>, <span class="number">510</span>);</div><div class="line">values.put(<span class="string">"price"</span>, <span class="number">19.95</span>);</div><div class="line">db.insert(<span class="string">"Book"</span>, <span class="keyword">null</span>, values);</div></pre></td></tr></table></figure>
+<h2 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">SQLiteDatabase db = dbHelper.getWritableDatabase();</div><div class="line">ContentValues values = <span class="keyword">new</span> ContentValues();</div><div class="line">values.put(<span class="string">"price"</span>, <span class="number">10.99</span>);</div><div class="line">db.update(<span class="string">"Book"</span>, values, <span class="string">"name = ?"</span>,</div><div class="line">		<span class="keyword">new</span> String[] &#123; <span class="string">"The Da Vinci Code"</span> &#125;);</div></pre></td></tr></table></figure>
+<h2 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">SQLiteDatabase db = dbHelper.getWritableDatabase();</div><div class="line">db.delete(<span class="string">"Book"</span>, <span class="string">"pages &gt; ?"</span>, <span class="keyword">new</span> String[] &#123; <span class="string">"500"</span> &#125;);</div></pre></td></tr></table></figure>
+<h2 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">SQLiteDatabase db = dbHelper.getWritableDatabase();</div><div class="line">Cursor cursor = db.query(<span class="string">"Book"</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>,</div><div class="line">		<span class="keyword">null</span>);</div><div class="line"><span class="keyword">if</span> (cursor.moveToFirst()) &#123;</div><div class="line">	<span class="keyword">do</span> &#123;</div><div class="line">		String name = cursor.getString(cursor</div><div class="line">				.getColumnIndex(<span class="string">"name"</span>));</div><div class="line">		String author = cursor.getString(cursor</div><div class="line">				.getColumnIndex(<span class="string">"author"</span>));</div><div class="line">		<span class="keyword">int</span> pages = cursor.getInt(cursor</div><div class="line">				.getColumnIndex(<span class="string">"pages"</span>));</div><div class="line">		<span class="keyword">double</span> price = cursor.getDouble(cursor</div><div class="line">				.getColumnIndex(<span class="string">"price"</span>));</div><div class="line">		Log.d(<span class="string">"MainActivity"</span>, <span class="string">"book name is "</span> + name);</div><div class="line">		Log.d(<span class="string">"MainActivity"</span>, <span class="string">"book author is "</span> + author);</div><div class="line">		Log.d(<span class="string">"MainActivity"</span>, <span class="string">"book pages is "</span> + pages);</div><div class="line">		Log.d(<span class="string">"MainActivity"</span>, <span class="string">"book price is "</span> + price);</div><div class="line">	&#125; <span class="keyword">while</span> (cursor.moveToNext());</div><div class="line">&#125;</div><div class="line">cursor.close();</div></pre></td></tr></table></figure>
+<h2 id="直接使用SQL操作数据库"><a href="#直接使用SQL操作数据库" class="headerlink" title="直接使用SQL操作数据库"></a>直接使用SQL操作数据库</h2><p>我觉得这种方法简单多了，放几个实例部分代码<br>创建表<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">db.execSQL(<span class="string">"DROP TABLE IF EXISTS students"</span>);  </div><div class="line">da.execSQL(<span class="string">"CREATE TABLE IF NOT EXISTS student (_id INTEGER PRIMARY KEY AUTOINCREMENT, Name text,Number INTEGER, Chinese INTEGER,Math INTEGER, English integer)"</span>);</div></pre></td></tr></table></figure></p>
+<p>依据Select编辑框里面内容删除数据<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">da.execSQL(<span class="string">"DELETE FROM student WHERE Name=?"</span>,<span class="keyword">new</span> String[]&#123;Select.getText().toString()&#125;);</div></pre></td></tr></table></figure></p>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p>数据库示例，大一做的，<a href="https://github.com/isnine/Android-Student" target="_blank" rel="external">学生成绩管理系统</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/09/28/ios-opennew/" data-toggle="tooltip" data-placement="top"
+                           title="iOS学习笔记-打开新窗口">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/08/10/AndroidCapter5/" data-toggle="tooltip" data-placement="top"
+                           title="Android第一行代码-广播">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文本存储"><span class="toc-text">文本存储</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#save-方法"><span class="toc-text">save()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#load-方法"><span class="toc-text">load()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改onCreate-方法"><span class="toc-text">修改onCreate()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#onDestroy-方法"><span class="toc-text">onDestroy()方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SharedPreferences存储"><span class="toc-text">SharedPreferences存储</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#存储"><span class="toc-text">存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读取"><span class="toc-text">读取</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SQLite数据库存储"><span class="toc-text">SQLite数据库存储</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#新建数据库"><span class="toc-text">新建数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入数据"><span class="toc-text">插入数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改数据"><span class="toc-text">修改数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除数据"><span class="toc-text">删除数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查询数据"><span class="toc-text">查询数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直接使用SQL操作数据库"><span class="toc-text">直接使用SQL操作数据库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#示例"><span class="toc-text">示例</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Android第一行代码"
+                           title="Android第一行代码">Android第一行代码</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

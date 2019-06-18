@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        工大助手iOS端开发日志｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2016/10/19/HutHelper/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>工大助手iOS端开发日志</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2016-10-19
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            工大助手iOS端开发日志
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><img src="https://img.wxz.name/76@2x-1.png" alt="76@2x"><br>湖南工业大学校园助手iOS端</p>
+<h1 id="项目总体概况"><a href="#项目总体概况" class="headerlink" title="项目总体概况"></a>项目总体概况</h1><ul>
+<li><p>截止到17年1月24日，上架三个月的时间里，iOS端使用者已经达到2500人，另外Android端使用人数已过8000+,主要使用对象为湖南工业大学学生，覆盖全校60%以上人群，iOS端开发语言采用Objective-c，开发软件为Xcode，适配iOS8以上系统，后端数据部分采用JSON。</p>
+</li>
+<li><p>下载方式: <a href="https://itunes.apple.com/cn/app/gong-da-zhu-shou-hu-nan-gong/id1164848835" target="_blank" rel="external">AppStore</a></p>
+</li>
+</ul>
+<h1 id="项目框架"><a href="#项目框架" class="headerlink" title="项目框架"></a>项目框架</h1><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">.</div><div class="line">	├── HutHelper</div><div class="line">	│   ├── 3rd：因为各种原因没有用Pods管理的第三方库</div><div class="line">	│   ├── Utils：一些工具类等</div><div class="line">	│   ├── Request：网络请求</div><div class="line">	│   ├── Models：数据模型</div><div class="line">	│   ├── View：界面，xib或者storyboard之类的文件</div><div class="line">	│   ├── Supporting Files：一些支持文件</div><div class="line">	│   └── Controllers</div><div class="line">	│       ├── Main：主界面</div><div class="line">	│       ├── Login：登录界面</div><div class="line">	│       ├── Class：课程表</div><div class="line">	│       ├── Score：考试成绩</div><div class="line">	│       ├── Exam：考试计划查询</div><div class="line">	│       ├── User：用户界面</div><div class="line">	│       ├── FeedBack：反馈界面</div><div class="line">	│       ├── Power：寝室电费查询</div><div class="line">	│       ├── Set：用户设置界面</div><div class="line">	│       ├── Lost：失物招领界面</div><div class="line">	│       ├── Day：校历界面</div><div class="line">	│       ├── HomeWork：网上作业界面</div><div class="line">	│       ├── Hand：二手市场界面</div><div class="line">	│       ├── Library：图书馆界面</div><div class="line">	│       ├── Other：其他</div><div class="line">	└── Pods：项目使用了[CocoaPods](http://code4app.com/article/cocoapods-install-usage)这个类库管理工具</div><div class="line">	└── json:请求的示例数据</div></pre></td></tr></table></figure>
+<p>请注意，因为使用了Pods,所以请下载完项目后先运行<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">pod install</div></pre></td></tr></table></figure></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
+<li>考虑到在校用户信息的安全性,<strong>App的接口地址全部换成了镜像接口,与线上版本不同</strong></li>
+<li>除此之外，一切和上线版本代码全部一致</li>
+<li>同时因为镜像接口的数据是固定的,所以测试时，<strong>登录界面，无论输入什么，点登录就可以</strong></li>
+<li>课程数据,考试数据,用户数据,课表数据,说说数据,二手数据这些也都是固定的</li>
+<li>请求的数据可以在json文件夹中查看</li>
+</ul>
+<p><strong>如果要进行二次开发，可以直接把请求的地址改成自己后端的地址，然后把接受的数据改一下即可.</strong></p>
+<h1 id="上架情况"><a href="#上架情况" class="headerlink" title="上架情况"></a>上架情况</h1><p><img src="https://img.wxz.name/14853135352743.jpg" alt=""></p>
+<h1 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h1><h2 id="登录界面"><a href="#登录界面" class="headerlink" title="登录界面"></a>登录界面</h2><p>登录界面采用简洁的方式展示。<br>用户输入学号和密码后，将通过JSON连接网络，得到Msg信息<br>如果成功—&gt;存储Json至NSUserDefault<br>如果失败—&gt;返回Msg提示信息</p>
+<p><img src="https://img.wxz.name/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-11-06%2018.56.58.png?imageView2/2/w/400/h/800/interlace/0/q/41" alt="登录界面"></p>
+<h2 id="主界面"><a href="#主界面" class="headerlink" title="主界面"></a>主界面</h2><p>主界面是直接用xib做的,图片直接使用UI给的图片,另外的话有很多数据是在这个界面初始化的</p>
+<ul>
+<li>viewDidLoad()方法中，需要计算APP打开的此时的周数，并且通过NSUserDefaults类将其数据存储到plist文件中</li>
+<li>判断是否为第一次登陆，是的话跳转到登陆界面</li>
+<li>判断设置中是否设置自动打开课程表，是的话跳转到课程表</li>
+<li>判断用户信息的标签是否上传</li>
+<li>初始化抽屉界面</li>
+<li>…</li>
+</ul>
+<p><img src="https://img.wxz.name/IMG_1364.png?imageView2/2/w/400/h/800/interlace/0/q/41" alt="主界面"></p>
+<h2 id="成绩查询"><a href="#成绩查询" class="headerlink" title="成绩查询"></a>成绩查询</h2><p>这里调用了<a href="https://github.com/ZhipingYang/UUChartView" target="_blank" rel="external">UUCharView - 成绩曲线图标</a>开源项目，展现了用户成绩数据，首先第一次打开这个界面会读取用户成绩数据，并缓存，后面几次打开时会直接读取缓存数据。如果需要刷新的话可以点刷新按钮。</p>
+<p><img src="https://img.wxz.name/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-11-06%2019.13.48.png?imageView2/2/w/400/h/800/interlace/0/q/41" alt="曲线成绩"><br>点右上角的按钮可以查询所有课程的成绩数据，同时也可以折叠数据。</p>
+<p><img src="https://img.wxz.name/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-11-06%2019.16.47.png?imageView2/2/w/400/h/800/interlace/0/q/41" alt="所有成绩查询"></p>
+<h2 id="课程表"><a href="#课程表" class="headerlink" title="课程表"></a>课程表</h2><p>这里使用了<a href="https://github.com/GanWenpeng/GWPCourseListView" target="_blank" rel="external">GWPCourseListView - 课程表界面</a>开源项目，做了一些调整，并且修复了一些bug，开发者已经接受了我的pull。<br>同时自己集成了<a href="https://github.com/Friend-LGA/LGPlusButtonsView" target="_blank" rel="external">LGPlusButtonsView - 按钮控件</a>开源项目的按钮控件，使课程表数据可以上下周的调整。</p>
+<ul>
+<li>另外加入了实验课程表，可以单独显示，也可以在设置里面设置成一起显示</li>
+</ul>
+<p><img src="https://img.wxz.name/IMG_1365.png?imageView2/2/w/400/h/800/interlace/0/q/41" alt="课程表"></p>
+<h2 id="考试计划"><a href="#考试计划" class="headerlink" title="考试计划"></a>考试计划</h2><p>考试计划中将显示教务处正在计划和已经确定的考试<br>用的自定义tableview做的，很简单的绘制一个cell，然后将Json的数据与之交互</p>
+<p><img src="https://img.wxz.name/IMG_1366.png?imageView2/2/w/400/h/800/interlace/0/q/41" alt="IMG_1366"></p>
+<h2 id="电费查询"><a href="#电费查询" class="headerlink" title="电费查询"></a>电费查询</h2><p>简单的调用接口查询，没什么技术含量</p>
+<p><img src="https://img.wxz.name/IMG_1367.png?imageView2/2/w/400/h/800/interlace/0/q/41" alt="IMG_1367"></p>
+<h2 id="校园说说"><a href="#校园说说" class="headerlink" title="校园说说"></a>校园说说</h2><p>这个部分最大的问题就是适配的问题,有的图片多，有的文字多，怎么决定这个长度呢<br>所以我把每条说说分为四个部分，从上往下依次是  用户信息和文字/图片部分/评论数目部分/评论部分<br>这样首先根据文字的长度，分配第一个cell也就是文字的高度<br>然后根据图片的部分，分配第二个cell也就是图片的高度</p>
+<p><img src="https://img.wxz.name/IMG_1371.png?imageView2/2/w/400/h/800/interlace/0/q/41" alt="IMG_1371"></p>
+<h2 id="二手市场"><a href="#二手市场" class="headerlink" title="二手市场"></a>二手市场</h2><p>每个cell显示两个商品，很简单的做法</p>
+<p><img src="https://img.wxz.name/IMG_1372.png?imageView2/2/w/400/h/800/interlace/0/q/41" alt="IMG_1372"></p>
+<h2 id="图书馆-校园说说-二手市场-网上作业"><a href="#图书馆-校园说说-二手市场-网上作业" class="headerlink" title="图书馆/校园说说/二手市场/网上作业"></a>图书馆/校园说说/二手市场/网上作业</h2><p>这两个部分因为没有接口，所以直接用web端做的</p>
+<p><img src="https://img.wxz.name/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-11-06%2019.41.19.png?imageView2/2/w/400/h/800/interlace/0/q/41" alt="图书馆"></p>
+<p><img src="https://img.wxz.name/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-11-06%2019.41.41.png?imageView2/2/w/400/h/800/interlace/0/q/41" alt="网上作业"></p>
+<h1 id="项目使用的开源项目"><a href="#项目使用的开源项目" class="headerlink" title="项目使用的开源项目"></a>项目使用的开源项目</h1><ul>
+<li><a href="https://github.com/chennyhuang/LeftSlide" target="_blank" rel="external">LeftSlide - 主界面框架</a></li>
+<li><a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD - 等待框动画</a></li>
+<li><a href="https://github.com/GanWenpeng/GWPCourseListView" target="_blank" rel="external">GWPCourseListView - 课程表界面</a></li>
+<li><a href="https://github.com/Friend-LGA/LGPlusButtonsView" target="_blank" rel="external">LGPlusButtonsView - 按钮控件</a></li>
+<li><a href="https://github.com/ZhipingYang/UUChartView" target="_blank" rel="external">UUCharView - 成绩曲线图标</a></li>
+<li><a href="https://github.com/sakkaras/SKSTableView" target="_blank" rel="external">SKSTableView - 成绩列表</a></li>
+<li>[TZImagePickerController - 照片选择器]</li>
+<li>[SDWebImage - 异步多图加载]</li>
+<li>[MJRefresh - 上拉下拉刷新]</li>
+<li>[YYModel - Json转Model]</li>
+<li>[AFNetworking - 请求异步加载]</li>
+<li>[UMengUShare - 友盟分享]</li>
+<li>[ASIHTTPRequest - 照片同步上传]</li>
+</ul>
+<h1 id="最后-求一个Star"><a href="#最后-求一个Star" class="headerlink" title="最后,求一个Star"></a>最后,求一个Star</h1><p>这是本人刚进大二,在湖南工业大学实验室写的一款App，目的主要是为湖南工业大学的学生提供一些便利,同时也是湖南省省级项目,App中有很多不足的地方,代码的可读性也不是很好,甚至于最开始的版本，网络请求都是同步请求，没有加载框，很容易卡死。但是不管如何，我都在完善。<br>这是开源的第一个版本,在后续每当上线版本有大的更新后，我都会同步发布在这里<br>其目的是，如果有其他学校的同学也需要开发一个服务于自己母校的iOS App，可以从这得到一定的参考<br>如果有任何问题也可以在issues留言</p>
+<p>我的个人网站是<a href="www.wxz.name">www.wxz.name</a></p>
+<h1 id="License"><a href="#License" class="headerlink" title="License"></a>License</h1><p><a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_blank" rel="external">Apache Licene 2.0</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/11/06/registeremail/" data-toggle="tooltip" data-placement="top"
+                           title="学生邮箱申请及Github私有仓库申请">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/10/09/interviewQuestions/" data-toggle="tooltip" data-placement="top"
+                           title="iOS问题整理回答">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#项目总体概况"><span class="toc-text">项目总体概况</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目框架"><span class="toc-text">项目框架</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注意事项"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#上架情况"><span class="toc-text">上架情况</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#功能介绍"><span class="toc-text">功能介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#登录界面"><span class="toc-text">登录界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主界面"><span class="toc-text">主界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#成绩查询"><span class="toc-text">成绩查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#课程表"><span class="toc-text">课程表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#考试计划"><span class="toc-text">考试计划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#电费查询"><span class="toc-text">电费查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#校园说说"><span class="toc-text">校园说说</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二手市场"><span class="toc-text">二手市场</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图书馆-校园说说-二手市场-网上作业"><span class="toc-text">图书馆/校园说说/二手市场/网上作业</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目使用的开源项目"><span class="toc-text">项目使用的开源项目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最后-求一个Star"><span class="toc-text">最后,求一个Star</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#License"><span class="toc-text">License</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

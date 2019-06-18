@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        创建自己的CocoaPods库｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2018/04/30/create-private-pod-private/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>创建自己的CocoaPods库</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2018-04-30
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            创建自己的CocoaPods库
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>一直想自己折腾一个第三方库，但是苦于之前一直没写啥好的控件<br>最近工作上写了几个ui控件，终于满足了下开源的心愿，这里记录下步骤<br><a id="more"></a></p>
+<h1 id="本地建一个库"><a href="#本地建一个库" class="headerlink" title="本地建一个库"></a>本地建一个库</h1><h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">pod spec create xxxx</div></pre></td></tr></table></figure>
+<p><img src="https://img.wxz.name/15250836204894.jpg" alt=""></p>
+<p>xxxx为库的名字，然后会有一系列的选项，根据自己的需求进行选择</p>
+<h2 id="打开新建的模板库，将自己的代码放进去"><a href="#打开新建的模板库，将自己的代码放进去" class="headerlink" title="打开新建的模板库，将自己的代码放进去"></a>打开新建的模板库，将自己的代码放进去</h2><p><img src="https://img.wxz.name/15250835729749.jpg" alt=""></p>
+<h2 id="对库进行基本的设置"><a href="#对库进行基本的设置" class="headerlink" title="对库进行基本的设置"></a>对库进行基本的设置</h2><p>打开xxxxx.podspec<br>像s.homepage,s.source等配置项改成自己准备传的仓库地址</p>
+<h1 id="将库传到远程库上"><a href="#将库传到远程库上" class="headerlink" title="将库传到远程库上"></a>将库传到远程库上</h1><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">git add .</div><div class="line">git commit -m &quot;xxx&quot;</div><div class="line">git remote add origin xxxxx</div><div class="line">git push master origin -u</div><div class="line">git tag 1.0.0  // 这里改成库的版本</div><div class="line">git push origin 1.0.0</div></pre></td></tr></table></figure>
+<p>这样库的代码就传到远程上了，如果是不希望给人看到的，就放在私有库上，反之就公开</p>
+<h1 id="提交到官方索引库"><a href="#提交到官方索引库" class="headerlink" title="提交到官方索引库"></a>提交到官方索引库</h1><h2 id="注册一个账号，比较坑的是如果换电脑需要再注册一次"><a href="#注册一个账号，比较坑的是如果换电脑需要再注册一次" class="headerlink" title="注册一个账号，比较坑的是如果换电脑需要再注册一次"></a>注册一个账号，比较坑的是如果换电脑需要再注册一次</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">pod trunk register 邮箱 &apos;名字&apos; --description=&apos;描述&apos; --verbose</div></pre></td></tr></table></figure>
+<p>然后打开邮箱，去收注册邮件</p>
+<h2 id="将自己的库的文件push上去"><a href="#将自己的库的文件push上去" class="headerlink" title="将自己的库的文件push上去"></a>将自己的库的文件push上去</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">pod trunk push</div></pre></td></tr></table></figure>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">pod search xxxxx  //xxx是库的名字</div></pre></td></tr></table></figure>
+<h1 id="创建一个自己的私有库"><a href="#创建一个自己的私有库" class="headerlink" title="创建一个自己的私有库"></a>创建一个自己的私有库</h1><p>我们有时不希望这个库被所有人可以用，比如公司等场景，那么我们需要创建一个自己的私有库</p>
+<h2 id="新建一个私有库"><a href="#新建一个私有库" class="headerlink" title="新建一个私有库"></a>新建一个私有库</h2><p>首先创建一个这样的仓库，这个私有库应该是公网上的私有仓库，或者公司内网上的仓库，接着将地址加进来<br><img src="https://img.wxz.name/15250848614083.jpg" alt=""><br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">pod repo add MyRepo xxxxxxxx.git</div></pre></td></tr></table></figure></p>
+<h2 id="推送库到私有库中"><a href="#推送库到私有库中" class="headerlink" title="推送库到私有库中"></a>推送库到私有库中</h2><p>然后我们将之前的库推送到这个私有库中<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">pod repo push MyRepo XXXXXX.podspec --allow-warnings</div></pre></td></tr></table></figure></p>
+<h2 id="使用私有库"><a href="#使用私有库" class="headerlink" title="使用私有库"></a>使用私有库</h2><p>我们在podfile文件中，新加上<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">source &apos;xxxxxxx&apos;</div></pre></td></tr></table></figure></p>
+<p>xxxx为我们私有库的地址，这样就完成了</p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="https://www.jianshu.com/p/0c640821b36f" target="_blank" rel="external">私有库的创建</a><br><a href="http://qiubaiying.top/2017/03/08/CocoaPods公有仓库的创建/" target="_blank" rel="external">公有库的创建</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2018/05/02/iOS-UndoManager/" data-toggle="tooltip" data-placement="top"
+                           title="iOS UndoManager">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2018/01/14/IpaPatch-Wechat/" data-toggle="tooltip" data-placement="top"
+                           title="通过IpaPatch分析Wechat界面">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本地建一个库"><span class="toc-text">本地建一个库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建"><span class="toc-text">创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打开新建的模板库，将自己的代码放进去"><span class="toc-text">打开新建的模板库，将自己的代码放进去</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对库进行基本的设置"><span class="toc-text">对库进行基本的设置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将库传到远程库上"><span class="toc-text">将库传到远程库上</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#提交到官方索引库"><span class="toc-text">提交到官方索引库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注册一个账号，比较坑的是如果换电脑需要再注册一次"><span class="toc-text">注册一个账号，比较坑的是如果换电脑需要再注册一次</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将自己的库的文件push上去"><span class="toc-text">将自己的库的文件push上去</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建一个自己的私有库"><span class="toc-text">创建一个自己的私有库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#新建一个私有库"><span class="toc-text">新建一个私有库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推送库到私有库中"><span class="toc-text">推送库到私有库中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用私有库"><span class="toc-text">使用私有库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Android提纲复习｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2016/11/22/ReviewAndroid/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Android提纲复习</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2016-11-22
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Android提纲复习
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>自己写的考试提纲的答案，仅供参考，如有错误欢迎指正<br><a id="more"></a></p>
+<h1 id="卷子结构"><a href="#卷子结构" class="headerlink" title="卷子结构"></a>卷子结构</h1><p>一、选择题（30分，15个）<br>二、填空题（30分，30空）<br>三、判断题（10分，10个）<br>四、简答题（10分，2个）<br>五、应用题（20分，4小题）</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h3 id="1-ADT的主要功能是什么？"><a href="#1-ADT的主要功能是什么？" class="headerlink" title="1.ADT的主要功能是什么？"></a>1.ADT的主要功能是什么？</h3><p>ADT(Android Development ToolKit),安装这个插件可以用于开发android应用.</p>
+<blockquote>
+<p>配置好了java的开发环境，安装了开发Android的IDE，下载安装了Android SDK，但是Eclipse还没有和Android SDK进行关联，也就是它们现在是互相独立的，就好比枪和子弹分开了。为了使得Android应用的创建，运行和调试更加方便快捷，Android的开发团队专门针对Eclipse IDE定制了一个插件：Android Development Tools（ADT）。</p>
+</blockquote>
+<h3 id="2-安卓应用程序的结构："><a href="#2-安卓应用程序的结构：" class="headerlink" title="2.安卓应用程序的结构："></a>2.安卓应用程序的结构：</h3><p>1）字符串资源文件、颜色资源文件分别放在那个目录下？<br>字符串资源文件  - res/values<br>颜色资源文件   - res/values</p>
+<p>2）图像资源文件放置在那个目录？<br>图像资源文件 - res/drawable<br>根据图片大小还将在drawable-hdpi,drawable-ldpi,drawable-mdpi,drawable-xhdpi,drawable0xxhdpi</p>
+<p>3）布局文件放置在那个目录？<br>布局文件 - res/layout</p>
+<p>4)Java源程序文件一般放置在那个目录？<br>Java源程序文件 - src</p>
+<h3 id="3-安卓编译器生成的可发布的文件的扩展名是？"><a href="#3-安卓编译器生成的可发布的文件的扩展名是？" class="headerlink" title="3.安卓编译器生成的可发布的文件的扩展名是？"></a>3.安卓编译器生成的可发布的文件的扩展名是？</h3><p>.apk</p>
+<h3 id="4-安卓编译器把所有的资源的ID号，放在那个Java文档中"><a href="#4-安卓编译器把所有的资源的ID号，放在那个Java文档中" class="headerlink" title="4.安卓编译器把所有的资源的ID号，放在那个Java文档中?"></a>4.安卓编译器把所有的资源的ID号，放在那个Java文档中?</h3><p>R.java</p>
+<h3 id="5-安卓系统的框架，一般分为哪四层？资源管理器、活动管理器定义在哪个结构层？通知管理器notificationManager定义在哪个结构层？"><a href="#5-安卓系统的框架，一般分为哪四层？资源管理器、活动管理器定义在哪个结构层？通知管理器notificationManager定义在哪个结构层？" class="headerlink" title="5.安卓系统的框架，一般分为哪四层？资源管理器、活动管理器定义在哪个结构层？通知管理器notificationManager定义在哪个结构层？"></a>5.安卓系统的框架，一般分为哪四层？资源管理器、活动管理器定义在哪个结构层？通知管理器notificationManager定义在哪个结构层？</h3><p>1)安卓系统的框架，一般分为哪四层？<br>应用程序层,应用程序框架层,系统运行库层,linux核心层</p>
+<p>2）资源管理器、活动管理器定义在哪个结构层？<br>应用程序框架层。</p>
+<blockquote>
+<p>这一层即是编写Google发布的核心应用时所使用的API框架，开发人员同样可以使用这些框架来开发自己的应用，这样便简化了程序开发的架构设计</p>
+</blockquote>
+<p>3)通知管理器notificationManager定义在哪个结构层？<br>应用程序框架层。</p>
+<h3 id="6-一个安卓应用程序这只能有一个活动-Activity吗？同一时刻可以有多个UI交互界面可操作吗？"><a href="#6-一个安卓应用程序这只能有一个活动-Activity吗？同一时刻可以有多个UI交互界面可操作吗？" class="headerlink" title="6.一个安卓应用程序这只能有一个活动 Activity吗？同一时刻可以有多个UI交互界面可操作吗？"></a>6.一个安卓应用程序这只能有一个活动 Activity吗？同一时刻可以有多个UI交互界面可操作吗？</h3><p>不是,可以，</p>
+<blockquote>
+<p>通过碎片的方法？</p>
+</blockquote>
+<h3 id="7-安卓应用程序的Activity一般由哪两个最基本的部分组成？"><a href="#7-安卓应用程序的Activity一般由哪两个最基本的部分组成？" class="headerlink" title="7.安卓应用程序的Activity一般由哪两个最基本的部分组成？"></a>7.安卓应用程序的Activity一般由哪两个最基本的部分组成？</h3><p>java文件和xml布局文件</p>
+<h3 id="8-活动处在Pause状态时，UI界面是不可见的吗？在Stop状态，活动在内存中不存在了吗？活动刚创建的时候，一般最早引发那个事件？"><a href="#8-活动处在Pause状态时，UI界面是不可见的吗？在Stop状态，活动在内存中不存在了吗？活动刚创建的时候，一般最早引发那个事件？" class="headerlink" title="8.活动处在Pause状态时，UI界面是不可见的吗？在Stop状态，活动在内存中不存在了吗？活动刚创建的时候，一般最早引发那个事件？"></a>8.活动处在Pause状态时，UI界面是不可见的吗？在Stop状态，活动在内存中不存在了吗？活动刚创建的时候，一般最早引发那个事件？</h3><p>可见,存在,OnCreate()事件</p>
+<h3 id="9-安卓活动管理器，采用堆栈还是队列的方式管理活动？"><a href="#9-安卓活动管理器，采用堆栈还是队列的方式管理活动？" class="headerlink" title="9.安卓活动管理器，采用堆栈还是队列的方式管理活动？"></a>9.安卓活动管理器，采用堆栈还是队列的方式管理活动？</h3><p>堆栈</p>
+<h3 id="10-把一个活动作为对话框显示时，能够引发调用活动的Stop事件吗？怎样在配置文件中设置？"><a href="#10-把一个活动作为对话框显示时，能够引发调用活动的Stop事件吗？怎样在配置文件中设置？" class="headerlink" title="10.把一个活动作为对话框显示时，能够引发调用活动的Stop事件吗？怎样在配置文件中设置？"></a>10.把一个活动作为对话框显示时，能够引发调用活动的Stop事件吗？怎样在配置文件中设置？</h3><p>不会<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">android:theme=&quot;@android:style/Theme.Dialog&quot;</div></pre></td></tr></table></figure></p>
+<h3 id="11-意图对象Intent无法用于活动间的导航？"><a href="#11-意图对象Intent无法用于活动间的导航？" class="headerlink" title="11.意图对象Intent无法用于活动间的导航？"></a>11.意图对象Intent无法用于活动间的导航？</h3><p>可以</p>
+<h3 id="12-写出一个导航到拨打指定电话的Intent。"><a href="#12-写出一个导航到拨打指定电话的Intent。" class="headerlink" title="12.写出一个导航到拨打指定电话的Intent。"></a>12.写出一个导航到拨打指定电话的Intent。</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_DIAL);</div><div class="line">intent.setData(Url.parse(<span class="string">"tel:10086"</span>));</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>需要加入权限 <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission></p>
+</blockquote>
+<h3 id="13-线性布局容器，只能让控件从上到下排列？如何让线性布局容器，让控件从下到上排列"><a href="#13-线性布局容器，只能让控件从上到下排列？如何让线性布局容器，让控件从下到上排列" class="headerlink" title="13.*线性布局容器，只能让控件从上到下排列？如何让线性布局容器，让控件从下到上排列?"></a>13.*线性布局容器，只能让控件从上到下排列？如何让线性布局容器，让控件从下到上排列?</h3><p>通过自定义控件实现（ViewGroup），只不过在onLayout（）方法中需要实现自己的逻辑，基本的思想就是后一个插入的控件的坐标位置放于前一个控件的前面。</p>
+<h3 id="14-所有控件都是从View继承来的吗？"><a href="#14-所有控件都是从View继承来的吗？" class="headerlink" title="14.所有控件都是从View继承来的吗？"></a>14.所有控件都是从View继承来的吗？</h3><p>是</p>
+<h3 id="15-布局容器可以嵌套使用吗？"><a href="#15-布局容器可以嵌套使用吗？" class="headerlink" title="15.布局容器可以嵌套使用吗？"></a>15.布局容器可以嵌套使用吗？</h3><p>可以</p>
+<h3 id="16-显示图像的控件是？显示文本的控件是？显示进度条的控件是？显示列表对象的控件是？显示输入框的控件是？"><a href="#16-显示图像的控件是？显示文本的控件是？显示进度条的控件是？显示列表对象的控件是？显示输入框的控件是？" class="headerlink" title="16.显示图像的控件是？显示文本的控件是？显示进度条的控件是？显示列表对象的控件是？显示输入框的控件是？"></a>16.显示图像的控件是？显示文本的控件是？显示进度条的控件是？显示列表对象的控件是？显示输入框的控件是？</h3><p>图像 - ImageView<br>文本 - TextView<br>进度条 - ProgressBar<br>列表 - ListView<br>输入框 - EditText</p>
+<h3 id="17-简述单选对话框的创建和使用步骤。"><a href="#17-简述单选对话框的创建和使用步骤。" class="headerlink" title="17.简述单选对话框的创建和使用步骤。"></a>17.简述单选对话框的创建和使用步骤。</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">signProfile</span><span class="params">(<span class="keyword">int</span> array, <span class="keyword">int</span> title, <span class="keyword">final</span> TextView show)</span> </span>&#123;		<span class="keyword">final</span> String[] ssex = getResources().getStringArray(array);AlertDialog.Builder builder = <span class="keyword">new</span> Builder(SignProfileActivity.<span class="keyword">this</span>);		builder.setTitle(title);		builder.setCancelable(<span class="keyword">false</span>);         <span class="comment">// 表示选用的是单选的对话框，同理，若是多选或者列表对话框只需表示为</span>         <span class="comment">// 多选 ：setMultiChoiceItems(arg0, arg1, arg2)</span>         <span class="comment">// 列表 ：setItems(arg0, arg1)</span>		builder.setSingleChoiceItems(array, <span class="number">1</span>, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;						<span class="meta">@Override</span>			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;                 <span class="comment">// 列表中任一个选项选中的回调函数</span>				picWhich = which;			&#125;		&#125;);			builder.setPositiveButton(R.string.comfirm, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;				<span class="meta">@Override</span>			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;                 <span class="comment">// 确认按键按下的回调函数</span>				show.setText(ssex[signSex]);		 &#125;		&#125;);		builder.setNegativeButton(R.string.cancel, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;						<span class="meta">@Override</span>			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;                 <span class="comment">// 取消按键按下的回调函数</span>				show.setText(ssex[<span class="number">1</span>]);			&#125;		&#125;);         <span class="comment">// 通过builder创建并显示对话框</span>		builder.create().show();		<span class="keyword">return</span> picWhich;	&#125;</div></pre></td></tr></table></figure>
+<h3 id="18-简述多选选对话框的创建和使用步骤。"><a href="#18-简述多选选对话框的创建和使用步骤。" class="headerlink" title="18.简述多选选对话框的创建和使用步骤。"></a>18.简述多选选对话框的创建和使用步骤。</h3><p> 将setSingleChoiceItems方法改为setMultiChoiceItems(arg0, arg1, arg2)</p>
+<h3 id="19-简述复选对话框的创建和使用步骤。"><a href="#19-简述复选对话框的创建和使用步骤。" class="headerlink" title="19.简述复选对话框的创建和使用步骤。"></a>19.简述复选对话框的创建和使用步骤。</h3><p>将setSingleChoiceItems改为setItems(CharSequence[] arg0, OnClickListener arg1)</p>
+<h3 id="20-怎样弹出上下文菜单COntextMenu？简述上下文菜单的建立过程。"><a href="#20-怎样弹出上下文菜单COntextMenu？简述上下文菜单的建立过程。" class="headerlink" title="20.怎样弹出上下文菜单COntextMenu？简述上下文菜单的建立过程。"></a>20.怎样弹出上下文菜单COntextMenu？简述上下文菜单的建立过程。</h3><p>长按弹出。<br>建立流程:<br>1)在Activity中使用上下文菜单，复写onCreateContextMenu() 和 onContextItemSelected()方法；<br>2)为视图控件View中注册上下文菜单，使用registerForContextMenu（View）方法。<br>3)在onCreateContextMenu(…ContextMenu menu)中添加菜单项menu.add(…)；<br>4)在onContextItemSelected()中通过设置菜单的id来实现菜单子项的监听。<br><a href="http://www.cnblogs.com/codingmyworld/archive/2011/08/27/2155521.html" target="_blank" rel="external">详细过程</a></p>
+<h3 id="21-选项菜单Menu是怎样弹出的？了解选项菜单文件的格式。"><a href="#21-选项菜单Menu是怎样弹出的？了解选项菜单文件的格式。" class="headerlink" title="21.选项菜单Menu是怎样弹出的？了解选项菜单文件的格式。"></a>21.选项菜单Menu是怎样弹出的？了解选项菜单文件的格式。</h3><p>点击手机Menu键</p>
+<blockquote>
+<p>了解选项菜单文件的格式(这个是答什么？)</p>
+</blockquote>
+<h3 id="22-创建toast需要使用其静态方法是？可以创建自定义toast吗？"><a href="#22-创建toast需要使用其静态方法是？可以创建自定义toast吗？" class="headerlink" title="22.创建toast需要使用其静态方法是？可以创建自定义toast吗？"></a>22.创建toast需要使用其静态方法是？可以创建自定义toast吗？</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Toast.makeText(FirstActivity.<span class="keyword">this</span>,<span class="string">"you clicked button 1"</span>,Toast.LENGTH_SHORT).show();</div></pre></td></tr></table></figure>
+<pre><code>可以自定义，[自定义的方法](http://www.cnblogs.com/salam/archive/2010/11/10/1873654.html)
+</code></pre><h3 id="23-通知对象notification，可以设置让手机振动吗？可以设置让手机的指示灯闪烁红色吗？"><a href="#23-通知对象notification，可以设置让手机振动吗？可以设置让手机的指示灯闪烁红色吗？" class="headerlink" title="23.通知对象notification，可以设置让手机振动吗？可以设置让手机的指示灯闪烁红色吗？"></a>23.通知对象notification，可以设置让手机振动吗？可以设置让手机的指示灯闪烁红色吗？</h3><p>可以，<a href="http://www.cnblogs.com/xy95/p/5870040.html" target="_blank" rel="external">方法</a></p>
+<h3 id="24-简述通知对象的使用步骤。"><a href="#24-简述通知对象的使用步骤。" class="headerlink" title="24.简述通知对象的使用步骤。"></a>24.简述通知对象的使用步骤。</h3><p>（1）获取NotificationManager实例<br>　　NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);</p>
+<p>（2）创建Notification对象，该对象用于存储通知的各种所需信息，我们可以使用它的有参构造函数来创建。<br>　　第一个参数指定通知图标，第二个参数用于指定通知的ticker 内容，当通知刚被创建的时候，它会在系统的状态栏一闪而过，属于一种瞬时的提示信息。第三个参数用于指定通知被创建的时间，以毫秒为单位，<br>　　Notification notification = new Notification(R.drawable.ic_launcher,”This is a ticker text”,System.currentTimeMillis());</p>
+<p>（3）调用Notification的setLatestEventIfo()方法对通知的布局进行设定，这个方法接收四个参数，第一个参数是Context。第二个参数用于指定通知的标题内容，下拉系统状态栏就可以看到这部分内容。第三个参数用于指定通知的正文内容，同样下拉系统状态栏就可以看到这部分内容。第四个参数用于指定实现通知点击事件的PendingIntent对象，如果暂时用不到可以先传入null。因此，对通知的布局进行设定就可以写成：<br>　　notification.setLatestEventInfo(context, “This is content title”, “This iscontent text”, null);<br>　　<br>（4）调用NotificationManager的notify（）方法显示通知。</p>
+<h3 id="25-使用列表控件，需要使用适配器。创建自定义适配器，需要从哪个类继承？需要传递哪两个最基本的参数？需要覆写哪个方法才能正确显示数据？"><a href="#25-使用列表控件，需要使用适配器。创建自定义适配器，需要从哪个类继承？需要传递哪两个最基本的参数？需要覆写哪个方法才能正确显示数据？" class="headerlink" title="25.*使用列表控件，需要使用适配器。创建自定义适配器，需要从哪个类继承？需要传递哪两个最基本的参数？需要覆写哪个方法才能正确显示数据？"></a>25.*使用列表控件，需要使用适配器。创建自定义适配器，需要从哪个类继承？需要传递哪两个最基本的参数？需要覆写哪个方法才能正确显示数据？</h3><p>继承BaseAdapter类。context和布局文件<br>getview()</p>
+<h3 id="26-安卓程序启动服务的两种方式是？其引发的服务生命周期中的事件是否一样？"><a href="#26-安卓程序启动服务的两种方式是？其引发的服务生命周期中的事件是否一样？" class="headerlink" title="26.安卓程序启动服务的两种方式是？其引发的服务生命周期中的事件是否一样？"></a>26.安卓程序启动服务的两种方式是？其引发的服务生命周期中的事件是否一样？</h3><p>采用Start方式开启<br>1.定义一个类继承Service<br>2.在Manifest.xml文件中配置该Service<br>3.使用Context的startService(Intent)方法启动该Service<br>4.不再使用时，调用stopService(Intent)方法停止该服务<br>使用这种start方式启动的Service的生命周期如下：<br>onCreate()—&gt;onStartCommand()（onStart()方法已过时） —&gt; onDestory()<br>说明：如果服务已经开启，不会重复的执行onCreate()， 而是会调用onStart()和onStartCommand()。<br>服务停止的时候调用 onDestory()。服务只会被停止一次。</p>
+<p>采用Bind方式开启<br>1.定义一个类继承Service<br>2.在Manifest.xml文件中配置该Service<br>3.使用Context的bindService(Intent, ServiceConnection, int)方法启动该Service<br>4.不再使用时，调用unbindService(ServiceConnection)方法停止该服务<br>使用这种start方式启动的Service的生命周期如下：<br>onCreate() —&gt;onBind()—&gt;onunbind()—&gt;onDestory()<br>注意：绑定服务不会调用onstart()或者onstartcommand()方法</p>
+<p><a href="http://blog.csdn.net/syc434432458/article/details/51194268" target="_blank" rel="external">详细区别</a></p>
+<h3 id="27-停止服务的的方法是？"><a href="#27-停止服务的的方法是？" class="headerlink" title="27.停止服务的的方法是？"></a>27.停止服务的的方法是？</h3><p>  stopService(intent);  </p>
+<h3 id="28-要使用远程服务，必须定义一个接口文件，其扩展名一般是？"><a href="#28-要使用远程服务，必须定义一个接口文件，其扩展名一般是？" class="headerlink" title="28.要使用远程服务，必须定义一个接口文件，其扩展名一般是？"></a>28.要使用远程服务，必须定义一个接口文件，其扩展名一般是？</h3><p>.aidl</p>
+<blockquote>
+<p>通过AIDL文件定义服务(Service)向客户端(Client)提供的接口，我们需要在对应的目录下添加一个后缀为.aidl的文件</p>
+</blockquote>
+<h3 id="29-简述安卓应用程序发送广播的过程。"><a href="#29-简述安卓应用程序发送广播的过程。" class="headerlink" title="29.简述安卓应用程序发送广播的过程。"></a>29.简述安卓应用程序发送广播的过程。</h3><p>发送广播 - 接收广播 - 结束</p>
+<h3 id="30-简述安卓程序接收消息的方法和步骤。写出注册接收器的配置文件的片段。"><a href="#30-简述安卓程序接收消息的方法和步骤。写出注册接收器的配置文件的片段。" class="headerlink" title="30.简述安卓程序接收消息的方法和步骤。写出注册接收器的配置文件的片段。"></a>30.简述安卓程序接收消息的方法和步骤。写出注册接收器的配置文件的片段。</h3><p>接收消息的方法<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyReceiver</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;  </div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;  </div><div class="line">        Toast.makeText(context, <span class="string">"接收到的Intent的Action位："</span>+intent.getAction()+<span class="string">"\n消息内容是："</span>+intent.getStringExtra(<span class="string">"msg"</span>),Toast.LENGTH_LONG).show();  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注册接收器的配置文件<br><figure class="highlight"><table><tr><td class="code"><pre><div class="line">&lt;receiver android:name=".MyReceiver"&gt;  </div><div class="line">           &lt;intent-filter &gt;  </div><div class="line">               &lt;action android:name="com.example.BROADCAST"/&gt;  </div><div class="line">           &lt;/intent-filter&gt;  </div><div class="line">       &lt;/receiver&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="31-安卓应用程序可以接收系统级别的广播消息吗？"><a href="#31-安卓应用程序可以接收系统级别的广播消息吗？" class="headerlink" title="31.安卓应用程序可以接收系统级别的广播消息吗？"></a>31.安卓应用程序可以接收系统级别的广播消息吗？</h3><p>可以</p>
+<h3 id="32-使用sharedPreferrence对象，可以直接存储对象的数据吗？sharedPreferrence采用什么格式存储数据？"><a href="#32-使用sharedPreferrence对象，可以直接存储对象的数据吗？sharedPreferrence采用什么格式存储数据？" class="headerlink" title="32.*使用sharedPreferrence对象，可以直接存储对象的数据吗？sharedPreferrence采用什么格式存储数据？"></a>32.*使用sharedPreferrence对象，可以直接存储对象的数据吗？sharedPreferrence采用什么格式存储数据？</h3><p>采用XML文件存储key-value键值对数据，位于/data/data/&lt;包名&gt;/shared_prefs目录</p>
+<h3 id="33-安卓程序存储数据表格，采用哪种存储技术较好？"><a href="#33-安卓程序存储数据表格，采用哪种存储技术较好？" class="headerlink" title="33.安卓程序存储数据表格，采用哪种存储技术较好？"></a>33.安卓程序存储数据表格，采用哪种存储技术较好？</h3><p>SQLite</p>
+<h3 id="34-安卓应用程序的数据，要共享给其它应用程序使用，需要采取的存储技术是？"><a href="#34-安卓应用程序的数据，要共享给其它应用程序使用，需要采取的存储技术是？" class="headerlink" title="34.安卓应用程序的数据，要共享给其它应用程序使用，需要采取的存储技术是？"></a>34.安卓应用程序的数据，要共享给其它应用程序使用，需要采取的存储技术是？</h3><p>ContentProvider</p>
+<h3 id="35-安卓文件存储数据，可以保存任意类型的数据吗？打开输出文件流的方法是？打开输入文件流的方法是？"><a href="#35-安卓文件存储数据，可以保存任意类型的数据吗？打开输出文件流的方法是？打开输入文件流的方法是？" class="headerlink" title="35.*安卓文件存储数据，可以保存任意类型的数据吗？打开输出文件流的方法是？打开输入文件流的方法是？"></a>35.*安卓文件存储数据，可以保存任意类型的数据吗？打开输出文件流的方法是？打开输入文件流的方法是？</h3><p>打开输出文件流<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">File file=<span class="keyword">new</span> File(filename);  </div><div class="line">FileOutputStream outputStream=context.openFileOutput(filename, Context.MODE_PRIVATE); <span class="comment">//创建文件输出流并且指定文件操作模式  </span></div><div class="line">outputStream.write(fileContent.getBytes());<span class="comment">//写入输出流  </span></div><div class="line">outputStream.close();<span class="comment">//关闭输出流</span></div></pre></td></tr></table></figure></p>
+<p>打开输入文件流<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">/**  </div><div class="line">     * 读取数据   </div><div class="line">     * @param filename 文件名称  </div><div class="line">     * @return  </div><div class="line">     */  </div><div class="line">    public String read(String filename) throws Exception&#123;  </div><div class="line">        File file=new File(filename);  </div><div class="line">        FileInputStream inputStream= new FileInputStream(file);                  //创建输入流  </div><div class="line">        ByteArrayOutputStream outStream=new ByteArrayOutputStream();             //缓存输出流  </div><div class="line">        byte[] buffer =new byte[1024];                                           //创建字节数组  </div><div class="line">        int len=0;  </div><div class="line">         while((len=inputStream.read(buffer))!=-1)&#123;                              //循环读取数据并且将数据写入到缓存输出流中  </div><div class="line">            outStream.write(buffer, 0, len);  </div><div class="line">        &#125;  </div><div class="line">        return new String(outStream.toByteArray());  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="36-安卓程序与服务器程序通信，一般采用哪种方式？"><a href="#36-安卓程序与服务器程序通信，一般采用哪种方式？" class="headerlink" title="36.安卓程序与服务器程序通信，一般采用哪种方式？"></a>36.安卓程序与服务器程序通信，一般采用哪种方式？</h3><p>socket</p>
+<h3 id="37-Socket客户端程序，需要设置连接服务器的哪几个参数才能正确连接到服务器？"><a href="#37-Socket客户端程序，需要设置连接服务器的哪几个参数才能正确连接到服务器？" class="headerlink" title="37.Socket客户端程序，需要设置连接服务器的哪几个参数才能正确连接到服务器？"></a>37.Socket客户端程序，需要设置连接服务器的哪几个参数才能正确连接到服务器？</h3><p>IP地址和端口号</p>
+<h3 id="38-Http通信方式中，服务器不能主动往客户端发送数据吗？"><a href="#38-Http通信方式中，服务器不能主动往客户端发送数据吗？" class="headerlink" title="38.Http通信方式中，服务器不能主动往客户端发送数据吗？"></a>38.Http通信方式中，服务器不能主动往客户端发送数据吗？</h3><p>应该不能，因为http协议是基于请求/响应模式，客户端要想获取数据，需要通过get请求，而不能有服务器主动发送（话说主动发送的话没有客户端的信息，怎么发给指定的客户端？）</p>
+<h3 id="39-编写安卓客户端登录界面程序，UI要求能输入账号、密码，服务器的IP地址和端口号；后台程序能保存最近使用的参数，下次启动程序时，自动恢复上次的数据。"><a href="#39-编写安卓客户端登录界面程序，UI要求能输入账号、密码，服务器的IP地址和端口号；后台程序能保存最近使用的参数，下次启动程序时，自动恢复上次的数据。" class="headerlink" title="39.编写安卓客户端登录界面程序，UI要求能输入账号、密码，服务器的IP地址和端口号；后台程序能保存最近使用的参数，下次启动程序时，自动恢复上次的数据。"></a>39.编写安卓客户端登录界面程序，UI要求能输入账号、密码，服务器的IP地址和端口号；后台程序能保存最近使用的参数，下次启动程序时，自动恢复上次的数据。</h3><p>xml界面<br><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/activity_main"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:paddingBottom</span>=<span class="string">"@dimen/activity_vertical_margin"</span></div><div class="line">    <span class="attr">android:paddingLeft</span>=<span class="string">"@dimen/activity_horizontal_margin"</span></div><div class="line">    <span class="attr">android:paddingRight</span>=<span class="string">"@dimen/activity_horizontal_margin"</span></div><div class="line">    <span class="attr">android:paddingTop</span>=<span class="string">"@dimen/activity_vertical_margin"</span></div><div class="line">    <span class="attr">tools:context</span>=<span class="string">"wxz.name.ui1.MainActivity"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">EditText</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:inputType</span>=<span class="string">"textPersonName"</span></div><div class="line">        <span class="attr">android:ems</span>=<span class="string">"10"</span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/editText1"</span></div><div class="line">        <span class="attr">android:hint</span>=<span class="string">"账号"</span></div><div class="line"></div><div class="line"> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">EditText</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:inputType</span>=<span class="string">"textPersonName"</span></div><div class="line">        <span class="attr">android:ems</span>=<span class="string">"10"</span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/editText3"</span></div><div class="line">        <span class="attr">android:hint</span>=<span class="string">"ip地址"</span></div><div class="line">        <span class="attr">android:layout_below</span>=<span class="string">"@+id/editText2"</span></div><div class="line"> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">EditText</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:inputType</span>=<span class="string">"textPersonName"</span></div><div class="line">        <span class="attr">android:ems</span>=<span class="string">"10"</span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/editText4"</span></div><div class="line">        <span class="attr">android:hint</span>=<span class="string">"端口"</span></div><div class="line">        <span class="attr">android:layout_marginTop</span>=<span class="string">"31dp"</span></div><div class="line">        <span class="attr">android:layout_below</span>=<span class="string">"@+id/editText2"</span></div><div class="line"> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">EditText</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:inputType</span>=<span class="string">"textPassword"</span></div><div class="line">        <span class="attr">android:ems</span>=<span class="string">"10"</span></div><div class="line">        <span class="attr">android:layout_marginTop</span>=<span class="string">"28dp"</span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/editText2"</span></div><div class="line">        <span class="attr">android:hint</span>=<span class="string">"密码"</span></div><div class="line"> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>java文件<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">     <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">     setContentView(R.layout.activity_main);</div><div class="line">        </div><div class="line">    EditText userName = (EditText)findViewById(R.id.editText1);</div><div class="line">    EditText passWord = (EditText)findViewById(R.id.editText2);</div><div class="line">    EditText ipEdit = (EditText)findViewById(R.id.editText3);</div><div class="line">    EditText portEdit = (EditText)findViewById(R.id.editText4);</div><div class="line">    </div><div class="line">    SharedPreferencessharedPreferences= getSharedPreferences(<span class="string">"test"</span>, </div><div class="line">    Activity.MODE_PRIVATE); </div><div class="line"></div><div class="line">String username =sharedPreferences.getString(<span class="string">"username"</span>, <span class="string">""</span>); </div><div class="line">String passWord =sharedPreferences.getString(<span class="string">"passWord"</span>, <span class="string">""</span>); </div><div class="line">String ip =sharedPreferences.getString(<span class="string">"ip"</span>, <span class="string">""</span>); </div><div class="line">String port =sharedPreferences.getString(<span class="string">"port"</span>, <span class="string">""</span>); </div><div class="line"></div><div class="line">userName.text=username;</div><div class="line">passWord.text=passWord;</div><div class="line">ipEdit.text=ip;</div><div class="line">portEdit.text=port;</div><div class="line">&#125;</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">    <span class="keyword">super</span>.onDestroy();</div><div class="line">    WriteUserInfo()</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span>  <span class="title">WriteUserInfo</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    SharedPreferences userInfo = getSharedPreferences(<span class="string">"user_info"</span>,<span class="number">0</span>);</div><div class="line">    SharedPreferences.Editor editor = userInfo.edit();</div><div class="line">    editor.putString(<span class="string">"username"</span>, userName.getText().toString());</div><div class="line">    editor.putString(<span class="string">"passWord"</span>, passWord.getText().toString());</div><div class="line">editor.putString(<span class="string">"ip"</span>, ipEdit.getText().toString());</div><div class="line">editor.putString(<span class="string">"port"</span>, portEdit.getText().toString());</div><div class="line">    editor.commit();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="40-编写安卓应用程序，要求使用列表对象显示班级学生的信息。性别用图片显示，姓名、学号、专业、地址用文字显示。"><a href="#40-编写安卓应用程序，要求使用列表对象显示班级学生的信息。性别用图片显示，姓名、学号、专业、地址用文字显示。" class="headerlink" title="40.编写安卓应用程序，要求使用列表对象显示班级学生的信息。性别用图片显示，姓名、学号、专业、地址用文字显示。"></a>40.编写安卓应用程序，要求使用列表对象显示班级学生的信息。性别用图片显示，姓名、学号、专业、地址用文字显示。</h3><p>以下代码未包括，性别用图片显示这无聊的功能，如果要实现这个功能需要新建一个类重写适配器。代码巨长</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>  </span></div><div class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span>  </div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span>  </div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span> &gt;  </div><div class="line">  </div><div class="line">    <span class="tag">&lt;<span class="name">ListView</span>  </span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/listView"</span>  </div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span>  </div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span> &gt;  </div><div class="line">    <span class="tag">&lt;/<span class="name">ListView</span>&gt;</span>  </div><div class="line">  </div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;  </div><div class="line">  </div><div class="line"><span class="keyword">private</span> ListView myListView;<span class="comment">//列表  </span></div><div class="line"><span class="keyword">private</span> List&lt;String&gt; itemList;<span class="comment">//数据  </span></div><div class="line">  </div><div class="line"><span class="meta">@Override</span>  </div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;  </div><div class="line"><span class="keyword">super</span>.onCreate(savedInstanceState);  </div><div class="line">setContentView(R.layout.activity_main);  </div><div class="line">initData();  </div><div class="line">myListView = (ListView) findViewById(R.id.listView);  </div><div class="line"><span class="comment">//ArrayAdapter中有三个参数  </span></div><div class="line"><span class="comment">//Context context 指定现在的上下文  </span></div><div class="line"><span class="comment">//int textViewResourceId 指定一个包含textview的布局文件,显示每行的信息  </span></div><div class="line"><span class="comment">//List&lt;String&gt; objects 在listview上显示的数据信息  </span></div><div class="line">ArrayAdapter&lt;String&gt; myAdapter = <span class="keyword">new</span> ArrayAdapter&lt;String&gt;(MainActivity.<span class="keyword">this</span>,  </div><div class="line">android.R.layout.simple_list_item_1, itemList);<span class="comment">//适配器  </span></div><div class="line">&#125;  </div><div class="line">  </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initData</span><span class="params">()</span> </span>&#123;  </div><div class="line">itemList = <span class="keyword">new</span> ArrayList&lt;String&gt;();  </div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;  </div><div class="line">string name=“名字”;</div><div class="line">string number=<span class="string">"15408500000"</span>;</div><div class="line">itemList.add(<span class="string">"姓名:"</span> +name+ <span class="string">"学号"</span>+number);<span class="comment">//省略.....name和number需要自己修改  </span></div><div class="line">&#125;  </div><div class="line">&#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/12/08/iOS-privacy-cn/" data-toggle="tooltip" data-placement="top"
+                           title="App 隐私政策网址(URL)">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/11/06/Build-ShadowSocks/" data-toggle="tooltip" data-placement="top"
+                           title="关于搭建ShadowSocks以及使用">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#卷子结构"><span class="toc-text">卷子结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ADT的主要功能是什么？"><span class="toc-text">1.ADT的主要功能是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-安卓应用程序的结构："><span class="toc-text">2.安卓应用程序的结构：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-安卓编译器生成的可发布的文件的扩展名是？"><span class="toc-text">3.安卓编译器生成的可发布的文件的扩展名是？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-安卓编译器把所有的资源的ID号，放在那个Java文档中"><span class="toc-text">4.安卓编译器把所有的资源的ID号，放在那个Java文档中?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-安卓系统的框架，一般分为哪四层？资源管理器、活动管理器定义在哪个结构层？通知管理器notificationManager定义在哪个结构层？"><span class="toc-text">5.安卓系统的框架，一般分为哪四层？资源管理器、活动管理器定义在哪个结构层？通知管理器notificationManager定义在哪个结构层？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-一个安卓应用程序这只能有一个活动-Activity吗？同一时刻可以有多个UI交互界面可操作吗？"><span class="toc-text">6.一个安卓应用程序这只能有一个活动 Activity吗？同一时刻可以有多个UI交互界面可操作吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-安卓应用程序的Activity一般由哪两个最基本的部分组成？"><span class="toc-text">7.安卓应用程序的Activity一般由哪两个最基本的部分组成？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-活动处在Pause状态时，UI界面是不可见的吗？在Stop状态，活动在内存中不存在了吗？活动刚创建的时候，一般最早引发那个事件？"><span class="toc-text">8.活动处在Pause状态时，UI界面是不可见的吗？在Stop状态，活动在内存中不存在了吗？活动刚创建的时候，一般最早引发那个事件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-安卓活动管理器，采用堆栈还是队列的方式管理活动？"><span class="toc-text">9.安卓活动管理器，采用堆栈还是队列的方式管理活动？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-把一个活动作为对话框显示时，能够引发调用活动的Stop事件吗？怎样在配置文件中设置？"><span class="toc-text">10.把一个活动作为对话框显示时，能够引发调用活动的Stop事件吗？怎样在配置文件中设置？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-意图对象Intent无法用于活动间的导航？"><span class="toc-text">11.意图对象Intent无法用于活动间的导航？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-写出一个导航到拨打指定电话的Intent。"><span class="toc-text">12.写出一个导航到拨打指定电话的Intent。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-线性布局容器，只能让控件从上到下排列？如何让线性布局容器，让控件从下到上排列"><span class="toc-text">13.*线性布局容器，只能让控件从上到下排列？如何让线性布局容器，让控件从下到上排列?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-所有控件都是从View继承来的吗？"><span class="toc-text">14.所有控件都是从View继承来的吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-布局容器可以嵌套使用吗？"><span class="toc-text">15.布局容器可以嵌套使用吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-显示图像的控件是？显示文本的控件是？显示进度条的控件是？显示列表对象的控件是？显示输入框的控件是？"><span class="toc-text">16.显示图像的控件是？显示文本的控件是？显示进度条的控件是？显示列表对象的控件是？显示输入框的控件是？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-简述单选对话框的创建和使用步骤。"><span class="toc-text">17.简述单选对话框的创建和使用步骤。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#18-简述多选选对话框的创建和使用步骤。"><span class="toc-text">18.简述多选选对话框的创建和使用步骤。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#19-简述复选对话框的创建和使用步骤。"><span class="toc-text">19.简述复选对话框的创建和使用步骤。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#20-怎样弹出上下文菜单COntextMenu？简述上下文菜单的建立过程。"><span class="toc-text">20.怎样弹出上下文菜单COntextMenu？简述上下文菜单的建立过程。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#21-选项菜单Menu是怎样弹出的？了解选项菜单文件的格式。"><span class="toc-text">21.选项菜单Menu是怎样弹出的？了解选项菜单文件的格式。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#22-创建toast需要使用其静态方法是？可以创建自定义toast吗？"><span class="toc-text">22.创建toast需要使用其静态方法是？可以创建自定义toast吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#23-通知对象notification，可以设置让手机振动吗？可以设置让手机的指示灯闪烁红色吗？"><span class="toc-text">23.通知对象notification，可以设置让手机振动吗？可以设置让手机的指示灯闪烁红色吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#24-简述通知对象的使用步骤。"><span class="toc-text">24.简述通知对象的使用步骤。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#25-使用列表控件，需要使用适配器。创建自定义适配器，需要从哪个类继承？需要传递哪两个最基本的参数？需要覆写哪个方法才能正确显示数据？"><span class="toc-text">25.*使用列表控件，需要使用适配器。创建自定义适配器，需要从哪个类继承？需要传递哪两个最基本的参数？需要覆写哪个方法才能正确显示数据？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#26-安卓程序启动服务的两种方式是？其引发的服务生命周期中的事件是否一样？"><span class="toc-text">26.安卓程序启动服务的两种方式是？其引发的服务生命周期中的事件是否一样？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#27-停止服务的的方法是？"><span class="toc-text">27.停止服务的的方法是？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#28-要使用远程服务，必须定义一个接口文件，其扩展名一般是？"><span class="toc-text">28.要使用远程服务，必须定义一个接口文件，其扩展名一般是？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#29-简述安卓应用程序发送广播的过程。"><span class="toc-text">29.简述安卓应用程序发送广播的过程。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#30-简述安卓程序接收消息的方法和步骤。写出注册接收器的配置文件的片段。"><span class="toc-text">30.简述安卓程序接收消息的方法和步骤。写出注册接收器的配置文件的片段。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#31-安卓应用程序可以接收系统级别的广播消息吗？"><span class="toc-text">31.安卓应用程序可以接收系统级别的广播消息吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#32-使用sharedPreferrence对象，可以直接存储对象的数据吗？sharedPreferrence采用什么格式存储数据？"><span class="toc-text">32.*使用sharedPreferrence对象，可以直接存储对象的数据吗？sharedPreferrence采用什么格式存储数据？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#33-安卓程序存储数据表格，采用哪种存储技术较好？"><span class="toc-text">33.安卓程序存储数据表格，采用哪种存储技术较好？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#34-安卓应用程序的数据，要共享给其它应用程序使用，需要采取的存储技术是？"><span class="toc-text">34.安卓应用程序的数据，要共享给其它应用程序使用，需要采取的存储技术是？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#35-安卓文件存储数据，可以保存任意类型的数据吗？打开输出文件流的方法是？打开输入文件流的方法是？"><span class="toc-text">35.*安卓文件存储数据，可以保存任意类型的数据吗？打开输出文件流的方法是？打开输入文件流的方法是？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#36-安卓程序与服务器程序通信，一般采用哪种方式？"><span class="toc-text">36.安卓程序与服务器程序通信，一般采用哪种方式？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#37-Socket客户端程序，需要设置连接服务器的哪几个参数才能正确连接到服务器？"><span class="toc-text">37.Socket客户端程序，需要设置连接服务器的哪几个参数才能正确连接到服务器？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#38-Http通信方式中，服务器不能主动往客户端发送数据吗？"><span class="toc-text">38.Http通信方式中，服务器不能主动往客户端发送数据吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#39-编写安卓客户端登录界面程序，UI要求能输入账号、密码，服务器的IP地址和端口号；后台程序能保存最近使用的参数，下次启动程序时，自动恢复上次的数据。"><span class="toc-text">39.编写安卓客户端登录界面程序，UI要求能输入账号、密码，服务器的IP地址和端口号；后台程序能保存最近使用的参数，下次启动程序时，自动恢复上次的数据。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#40-编写安卓应用程序，要求使用列表对象显示班级学生的信息。性别用图片显示，姓名、学号、专业、地址用文字显示。"><span class="toc-text">40.编写安卓应用程序，要求使用列表对象显示班级学生的信息。性别用图片显示，姓名、学号、专业、地址用文字显示。</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做什么都是因为喜欢.">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="favicon1.png">
+    <link rel="alternate" type="application/atom+xml" title="Nine" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        iOS问题整理回答｜Nine&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.wxz.name/2016/10/09/interviewQuestions/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('https://oco8bvfr8.qnssl.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nine
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/work/">work</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://img.wxz.name/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://img.wxz.name/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>iOS问题整理回答</h1>
+                    
+                    <span class="meta">
+                         作者 汪小祯
+                        <span>
+                          日期 2016-10-09
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#iOS"
+                           title="iOS">iOS</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            iOS问题整理回答
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>感觉自己基础不够老实，网上找了一些别人的面试题，自己搜集了一些资料，来回答。<br><a id="more"></a></p>
+<h1 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h1><p><a href="https://www.nowcoder.com/discuss/21022?type=0&amp;order=0&amp;pos=92&amp;page=1" target="_blank" rel="external">原文地址</a></p>
+<h2 id="OC-中load方法和initialize方法的异同。"><a href="#OC-中load方法和initialize方法的异同。" class="headerlink" title="OC 中load方法和initialize方法的异同。"></a>OC 中load方法和initialize方法的异同。</h2><p>load<br>被程序装载时调用，main之前<br>父类-&gt;子类-&gt;分类<br>如果一个类没有实现load方法，那么就不会调用它父类的load方法<br>根据编译顺序</p>
+<p>initializez<br>第一次给某个类发送消息时调用，惰性调用<br>如果子类实现了initialize方法，就不会执行父类的了，直接执行子类本身的。如果分类实现了initialize方法，也不会再执行主类的。所以initialize方法的执行覆盖顺序是 分类 -&gt; 子类 -&gt;类。且只会有一个initialize方法被执行。<br><a href="http://www.jianshu.com/p/d25f691f0b07" target="_blank" rel="external">建议学习</a></p>
+<h2 id="说说你对-block-的理解"><a href="#说说你对-block-的理解" class="headerlink" title="说说你对 block 的理解"></a>说说你对 block 的理解</h2><h1 id="面试题集合"><a href="#面试题集合" class="headerlink" title="面试题集合"></a>面试题集合</h1><p><a href="http://www.2bjs.com/求职笔记/iOS面试题集合(BAT及各大中小型公司" target="_blank" rel="external">原文地址</a>/)</p>
+<h1 id="去哪儿网一面"><a href="#去哪儿网一面" class="headerlink" title="去哪儿网一面"></a>去哪儿网一面</h1><h2 id="1-自我介绍"><a href="#1-自我介绍" class="headerlink" title="1.自我介绍"></a>1.自我介绍</h2><h2 id="2-atomic-和-nonatomic-的区别"><a href="#2-atomic-和-nonatomic-的区别" class="headerlink" title="2.atomic 和 nonatomic 的区别"></a>2.atomic 和 nonatomic 的区别</h2><p>前者是原子性，后者是非原子型。两者的区别在于一个加锁，比如说一个属性，同时几个线程在读和写，那么atomic能保证其不受到其他线程的影响。但不能保证线程安全，比如说线程 A 调了 getter，与此同时线程 B 、线程 C 都调了 setter——那最后线程 A get 到的值，3种都有可能。<br>从代码角度解释<br>非原子型<br><figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="comment">//@property(nonatomic, retain) UITextField *userName;</span></div><div class="line"><span class="comment">//系统生成的代码如下：</span></div><div class="line"></div><div class="line">- (UITextField *) userName &#123;</div><div class="line">    <span class="keyword">return</span> userName;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) setUserName:(UITextField *)userName_ &#123;</div><div class="line">    [userName_ retain];</div><div class="line">    [userName release];</div><div class="line">    userName = userName_;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>原子型<br><figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="comment">//@property(retain) UITextField *userName;</span></div><div class="line"><span class="comment">//系统生成的代码如下：</span></div><div class="line"></div><div class="line">- (UITextField *) userName &#123;</div><div class="line">    UITextField *retval = nil;</div><div class="line">    @synchronized(self) &#123;</div><div class="line">        retval = [[userName retain] autorelease];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> retval;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>) setUserName:(UITextField *)userName_ &#123;</div><div class="line">    @synchronized(self) &#123;</div><div class="line">      [userName release];</div><div class="line">      userName = [userName_ retain];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>建议阅读:<br><a href="http://www.jianshu.com/p/7288eacbb1a2" target="_blank" rel="external">atomic 和 nonatomic 有什么区别?</a><br><a href="http://www.cocoachina.com/ios/20151103/14007.html" target="_blank" rel="external">关于 @synchronized，这儿比你想知道的还要多</a></p>
+<h2 id="3-手写-property-nonatomic-strong-readonly-NSString-context-的get-方法。前提是线程安全，lazy-load的方式"><a href="#3-手写-property-nonatomic-strong-readonly-NSString-context-的get-方法。前提是线程安全，lazy-load的方式" class="headerlink" title="3.手写@property (nonatomic, strong, readonly) NSString *context 的get 方法。前提是线程安全，lazy load的方式"></a>3.手写@property (nonatomic, strong, readonly) NSString *context 的get 方法。前提是线程安全，lazy load的方式</h2><figure class="highlight c"><table><tr><td class="code"><pre><div class="line">@synthesize context4=_context4;</div><div class="line">-(NSString*)context4&#123;</div><div class="line">    <span class="keyword">return</span> _context4;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="4-property-atomic-strong-NSString-str-如果重写了str的set方法，那atomic还有效吗？"><a href="#4-property-atomic-strong-NSString-str-如果重写了str的set方法，那atomic还有效吗？" class="headerlink" title="4.@property (atomic, strong) NSString *str; 如果重写了str的set方法，那atomic还有效吗？"></a>4.@property (atomic, strong) NSString *str; 如果重写了str的set方法，那atomic还有效吗？</h2><p>get方法中的同步锁@synchronized还有，但是无法保证set了。</p>
+<h2 id="5-写一个method-能满足输入-6-5-4-3-2-1-数组-输出-1-2-3-4-5-6-数组"><a href="#5-写一个method-能满足输入-6-5-4-3-2-1-数组-输出-1-2-3-4-5-6-数组" class="headerlink" title="5.写一个method 能满足输入[6, 5, 4, 3, 2, 1]数组 输出 [1, 2, 3, 4, 5, 6]数组"></a>5.写一个method 能满足输入[6, 5, 4, 3, 2, 1]数组 输出 [1, 2, 3, 4, 5, 6]数组</h2><h2 id="6-http-socket的区别，http是在网络里面的那一层。这里考的是网络传输的那7层。如何知道消息体的数据已经发送完成了。tcp-udp的理解。"><a href="#6-http-socket的区别，http是在网络里面的那一层。这里考的是网络传输的那7层。如何知道消息体的数据已经发送完成了。tcp-udp的理解。" class="headerlink" title="6.http socket的区别，http是在网络里面的那一层。这里考的是网络传输的那7层。如何知道消息体的数据已经发送完成了。tcp udp的理解。"></a>6.http socket的区别，http是在网络里面的那一层。这里考的是网络传输的那7层。如何知道消息体的数据已经发送完成了。tcp udp的理解。</h2><p><strong>http socket的区别?</strong><br>http在应用层</p>
+<p>建议阅读:<br><a href="http://blog.csdn.net/u012861978/article/details/51236531" target="_blank" rel="external">TCP/IP SOCKET HTTP及HTTPS之间的关系及各自特性之总结</a></p>
+<h2 id="7-一个新的app的设计思路，主要看架构方面的想法"><a href="#7-一个新的app的设计思路，主要看架构方面的想法" class="headerlink" title="7.一个新的app的设计思路，主要看架构方面的想法"></a>7.一个新的app的设计思路，主要看架构方面的想法</h2><h2 id="8-多个登录方式，比如qq，-微信，微博，手机号，邮箱等的登录，如果真对变化进行封装。这里考虑的更多的是设计模式上的问题。"><a href="#8-多个登录方式，比如qq，-微信，微博，手机号，邮箱等的登录，如果真对变化进行封装。这里考虑的更多的是设计模式上的问题。" class="headerlink" title="8.多个登录方式，比如qq， 微信，微博，手机号，邮箱等的登录，如果真对变化进行封装。这里考虑的更多的是设计模式上的问题。"></a>8.多个登录方式，比如qq， 微信，微博，手机号，邮箱等的登录，如果真对变化进行封装。这里考虑的更多的是设计模式上的问题。</h2><h2 id="9-事件响应链（比如点击事件）"><a href="#9-事件响应链（比如点击事件）" class="headerlink" title="9.事件响应链（比如点击事件）"></a>9.事件响应链（比如点击事件）</h2><p><a href="http://www.jianshu.com/p/2e074db792ba" target="_blank" rel="external">史上最详细的iOS之事件的传递和响应机制-原理篇</a></p>
+<h2 id="10-GCD中group的优点，及串行，并行队列"><a href="#10-GCD中group的优点，及串行，并行队列" class="headerlink" title="10.GCD中group的优点，及串行，并行队列"></a>10.GCD中group的优点，及串行，并行队列</h2><p>获知所有线程的完成情况<br>串行队列: 线程任务按先后顺序逐个执行<br>并行队列: 多个任务按添加顺序一起开始执行</p>
+<h2 id="11-framework时动态链接库还是静态链接库，和-a的区别是什么"><a href="#11-framework时动态链接库还是静态链接库，和-a的区别是什么" class="headerlink" title="11.framework时动态链接库还是静态链接库，和.a的区别是什么"></a>11.framework时动态链接库还是静态链接库，和.a的区别是什么</h2><p>.a静态库是一个纯二进制文件，.framework中除了有二进制文件之外还有资源文件<br>.a文件不能直接使用，至少要有.h文件配合，.framework文件可以直接使用(内部直接包含了要展示方法的.h文件)。</p>
+<p>静态库：以.a 和 .framework为文件后缀名。<br>动态库：以.tbd(之前叫.dylib) 和 .framework 为文件后缀名。</p>
+<p>静态库：链接时会被完整的复制到可执行文件中，被多次使用就有多份拷贝。<br>动态库：链接时不复制，程序运行时由系统动态加载到内存，系统只加载一次，多个程序共用（如系统的UIKit.framework等），节省内存。</p>
+<h2 id="12-将对象加入字典，array时的引用计数是多少"><a href="#12-将对象加入字典，array时的引用计数是多少" class="headerlink" title="12.将对象加入字典，array时的引用计数是多少"></a>12.将对象加入字典，array时的引用计数是多少</h2><h2 id="13-weak的实现原理-strong的实现原理"><a href="#13-weak的实现原理-strong的实现原理" class="headerlink" title="13.weak的实现原理 strong的实现原理"></a>13.weak的实现原理 strong的实现原理</h2><h2 id="14-关于引用计数的知识点"><a href="#14-关于引用计数的知识点" class="headerlink" title="14.关于引用计数的知识点"></a>14.关于引用计数的知识点</h2><h2 id="15-手写一个set方法"><a href="#15-手写一个set方法" class="headerlink" title="15.手写一个set方法"></a>15.手写一个set方法</h2><h2 id="16-block中的弱引用强引用，什么情况会导致循环引用，什么时候需要-strong保持强引用"><a href="#16-block中的弱引用强引用，什么情况会导致循环引用，什么时候需要-strong保持强引用" class="headerlink" title="16.block中的弱引用强引用，什么情况会导致循环引用，什么时候需要__strong保持强引用"></a>16.block中的弱引用强引用，什么情况会导致循环引用，什么时候需要__strong保持强引用</h2><p>block中引用self会造成循环引用</p>
+<h2 id="17-app的性能优化，都有哪些"><a href="#17-app的性能优化，都有哪些" class="headerlink" title="17.app的性能优化，都有哪些"></a>17.app的性能优化，都有哪些</h2><h2 id="18-对于image加载的优化方案有哪些"><a href="#18-对于image加载的优化方案有哪些" class="headerlink" title="18.对于image加载的优化方案有哪些"></a>18.对于image加载的优化方案有哪些</h2><h2 id="19-Runloop-runtime的理解"><a href="#19-Runloop-runtime的理解" class="headerlink" title="19.Runloop, runtime的理解"></a>19.Runloop, runtime的理解</h2><h1 id="计算机网络问题整理"><a href="#计算机网络问题整理" class="headerlink" title="计算机网络问题整理"></a>计算机网络问题整理</h1><ol>
+<li>简要说明交换机，路由器的工作原理及它们之间的区别？</li>
+</ol>
+<ul>
+<li>层不同：路由器在OSI的第三层–网络层，而交换机在第二层–数据链路层;</li>
+<li>表不同：路由器有一张路由器表，而交换机有一张桥表;</li>
+<li>功能不同：路由器是不同网段之间的连接设备，主要有路由选择、拥塞控制、存储转发功能;；交换机只有扩展延伸同一网络更多终端的作用。</li>
+<li>协议不同：路由器用的协议多与软件有关，交换机所用协议多与硬件接口有关。</li>
+<li>作用地址不同：路由器针对的地址是IP地址，可以用静态分配和动态分配，是变化的;而交换机作用地址是MAC地址，这是设备厂商出厂时就固化在设备中的，只能有一个，不能变化。</li>
+</ul>
+<p>2.描述TCP 协议三次握手，四次释放的过程<br><img src="https://img.wxz.name/15020184475110.jpg" alt=""></p>
+<blockquote>
+<p>三次握手：<br>1.客户端请求连接，会发送一个SYN序列号。<br>2.服务端发送一个针对上次SYN序号的应答确认号ACK，和一个SYN序列号。<br>3.客户端发送一个针对上次SYN序号的应答确认号ACK。<br>四次握手：<br>1.客户端请求断开连接，会发送一个FIN序号。<br>2.服务端发送一个针对上次FIN序号的应答确认号ACK。<br>3.服务端发送一个FIN序号请求断开连接。<br>4.客户端发送一个针对上次服务端FIN序号的应答确认号ACK。</p>
+</blockquote>
+<p>3.TCP 协议是如何进行流量控制，拥塞控制的？</p>
+<ul>
+<li>TCP流量控制原理<br>  运用TCP报文段中的窗口大小字段来控制，发送方的发送窗口不可以大于接收方发回的窗口大小。</li>
+</ul>
+<p>4.为什么建立连接时是三次握手，两次行不行？如果第三次握手失败了怎么处理</p>
+<ul>
+<li>如果只有两次的话，假如第二次服务端发送完ack就开始传送信息，此时不知道客户端是否可以收到</li>
+<li>假如之前客户端已经请求了一次，但是没有到服务端。之后又请求了一次，得到回复开始传信息然后结束。此时上一次的那个请求才到达客户端。</li>
+<li>如果第三次握手失败后发送RST报文段，进入CLOSED状态</li>
+</ul>
+<p>5.你怎么理解分层和协议？</p>
+<ul>
+<li>每层的提供的服务是固定的，所以每一层改变的时候，不会影响其他层次。<br>比如数据链路层是以太网、令牌环网，他们都能支持IP协议。而应用层的传输协议既可以使用TCP协议，也可以使用UDP协议。分层也使每一层的功能单一。</li>
+<li>协议是两个通信的主体达成一致的通信规则，windows、linux都支持TCP/IP，他们就能通过TCP/IP通信。</li>
+</ul>
+<p>6.HTTP 请求中的 GET 和 POST 的区别</p>
+<ul>
+<li>请求方式:Get请求数据会放在Url之后，POST会放在HTTP请求的包体中。</li>
+<li>传输数据大小，GET请求会受到URL长度限制，POST理论上不受限制，但服务器会对提交大小进行限制</li>
+<li>安全性，POST请求安全性比GET高</li>
+</ul>
+<p>7.Session 和 Cookie 的区别。</p>
+<blockquote>
+<p>1，session 在服务器端，cookie 在客户端（浏览器）<br>2，session 默认被存在在服务器的一个文件里（不是内存）<br>3，session 的运行依赖 session id，而 session id 是存在 cookie 中的，也就是说，如果浏览器禁用了 cookie ，同时 session 也会失效（但是可以通过其它方式实现，比如在 url 中传递 session_id）<br>4，session 可以放在 文件、数据库、或内存中都可以。<br>5，用户验证这种场合一般会用 session</p>
+</blockquote>
+<p>8.谈谈你对 HTTP 1.1，2.0 和 HTTPS 理解</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/10/19/HutHelper/" data-toggle="tooltip" data-placement="top"
+                           title="工大助手iOS端开发日志">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/09/28/ios-opennew/" data-toggle="tooltip" data-placement="top"
+                           title="iOS学习笔记-打开新窗口">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                <!--加入新的评论系统-->
+               
+                    <div class="comments">
+                    <div id="container"></div>
+                        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+                        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+                         <script>
+                            var gitment = new Gitment({
+                            id: location.pathname, // 可选。默认为 location.href
+                            owner: "isnine",
+                            repo: "www.wxz.name",
+                            oauth: {
+                            client_id: "e3bfc43b9dfc0410745c",
+                            client_secret: "ee11e9819591ef72c8584abd8d5e1e21fbaf6cc4",
+                            },
+                            })
+                        gitment.render('container')
+                        </script>
+                </div>
+                
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#学习路线"><span class="toc-text">学习路线</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OC-中load方法和initialize方法的异同。"><span class="toc-text">OC 中load方法和initialize方法的异同。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说说你对-block-的理解"><span class="toc-text">说说你对 block 的理解</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#面试题集合"><span class="toc-text">面试题集合</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#去哪儿网一面"><span class="toc-text">去哪儿网一面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-自我介绍"><span class="toc-text">1.自我介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-atomic-和-nonatomic-的区别"><span class="toc-text">2.atomic 和 nonatomic 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-手写-property-nonatomic-strong-readonly-NSString-context-的get-方法。前提是线程安全，lazy-load的方式"><span class="toc-text">3.手写@property (nonatomic, strong, readonly) NSString *context 的get 方法。前提是线程安全，lazy load的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-property-atomic-strong-NSString-str-如果重写了str的set方法，那atomic还有效吗？"><span class="toc-text">4.@property (atomic, strong) NSString *str; 如果重写了str的set方法，那atomic还有效吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-写一个method-能满足输入-6-5-4-3-2-1-数组-输出-1-2-3-4-5-6-数组"><span class="toc-text">5.写一个method 能满足输入[6, 5, 4, 3, 2, 1]数组 输出 [1, 2, 3, 4, 5, 6]数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-http-socket的区别，http是在网络里面的那一层。这里考的是网络传输的那7层。如何知道消息体的数据已经发送完成了。tcp-udp的理解。"><span class="toc-text">6.http socket的区别，http是在网络里面的那一层。这里考的是网络传输的那7层。如何知道消息体的数据已经发送完成了。tcp udp的理解。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-一个新的app的设计思路，主要看架构方面的想法"><span class="toc-text">7.一个新的app的设计思路，主要看架构方面的想法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-多个登录方式，比如qq，-微信，微博，手机号，邮箱等的登录，如果真对变化进行封装。这里考虑的更多的是设计模式上的问题。"><span class="toc-text">8.多个登录方式，比如qq， 微信，微博，手机号，邮箱等的登录，如果真对变化进行封装。这里考虑的更多的是设计模式上的问题。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-事件响应链（比如点击事件）"><span class="toc-text">9.事件响应链（比如点击事件）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-GCD中group的优点，及串行，并行队列"><span class="toc-text">10.GCD中group的优点，及串行，并行队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-framework时动态链接库还是静态链接库，和-a的区别是什么"><span class="toc-text">11.framework时动态链接库还是静态链接库，和.a的区别是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-将对象加入字典，array时的引用计数是多少"><span class="toc-text">12.将对象加入字典，array时的引用计数是多少</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-weak的实现原理-strong的实现原理"><span class="toc-text">13.weak的实现原理 strong的实现原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-关于引用计数的知识点"><span class="toc-text">14.关于引用计数的知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-手写一个set方法"><span class="toc-text">15.手写一个set方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-block中的弱引用强引用，什么情况会导致循环引用，什么时候需要-strong保持强引用"><span class="toc-text">16.block中的弱引用强引用，什么情况会导致循环引用，什么时候需要__strong保持强引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-app的性能优化，都有哪些"><span class="toc-text">17.app的性能优化，都有哪些</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-对于image加载的优化方案有哪些"><span class="toc-text">18.对于image加载的优化方案有哪些</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-Runloop-runtime的理解"><span class="toc-text">19.Runloop, runtime的理解</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#计算机网络问题整理"><span class="toc-text">计算机网络问题整理</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#iOS"
+                           title="iOS">iOS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://www.zengheng.top/">曾恒</a></li>
+                        
+                        <li><a href="http://gunpowder.net.cn/">火药</a></li>
+                        
+                        <li><a href="https://CSeventh.github.io">昌强</a></li>
+                        
+                        <li><a href="https://royalq.github.io">邱雄强</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnine">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nine 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.wxz.name/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://img.wxz.name/psb-7.jpeg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
