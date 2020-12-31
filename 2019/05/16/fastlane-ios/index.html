@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.zanderwang.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="摘要在公司时，都是由一套完整的工具链完成，开发-&gt;构建-&gt;分发-&gt;测试，等流程而作为个人开发时，失去了这套工具链，自然感觉到十分不便所以笔者思考，能否自己搭建一套这样的工具链呢 需求列表搭建一套工具，首先要明确我想实现的效果我目前发布一个版本到TestFlight内测，需要以下几个步骤  手动改Xcode的build号格式为当天日期+次数，如09051601 手动archive，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS Fastlane+CI自动化构建">
+<meta property="og:url" content="https://www.zanderwang.com/2019/05/16/fastlane-ios/index.html">
+<meta property="og:site_name" content="Zander&#96;s blog">
+<meta property="og:description" content="摘要在公司时，都是由一套完整的工具链完成，开发-&gt;构建-&gt;分发-&gt;测试，等流程而作为个人开发时，失去了这套工具链，自然感觉到十分不便所以笔者思考，能否自己搭建一套这样的工具链呢 需求列表搭建一套工具，首先要明确我想实现的效果我目前发布一个版本到TestFlight内测，需要以下几个步骤  手动改Xcode的build号格式为当天日期+次数，如09051601 手动archive，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img.wxz.name/15583584051012.jpg">
+<meta property="og:image" content="https://img.wxz.name/15583584946186.jpg">
+<meta property="og:image" content="https://img.wxz.name/15584097255132.jpg">
+<meta property="og:image" content="https://img.wxz.name/15584100323855.jpg">
+<meta property="og:image" content="https://img.wxz.name/15584101532733.jpg">
+<meta property="og:image" content="https://img.wxz.name/15584101656036.jpg">
+<meta property="og:image" content="https://img.wxz.name/15584105581907.jpg">
+<meta property="og:image" content="https://img.wxz.name/15584106259902.jpg">
+<meta property="og:image" content="https://img.wxz.name/15584109865524.jpg">
+<meta property="article:published_time" content="2019-05-16T10:12:33.000Z">
+<meta property="article:modified_time" content="2019-09-02T04:26:05.000Z">
+<meta property="article:author" content="Zander Wang">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.wxz.name/15583584051012.jpg">
+
+<link rel="canonical" href="https://www.zanderwang.com/2019/05/16/fastlane-ios/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>iOS Fastlane+CI自动化构建 | Zander`s blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Zander`s blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.zanderwang.com/2019/05/16/fastlane-ios/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zander Wang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zander`s blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS Fastlane+CI自动化构建
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-05-16 18:12:33" itemprop="dateCreated datePublished" datetime="2019-05-16T18:12:33+08:00">2019-05-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-02 12:26:05" itemprop="dateModified" datetime="2019-09-02T12:26:05+08:00">2019-09-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在公司时，都是由一套完整的工具链完成，开发-&gt;构建-&gt;分发-&gt;测试，等流程<br>而作为个人开发时，失去了这套工具链，自然感觉到十分不便<br>所以笔者思考，能否自己搭建一套这样的工具链呢</p>
+<h1 id="需求列表"><a href="#需求列表" class="headerlink" title="需求列表"></a>需求列表</h1><p>搭建一套工具，首先要明确我想实现的效果<br>我目前发布一个版本到TestFlight内测，需要以下几个步骤</p>
+<ul>
+<li>手动改Xcode的build号格式为当天日期+次数，如09051601</li>
+<li>手动archive，等待漫长过程，然后上传appstore</li>
+<li>等待30分钟左右机器审核，然后手动选择组</li>
+<li>重复输入更新内容，再点分发测试</li>
+</ul>
+<p>如果需要发一个版本到AppStore<br>除了上述几个内容，我还需要</p>
+<ul>
+<li>选择编译版本</li>
+<li>添加版本更新内容</li>
+<li>选择有无加密app</li>
+<li>有无增加广告标识号</li>
+</ul>
+<p>对于我而说，我希望上述两个过程，全部可以分别通过一行命令来进行<br>我希望我只需要<strong>git push</strong>一下，这些操作会自动在背后ci构建</p>
+<h1 id="最终实现效果"><a href="#最终实现效果" class="headerlink" title="最终实现效果"></a>最终实现效果</h1><p>本地git push后</p>
+<ul>
+<li>如果当前在master分支，ci自动打包发布TestFlight，版本号为当前日期+次数，并打tag提交。</li>
+<li>如果当前在release/xxx分支，ci自动发布AppStore，版本号为当前日期+次数，并打tag提交。<h2 id="流程示意图"><a href="#流程示意图" class="headerlink" title="流程示意图"></a>流程示意图</h2><img src="https://img.wxz.name/15583584051012.jpg"><h2 id="Ci结果图"><a href="#Ci结果图" class="headerlink" title="Ci结果图"></a>Ci结果图</h2><img src="https://img.wxz.name/15583584946186.jpg"></li>
+</ul>
+<h1 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h1><h2 id="选用工具"><a href="#选用工具" class="headerlink" title="选用工具"></a>选用工具</h2><ul>
+<li>github作为存储代码的仓库</li>
+<li>travis-ci作为构建的ci</li>
+<li>fastlane作为构建工具<blockquote>
+<p>注意，如果你的仓库是私有仓库的话，travis-ci将不再免费，不过如果通过了学生认证的话，依旧是免费的，笔者因为目前是学生，所以并没有单独购买。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="期间遇到的坑"><a href="#期间遇到的坑" class="headerlink" title="期间遇到的坑"></a>期间遇到的坑</h2><ul>
+<li>travis-ci 的KeyChain导致不能编译</li>
+<li>apple的两步验证导致流程不能通过</li>
+<li>build号自增</li>
+</ul>
+<h2 id="1-配置Fastlane"><a href="#1-配置Fastlane" class="headerlink" title="1.配置Fastlane"></a>1.配置Fastlane</h2><p>首先进入工程目录，安装并对工程目录初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 安装fastlane</span><br><span class="line">sudo gem install fastlane -NV</span><br><span class="line"># 初始化工程</span><br><span class="line">fastlane init</span><br></pre></td></tr></table></figure>
+<p>接着修改Fastfile文件<br>可以参照我的<a target="_blank" rel="noopener" href="https://gist.github.com/isnine/d4aacf8fcc7ecae50c3c8390651b893f">Fastfile文件</a></p>
+<h2 id="1-1-更新版本号配置"><a href="#1-1-更新版本号配置" class="headerlink" title="1.1 更新版本号配置"></a>1.1 更新版本号配置</h2><p>在这一步中，我会先从iTunes Connect上获取最新的版本号，然后拉取下来，如果日期相同，则加一，否则重置为当天日期+01.比如19055101</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># 更新版本号</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">updateProjectBuildNumber</span></span></span><br><span class="line">   currentTime = Time.new.strftime(<span class="string">&quot;%y%m%d&quot;</span>)</span><br><span class="line">   build = latest_testflight_build_number(<span class="symbol">version:</span> get_version_number)</span><br><span class="line">   puts(<span class="string">&quot;*************| Tag: <span class="subst">#&#123;build&#125;</span> |*************&quot;</span>)</span><br><span class="line">   buildStr = build.to_s</span><br><span class="line">   <span class="keyword">if</span> buildStr.<span class="keyword">include</span>?<span class="string">&quot;<span class="subst">#&#123;currentTime&#125;</span>&quot;</span></span><br><span class="line">      <span class="comment"># =&gt; 为当天版本 计算迭代版本号</span></span><br><span class="line">      lastStr = buildStr[buildStr.length-<span class="number">2</span>..buildStr.length-<span class="number">1</span>]</span><br><span class="line">      lastNum = lastStr.to_i</span><br><span class="line">      lastNum = lastNum + <span class="number">1</span></span><br><span class="line">      lastStr = lastNum.to_s</span><br><span class="line">      <span class="keyword">if</span> lastNum &lt; <span class="number">10</span></span><br><span class="line">         lastStr = lastStr.insert(<span class="number">0</span>,<span class="string">&quot;0&quot;</span>)</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">      build = <span class="string">&quot;<span class="subst">#&#123;currentTime&#125;</span><span class="subst">#&#123;lastStr&#125;</span>&quot;</span></span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">      <span class="comment"># =&gt; 非当天版本 build 号重置</span></span><br><span class="line">      build = <span class="string">&quot;<span class="subst">#&#123;currentTime&#125;</span>01&quot;</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   puts(<span class="string">&quot;*************| 更新build <span class="subst">#&#123;build&#125;</span> |*************&quot;</span>)</span><br><span class="line">   <span class="comment"># =&gt; 更改项目 build 号</span></span><br><span class="line">   increment_build_number(</span><br><span class="line">   <span class="symbol">build_number:</span> <span class="string">&quot;<span class="subst">#&#123;build&#125;</span>&quot;</span></span><br><span class="line">   )</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="1-3-上传testFlight配置"><a href="#1-3-上传testFlight配置" class="headerlink" title="1.3 上传testFlight配置"></a>1.3 上传testFlight配置</h2><p>在这一部中，我会首先编译当前的app，然后上传到testFlight,最后更新版本tag，push到远端，再上传dysm到fabric中。Changelog.txt里会存放我这个版本的变更内容。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">platform <span class="symbol">:ios</span> <span class="keyword">do</span></span><br><span class="line">   lane <span class="symbol">:beta</span> <span class="keyword">do</span></span><br><span class="line">      <span class="comment"># 编译app</span></span><br><span class="line">      buildApp</span><br><span class="line">      <span class="comment"># 上传</span></span><br><span class="line">      upload_to_testflight(</span><br><span class="line">      <span class="symbol">beta_app_feedback_email:</span> <span class="string">&quot;wxz@wxz.name&quot;</span>,</span><br><span class="line">      <span class="symbol">beta_app_description:</span> <span class="string">&quot;&quot;</span>,</span><br><span class="line">      <span class="symbol">notify_external_testers:</span> <span class="literal">false</span>,</span><br><span class="line">      <span class="symbol">distribute_external:</span> <span class="literal">true</span>,</span><br><span class="line">      <span class="symbol">changelog:</span> File.read(<span class="string">&quot;Changelog.txt&quot;</span>),</span><br><span class="line">      <span class="symbol">groups:</span> [<span class="string">&quot;testflight.top&quot;</span>,<span class="string">&quot;Price Tag&quot;</span>,<span class="string">&quot;其他渠道&quot;</span>],</span><br><span class="line">      )</span><br><span class="line">      <span class="comment"># 更新版本tag</span></span><br><span class="line">      add_git_tag</span><br><span class="line">      <span class="keyword">if</span> is_ci?</span><br><span class="line">        system <span class="string">&quot;git push https://isnine:$&#123;GH_Token&#125;@github.com/user/repo.git --tags&quot;</span></span><br><span class="line">     <span class="keyword">else</span></span><br><span class="line">        push_to_git_remote</span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line">      <span class="comment"># 上传dysm</span></span><br><span class="line">      <span class="comment"># crashlytics(api_token: &quot;xxxxx&quot;,</span></span><br><span class="line">      <span class="comment"># build_secret: &quot;xxxx&quot;)</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   <span class="comment"># 编译当前app</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">buildApp</span></span></span><br><span class="line">   <span class="comment"># 更改build号</span></span><br><span class="line">   updateProjectBuildNumber</span><br><span class="line">   <span class="comment"># 编译</span></span><br><span class="line">   build_app(<span class="symbol">workspace:</span> <span class="string">&quot;easy.xcworkspace&quot;</span>, <span class="symbol">scheme:</span> <span class="string">&quot;easy&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="1-4-上传appStore配置"><a href="#1-4-上传appStore配置" class="headerlink" title="1.4 上传appStore配置"></a>1.4 上传appStore配置</h2><p>这一步和上一步也类似，只是apple store的选项比较多</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">platform <span class="symbol">:ios</span> <span class="keyword">do</span></span><br><span class="line">   lane <span class="symbol">:release</span> <span class="keyword">do</span></span><br><span class="line">      <span class="comment"># 编译app</span></span><br><span class="line">      buildApp</span><br><span class="line">      <span class="comment"># 上传app</span></span><br><span class="line">      upload_to_app_store(</span><br><span class="line">      <span class="symbol">skip_screenshots:</span> <span class="literal">true</span>,</span><br><span class="line">      <span class="symbol">skip_metadata:</span> <span class="literal">false</span>,</span><br><span class="line">      <span class="symbol">reject_if_possible:</span> <span class="literal">true</span>,</span><br><span class="line">      <span class="comment"># skip_binary_upload: true,</span></span><br><span class="line">      <span class="symbol">force:</span> <span class="literal">true</span>,</span><br><span class="line">      <span class="symbol">app_review_information:</span> &#123;</span><br><span class="line">         <span class="symbol">first_name:</span> <span class="string">&#x27;W&#x27;</span>,</span><br><span class="line">         <span class="symbol">last_name:</span> <span class="string">&#x27;XZ&#x27;</span>,</span><br><span class="line">         <span class="symbol">phone_number:</span> <span class="string">&#x27;+86 1760000000&#x27;</span>,</span><br><span class="line">         <span class="symbol">email_address:</span> <span class="string">&#x27;user@example.com&#x27;</span>,</span><br><span class="line">         <span class="symbol">demo_user:</span> <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">         <span class="symbol">demo_password:</span> <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">         <span class="symbol">notes:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="symbol">submit_for_review:</span> <span class="literal">true</span>,</span><br><span class="line">      <span class="symbol">submission_information:</span> &#123;</span><br><span class="line">         <span class="symbol">add_id_info_limits_tracking:</span> <span class="literal">true</span>,</span><br><span class="line">         <span class="symbol">add_id_info_serves_ads:</span> <span class="literal">false</span>,</span><br><span class="line">         <span class="symbol">add_id_info_tracks_action:</span> <span class="literal">true</span>,</span><br><span class="line">         <span class="symbol">add_id_info_tracks_install:</span> <span class="literal">true</span>,</span><br><span class="line">         <span class="symbol">add_id_info_uses_idfa:</span> <span class="literal">true</span>,</span><br><span class="line">         <span class="symbol">content_rights_has_rights:</span> <span class="literal">true</span>,</span><br><span class="line">         <span class="symbol">content_rights_contains_third_party_content:</span> <span class="literal">true</span>,</span><br><span class="line">         <span class="symbol">export_compliance_platform:</span> <span class="string">&#x27;ios&#x27;</span>,</span><br><span class="line">         <span class="symbol">export_compliance_compliance_required:</span> <span class="literal">false</span>,</span><br><span class="line">         <span class="symbol">export_compliance_encryption_updated:</span> <span class="literal">false</span>,</span><br><span class="line">         <span class="symbol">export_compliance_app_type:</span> <span class="literal">nil</span>,</span><br><span class="line">         <span class="symbol">export_compliance_uses_encryption:</span> <span class="literal">false</span>,</span><br><span class="line">         <span class="symbol">export_compliance_is_exempt:</span> <span class="literal">false</span>,</span><br><span class="line">         <span class="symbol">export_compliance_contains_third_party_cryptography:</span> <span class="literal">false</span>,</span><br><span class="line">         <span class="symbol">export_compliance_contains_proprietary_cryptography:</span> <span class="literal">false</span>,</span><br><span class="line">         <span class="symbol">export_compliance_available_on_french_store:</span> <span class="literal">false</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="symbol">release_notes:</span> &#123;<span class="string">&#x27;default&#x27;</span> =&gt; File.read(<span class="string">&quot;Changelog.txt&quot;</span>),</span><br><span class="line">                      <span class="string">&#x27;zh-Hans&#x27;</span> =&gt; File.read(<span class="string">&quot;Changelog.txt&quot;</span>),</span><br><span class="line">                      <span class="string">&#x27;en-US&#x27;</span> =&gt; File.read(<span class="string">&quot;Changelog.txt&quot;</span>)&#125;</span><br><span class="line">      )</span><br><span class="line">      <span class="comment"># 更新版本tag</span></span><br><span class="line">      add_git_tag</span><br><span class="line">      <span class="keyword">if</span> is_ci?</span><br><span class="line">        system <span class="string">&quot;git push https://isnine:$&#123;GH_Token&#125;@github.com/user/repo.git --tags&quot;</span></span><br><span class="line">     <span class="keyword">else</span></span><br><span class="line">        push_to_git_remote</span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line">      <span class="comment"># 上传dysm</span></span><br><span class="line">      <span class="comment"># crashlytics(api_token: &quot;xxxx&quot;,</span></span><br><span class="line">      <span class="comment"># build_secret: &quot;xxx&quot;)</span></span><br><span class="line">   <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-ci配置"><a href="#2-ci配置" class="headerlink" title="2 ci配置"></a>2 ci配置</h2><p>完成了上面两步，其实已经可以通过fastlane beta和fastlanbe release在本地发布了，因为本地非常方面，其实是不需要考虑以下问题。</p>
+<ul>
+<li>证书导入</li>
+<li>私钥导入</li>
+<li>github push权限</li>
+<li>apple connect权限</li>
+<li>两步认证<br>而CI因为每次启动都是一个新的环境，这些全部要考虑一遍。<br>首先需要再fastlane/certs/目录下存放好相关的p12和描述文件,如图所示:<br><img src="https://img.wxz.name/15584097255132.jpg"><br>接着我在fastlane目录下，写了个导入描述文件的脚本:<br>load_provision.sh<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles</span><br><span class="line">cp ./certs/*.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/</span><br></pre></td></tr></table></figure>
+最后Fastfile部分如下<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 记得提前在CI中设置 https://travis-ci.com/&#123;user&#125;/&#123;app&#125;/settings</span></span><br><span class="line">  <span class="comment"># - GH_Token //Github的token</span></span><br><span class="line">  <span class="comment"># - Cert_PassWord //证书密码</span></span><br><span class="line">  <span class="comment"># - FASTLANE_PASSWORD // Apple 账号密码</span></span><br><span class="line">  <span class="comment"># - FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD //不开两步认证忽略，PassWord apple专用密码</span></span><br><span class="line">  <span class="comment"># - Apple_Session //appleSession，不开两步认证忽略，通过fastlane spaceauth -u user<span class="doctag">@example</span>.com获得</span></span><br><span class="line">  lane <span class="symbol">:ci</span> <span class="keyword">do</span></span><br><span class="line">     branch = git_branch</span><br><span class="line">     puts(<span class="string">&quot;*************| 当前branch <span class="subst">#&#123;branch&#125;</span> |*************&quot;</span>)</span><br><span class="line">     <span class="comment"># 配置环境</span></span><br><span class="line">     keychain_name = <span class="string">&quot;easy-build&quot;</span></span><br><span class="line">     keychain_password = <span class="string">&quot;travis&quot;</span></span><br><span class="line">     <span class="comment"># 设置session 规避两步验证码，不开两步认证忽略</span></span><br><span class="line">     <span class="comment"># ENV[&quot;FASTLANE_SESSION&quot;] = File.read(&quot;session.txt&quot;)</span></span><br><span class="line">     <span class="comment"># 创建临时钥匙串</span></span><br><span class="line">     create_keychain(</span><br><span class="line">     <span class="symbol">name:</span> keychain_name,</span><br><span class="line">     <span class="symbol">password:</span> keychain_password,</span><br><span class="line">     <span class="symbol">default_keychain:</span> <span class="literal">true</span>,</span><br><span class="line">     <span class="symbol">unlock:</span> <span class="literal">true</span>,</span><br><span class="line">     <span class="symbol">timeout:</span> <span class="number">3600</span>,</span><br><span class="line">     <span class="symbol">add_to_search_list:</span> <span class="literal">true</span></span><br><span class="line">     )</span><br><span class="line">     <span class="comment"># 导入私钥</span></span><br><span class="line">     import_certificate(</span><br><span class="line">     <span class="symbol">certificate_path:</span> <span class="string">&quot;./fastlane/certs/dist.p12&quot;</span>,</span><br><span class="line">     <span class="symbol">certificate_password:</span> ENV[<span class="string">&quot;Cert_PassWord&quot;</span>],</span><br><span class="line">     <span class="symbol">keychain_name:</span> keychain_name,</span><br><span class="line">     <span class="symbol">keychain_password:</span> keychain_password</span><br><span class="line">     )</span><br><span class="line">     import_certificate(</span><br><span class="line">     <span class="symbol">certificate_path:</span> <span class="string">&quot;./fastlane/certs/dev.p12&quot;</span>,</span><br><span class="line">     <span class="symbol">certificate_password:</span> ENV[<span class="string">&quot;Cert_PassWord&quot;</span>],</span><br><span class="line">     <span class="symbol">keychain_name:</span> keychain_name,</span><br><span class="line">     <span class="symbol">keychain_password:</span> keychain_password</span><br><span class="line">     )</span><br><span class="line">     <span class="comment"># 拉取证书</span></span><br><span class="line">     system <span class="string">&quot;sh ./load_provision.sh&quot;</span></span><br><span class="line">     <span class="comment"># sigh(app_identifier: &quot;bundle.id&quot;,</span></span><br><span class="line">     <span class="comment">#   username: &quot;user<span class="doctag">@exampe</span>.com&quot;)</span></span><br><span class="line">     <span class="keyword">if</span> branch.start_with? <span class="string">&quot;master&quot;</span></span><br><span class="line">        beta</span><br><span class="line">     <span class="keyword">elsif</span> branch.start_with? <span class="string">&quot;release&quot;</span></span><br><span class="line">        release</span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-1-Travis-ci配置"><a href="#2-1-Travis-ci配置" class="headerlink" title="2.1 Travis-ci配置"></a>2.1 Travis-ci配置</h2><blockquote>
+<p>这部分我以新开一个开发者账号的方式讲，我强烈推荐这种方式。<br>你可以在后文中找到，如果不开新账号，用原来带有两步认证的开发者账号怎么实现。</p>
+</blockquote>
+</li>
+</ul>
+<p>这里我们一共需要配置四个环境变量</p>
+<ul>
+<li>GH_Token //Github的token</li>
+<li>Cert_PassWord //证书密码</li>
+<li>FASTLANE_USER // Apple 账号</li>
+<li>FASTLANE_PASSWORD // Apple 账号密码<br><img src="https://img.wxz.name/15584100323855.jpg"><h3 id="GH-Token"><a href="#GH-Token" class="headerlink" title="GH_Token"></a>GH_Token</h3>这一步是为了解决push权限的问题<br><img src="https://img.wxz.name/15584101532733.jpg"><br><img src="https://img.wxz.name/15584101656036.jpg"><br>然后将创建的token复制过来作为GH_Token的值即可<blockquote>
+<p>记得前面Fastfile里面的仓库地址也要改</p>
+</blockquote>
+<h3 id="FASTLANE-USER和FASTLANE-PASSWORD"><a href="#FASTLANE-USER和FASTLANE-PASSWORD" class="headerlink" title="FASTLANE_USER和FASTLANE_PASSWORD"></a>FASTLANE_USER和FASTLANE_PASSWORD</h3><a target="_blank" rel="noopener" href="https://appstoreconnect.apple.com/">https://appstoreconnect.apple.com/</a><br>这个很好理解，你的apple账号和密码。我踩了无数坑了，强烈建议重新创一个没有两步认证的apple小号。<br>然后在大号中邀请进来.<br>个人开发者账号虽然邀请进来的人不能拉取证书，但是一样有权限发布上传App<br><img src="https://img.wxz.name/15584105581907.jpg"><br>接着在ci中把FASTLANE_USER和FASTLANE_PASSWORD这两项配置好</li>
+</ul>
+<h3 id="Cert-PassWord"><a href="#Cert-PassWord" class="headerlink" title="Cert_PassWord"></a>Cert_PassWord</h3><p>我们在keychain中，导出时设置的p12文件的密码，就是这一项<br><img src="https://img.wxz.name/15584106259902.jpg"></p>
+<h1 id="踩过的坑"><a href="#踩过的坑" class="headerlink" title="踩过的坑"></a>踩过的坑</h1><h2 id="1-为什么不直接用带有两步认证的账号"><a href="#1-为什么不直接用带有两步认证的账号" class="headerlink" title="1.为什么不直接用带有两步认证的账号"></a>1.为什么不直接用带有两步认证的账号</h2><p>如果用带两步认证的账号，需要配置apple专用密码，并且还要加上session。<br>而session特别容易过期，网上说是30天，笔者测试下来一天就要重新设置一次，十分痛苦<br>如果一定要用的话，可以在刚刚的流程结束完，在ci中设置一个新的环境变量<br>FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD<br>可以在这里面设置<a target="_blank" rel="noopener" href="https://appleid.apple.com/account/manage">https://appleid.apple.com/account/manage</a><br><img src="https://img.wxz.name/15584109865524.jpg"><br>同时因为登录会话的问题，如果想在ci上直接绕过两步认证，还需要配置好session</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane spaceauth -u user@example.com #你的apple账号</span><br></pre></td></tr></table></figure>
+<p>然后复制session，我这里是在fastlane文件夹下创建了一个session.txt<br>将内容复制到里面去。<br>在脚本中再通过代码设置出来</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENV[<span class="string">&quot;FASTLANE_SESSION&quot;</span>] = File.read(<span class="string">&quot;session.txt&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/12/29/summary-2018/" rel="prev" title="一个句号的落笔是另一句话的开始 - 2018年小结">
+      <i class="fa fa-chevron-left"></i> 一个句号的落笔是另一句话的开始 - 2018年小结
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/06/MobileApplicationInnovation/" rel="next" title="移动应用创新赛总结">
+      移动应用创新赛总结 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%97%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">需求列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E5%AE%9E%E7%8E%B0%E6%95%88%E6%9E%9C"><span class="nav-number">3.</span> <span class="nav-text">最终实现效果</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="nav-number">3.1.</span> <span class="nav-text">流程示意图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ci%E7%BB%93%E6%9E%9C%E5%9B%BE"><span class="nav-number">3.2.</span> <span class="nav-text">Ci结果图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.</span> <span class="nav-text">实现步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="nav-number">4.1.</span> <span class="nav-text">选用工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%9F%E9%97%B4%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91"><span class="nav-number">4.2.</span> <span class="nav-text">期间遇到的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%85%8D%E7%BD%AEFastlane"><span class="nav-number">4.3.</span> <span class="nav-text">1.配置Fastlane</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%9B%B4%E6%96%B0%E7%89%88%E6%9C%AC%E5%8F%B7%E9%85%8D%E7%BD%AE"><span class="nav-number">4.4.</span> <span class="nav-text">1.1 更新版本号配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E4%B8%8A%E4%BC%A0testFlight%E9%85%8D%E7%BD%AE"><span class="nav-number">4.5.</span> <span class="nav-text">1.3 上传testFlight配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E4%B8%8A%E4%BC%A0appStore%E9%85%8D%E7%BD%AE"><span class="nav-number">4.6.</span> <span class="nav-text">1.4 上传appStore配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-ci%E9%85%8D%E7%BD%AE"><span class="nav-number">4.7.</span> <span class="nav-text">2 ci配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Travis-ci%E9%85%8D%E7%BD%AE"><span class="nav-number">4.8.</span> <span class="nav-text">2.1 Travis-ci配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GH-Token"><span class="nav-number">4.8.1.</span> <span class="nav-text">GH_Token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FASTLANE-USER%E5%92%8CFASTLANE-PASSWORD"><span class="nav-number">4.8.2.</span> <span class="nav-text">FASTLANE_USER和FASTLANE_PASSWORD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cert-PassWord"><span class="nav-number">4.8.3.</span> <span class="nav-text">Cert_PassWord</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91"><span class="nav-number">5.</span> <span class="nav-text">踩过的坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E7%9B%B4%E6%8E%A5%E7%94%A8%E5%B8%A6%E6%9C%89%E4%B8%A4%E6%AD%A5%E8%AE%A4%E8%AF%81%E7%9A%84%E8%B4%A6%E5%8F%B7"><span class="nav-number">5.1.</span> <span class="nav-text">1.为什么不直接用带有两步认证的账号</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zander Wang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zander Wang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

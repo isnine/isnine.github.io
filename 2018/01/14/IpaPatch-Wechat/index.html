@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.zanderwang.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="因为某个侧滑功能希望能参照微信来做，但是手上又木有越狱机，所以这里主要通过IpaPatch+Reveal来进行分析。 准备工具RevealIpaPatchPP助手 准备一个微信APP首先需要强调的是，AppStore上下载的iPA是加密过的，所以这里我们通过PP助手来下载已经砸壳过后的IPA文件。 克隆好IpaPatch工程IpaPatch是一个 免越狱调试、修改第三方App 的工具，主要过程分为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过IpaPatch分析Wechat界面">
+<meta property="og:url" content="https://www.zanderwang.com/2018/01/14/IpaPatch-Wechat/index.html">
+<meta property="og:site_name" content="Zander&#96;s blog">
+<meta property="og:description" content="因为某个侧滑功能希望能参照微信来做，但是手上又木有越狱机，所以这里主要通过IpaPatch+Reveal来进行分析。 准备工具RevealIpaPatchPP助手 准备一个微信APP首先需要强调的是，AppStore上下载的iPA是加密过的，所以这里我们通过PP助手来下载已经砸壳过后的IPA文件。 克隆好IpaPatch工程IpaPatch是一个 免越狱调试、修改第三方App 的工具，主要过程分为">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img.wxz.name/15159380872900.jpg">
+<meta property="og:image" content="https://img.wxz.name/15159382651784.jpg">
+<meta property="og:image" content="https://img.wxz.name/15159384937355.jpg">
+<meta property="og:image" content="https://img.wxz.name/15159385259266.jpg">
+<meta property="og:image" content="https://img.wxz.name/15159387058492.jpg">
+<meta property="og:image" content="https://img.wxz.name/Lark20180114221705.png">
+<meta property="og:image" content="https://img.wxz.name/15159396834913.jpg">
+<meta property="og:image" content="https://img.wxz.name/15159392238970.jpg">
+<meta property="og:image" content="https://img.wxz.name/15159398498752.jpg">
+<meta property="og:image" content="https://img.wxz.name/15159402686411.jpg">
+<meta property="og:image" content="https://img.wxz.name/15159405300287.jpg">
+<meta property="og:image" content="https://img.wxz.name/2.png">
+<meta property="og:image" content="https://img.wxz.name/15159410586968.jpg">
+<meta property="article:published_time" content="2018-01-14T13:39:29.000Z">
+<meta property="article:modified_time" content="2018-04-30T10:10:10.000Z">
+<meta property="article:author" content="Zander Wang">
+<meta property="article:tag" content="逆向">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.wxz.name/15159380872900.jpg">
+
+<link rel="canonical" href="https://www.zanderwang.com/2018/01/14/IpaPatch-Wechat/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>通过IpaPatch分析Wechat界面 | Zander`s blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Zander`s blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.zanderwang.com/2018/01/14/IpaPatch-Wechat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zander Wang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zander`s blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          通过IpaPatch分析Wechat界面
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-01-14 21:39:29" itemprop="dateCreated datePublished" datetime="2018-01-14T21:39:29+08:00">2018-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-04-30 18:10:10" itemprop="dateModified" datetime="2018-04-30T18:10:10+08:00">2018-04-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>因为某个侧滑功能希望能参照微信来做，但是手上又木有越狱机，所以这里主要通过IpaPatch+Reveal来进行分析。</p>
+<h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2><p><a target="_blank" rel="noopener" href="https://revealapp.com/">Reveal</a><br><a target="_blank" rel="noopener" href="https://github.com/Naituw/IPAPatch">IpaPatch</a><br><a target="_blank" rel="noopener" href="https://www.25pp.com/">PP助手</a></p>
+<h2 id="准备一个微信APP"><a href="#准备一个微信APP" class="headerlink" title="准备一个微信APP"></a>准备一个微信APP</h2><p>首先需要强调的是，AppStore上下载的iPA是加密过的，所以这里我们通过<a target="_blank" rel="noopener" href="https://www.25pp.com/">PP助手</a>来下载已经砸壳过后的IPA文件。<br><img src="https://img.wxz.name/15159380872900.jpg"></p>
+<h2 id="克隆好IpaPatch工程"><a href="#克隆好IpaPatch工程" class="headerlink" title="克隆好IpaPatch工程"></a>克隆好IpaPatch工程</h2><p>IpaPatch是一个 免越狱调试、修改第三方App 的工具，主要过程分为这几部</p>
+<ol>
+<li>解压 IPA 文件</li>
+<li>用 IPA 文件的内容，替换掉 Xcode 生成的 .app 的内容</li>
+<li>通过 OPTOOL，将你代码生成的 Framework 及其他外部 Framework，注入到二进制文件中</li>
+<li>对这些文件进行重新签名 </li>
+</ol>
+<h2 id="配置IpaPatch工程"><a href="#配置IpaPatch工程" class="headerlink" title="配置IpaPatch工程"></a>配置IpaPatch工程</h2><p>1.在我们克隆完毕后，我们将我们在pp助手上下载好的微信.ipa重命名为app.ipa然后复制到工程的IPAPatch/Assets/中替换掉原来的app.ipa<br><img src="https://img.wxz.name/15159382651784.jpg"></p>
+<p>2.接着我们需要将Reveal中的framework文件复制到Assets/Frameworks/RevealServer.framework中<br><img src="https://img.wxz.name/15159384937355.jpg"></p>
+<p>3.修改Display Name和Bundle Identifier。Display Name将加在原app名称之前，可与之前的app共存。<br><img src="https://img.wxz.name/15159385259266.jpg"></p>
+<h2 id="调试界面"><a href="#调试界面" class="headerlink" title="调试界面"></a>调试界面</h2><ol>
+<li>点击 Build 后就可以在我们真机上看到啦，然后打开Reveal，就可以看到微信的界面了<br> <img src="https://img.wxz.name/15159387058492.jpg"></li>
+</ol>
+<h2 id="开始分析"><a href="#开始分析" class="headerlink" title="开始分析"></a>开始分析</h2><h3 id="从层级开始分析"><a href="#从层级开始分析" class="headerlink" title="从层级开始分析"></a>从层级开始分析</h3><p>整体是一个tableview的界面，每个cell中，消息部分作为一个view与滑动部分的view所并列<br><img src="https://img.wxz.name/Lark20180114221705.png" alt="Lark20180114221705"><br>在一整个滑动view中，又是分为两个button，其中尺寸如第二条所分析<br><img src="https://img.wxz.name/15159396834913.jpg"></p>
+<h3 id="从尺寸分析"><a href="#从尺寸分析" class="headerlink" title="从尺寸分析"></a>从尺寸分析</h3><p>首先我的手机是iphone7 Plus,屏幕尺寸为 414 * 736，在微信设置的滑动view的大小为 175 * 68，其中</p>
+<ul>
+<li>滑动view的大小为 175 * 68</li>
+<li>“标为未读”按钮的宽度为116.6</li>
+<li>“删除”按钮的宽度为75.9</li>
+<li>其中两个按钮中有重叠部分，应该是为了动画效果而保留的。</li>
+</ul>
+<p><img src="https://img.wxz.name/15159392238970.jpg"></p>
+<h3 id="从动画分析"><a href="#从动画分析" class="headerlink" title="从动画分析"></a>从动画分析</h3><h4 id="1-刚开始滑动—-gt-滑动完成"><a href="#1-刚开始滑动—-gt-滑动完成" class="headerlink" title="1. 刚开始滑动—&gt;滑动完成"></a>1. 刚开始滑动—&gt;滑动完成</h4><p>   开始滑动的那一刻立即创建两个button，同时两者随手势向左侧滑动。但是第二个“删除”按钮<strong>滑动速度较慢</strong>。<br>   左侧聊天信息的view紧临“标为未读”的button。同时父视图cell位置不变<br> <img src="https://img.wxz.name/15159398498752.jpg"></p>
+<h4 id="2-滑动完成，到达稳定的状态"><a href="#2-滑动完成，到达稳定的状态" class="headerlink" title="2. 滑动完成，到达稳定的状态"></a>2. 滑动完成，到达稳定的状态</h4><p>cell的位置没变<br>但cell子视图的聊天view左移了，并且紧邻滑动view为同一层级<br>滑动view中又分为两个button，并且<strong>位置有一定的重叠</strong><br><img src="https://img.wxz.name/15159402686411.jpg"></p>
+<h4 id="3-返回过程"><a href="#3-返回过程" class="headerlink" title="3. 返回过程"></a>3. 返回过程</h4><p>   为之前动画的逆过程，不再赘述</p>
+<h4 id="4-长拖效果"><a href="#4-长拖效果" class="headerlink" title="4. 长拖效果"></a>4. 长拖效果</h4><p>  拖动按钮时，按钮会随着一起拖动。<br>  分析层级，发现滑动view的位置并没有感觉。<br>  实际上<strong>改变的是两个button的长度</strong>，他们超过了父view，显示出了这样一个效果。<br><img src="https://img.wxz.name/15159405300287.jpg"></p>
+<h4 id="5-删除效果"><a href="#5-删除效果" class="headerlink" title="5. 删除效果"></a>5. 删除效果</h4><p>  <strong>之前的“标为未读”按钮被删除了</strong>，全部只剩下了“删除”按钮。动画过程，因为真机显示太快我还木有抓到。<br><img src="https://img.wxz.name/2.png" alt="2"></p>
+<h4 id="6-删除返回"><a href="#6-删除返回" class="headerlink" title="6. 删除返回"></a>6. 删除返回</h4><p>  随着手势的返回，将<strong>“删除”按钮位置右移</strong>，聊天view紧邻删除button，但主要的是<strong>删除button的父view位置是不动的</strong><br><img src="https://img.wxz.name/15159410586968.jpg"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>关于微信滑动的实现，几个关键的点</p>
+<ol>
+<li>首先层级是cell最上，包含聊天view和滑动view。其中滑动view在没有开始滑动时是不创建的，滑动开始立刻创建，收回后立即销毁。</li>
+<li>滑动动画上，像抽屉的效果是<strong>通过移速不同</strong>，“标为未读”在“删除”下面，这样拖动和拖回产生了一个折叠的效果</li>
+<li>自始至终，<strong>cell的位置是不变得</strong>，这也就保证了，无论的滑动view还是聊天view都不会因为父视图超过自身位置，因为响应链的原因而不响应。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%80%86%E5%90%91/" rel="tag"># 逆向</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/12/30/summary-2017/" rel="prev" title="做什么都是因为喜欢 - 2017小结">
+      <i class="fa fa-chevron-left"></i> 做什么都是因为喜欢 - 2017小结
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/04/30/create-private-pod-private/" rel="next" title="创建自己的CocoaPods库">
+      创建自己的CocoaPods库 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E5%85%B7"><span class="nav-number">1.</span> <span class="nav-text">准备工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1APP"><span class="nav-number">2.</span> <span class="nav-text">准备一个微信APP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%8B%E9%9A%86%E5%A5%BDIpaPatch%E5%B7%A5%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">克隆好IpaPatch工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEIpaPatch%E5%B7%A5%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">配置IpaPatch工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E7%95%8C%E9%9D%A2"><span class="nav-number">5.</span> <span class="nav-text">调试界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">开始分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E5%B1%82%E7%BA%A7%E5%BC%80%E5%A7%8B%E5%88%86%E6%9E%90"><span class="nav-number">6.1.</span> <span class="nav-text">从层级开始分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E5%B0%BA%E5%AF%B8%E5%88%86%E6%9E%90"><span class="nav-number">6.2.</span> <span class="nav-text">从尺寸分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E5%8A%A8%E7%94%BB%E5%88%86%E6%9E%90"><span class="nav-number">6.3.</span> <span class="nav-text">从动画分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%9A%E5%BC%80%E5%A7%8B%E6%BB%91%E5%8A%A8%E2%80%94-gt-%E6%BB%91%E5%8A%A8%E5%AE%8C%E6%88%90"><span class="nav-number">6.3.1.</span> <span class="nav-text">1. 刚开始滑动—&gt;滑动完成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%BB%91%E5%8A%A8%E5%AE%8C%E6%88%90%EF%BC%8C%E5%88%B0%E8%BE%BE%E7%A8%B3%E5%AE%9A%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">6.3.2.</span> <span class="nav-text">2. 滑动完成，到达稳定的状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E8%BF%94%E5%9B%9E%E8%BF%87%E7%A8%8B"><span class="nav-number">6.3.3.</span> <span class="nav-text">3. 返回过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E9%95%BF%E6%8B%96%E6%95%88%E6%9E%9C"><span class="nav-number">6.3.4.</span> <span class="nav-text">4. 长拖效果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%88%A0%E9%99%A4%E6%95%88%E6%9E%9C"><span class="nav-number">6.3.5.</span> <span class="nav-text">5. 删除效果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%88%A0%E9%99%A4%E8%BF%94%E5%9B%9E"><span class="nav-number">6.3.6.</span> <span class="nav-text">6. 删除返回</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zander Wang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zander Wang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

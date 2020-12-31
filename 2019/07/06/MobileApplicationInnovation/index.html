@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.zanderwang.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前记  “你为什么喜欢编程”  这是我常被问到的一个问题，我认为编程是现代社会中每个人都可以掌握的“魔法”，我们在生活中享受着各种各样别人写好了的魔法，比如“出门不用钱包即可付款魔法”，“饿了就有外卖送上门魔法”，“买衣服不用出门魔法”。  但另一方面，不是每一件生活中不方便的事情，都有很好的魔法能够解决。但是如果学会了编程，就可以自己来创造一个更好的魔法来解决这些问题，更能够帮助到他人，这就是我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动应用创新赛总结">
+<meta property="og:url" content="https://www.zanderwang.com/2019/07/06/MobileApplicationInnovation/index.html">
+<meta property="og:site_name" content="Zander&#96;s blog">
+<meta property="og:description" content="前记  “你为什么喜欢编程”  这是我常被问到的一个问题，我认为编程是现代社会中每个人都可以掌握的“魔法”，我们在生活中享受着各种各样别人写好了的魔法，比如“出门不用钱包即可付款魔法”，“饿了就有外卖送上门魔法”，“买衣服不用出门魔法”。  但另一方面，不是每一件生活中不方便的事情，都有很好的魔法能够解决。但是如果学会了编程，就可以自己来创造一个更好的魔法来解决这些问题，更能够帮助到他人，这就是我">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img.wxz.name/234.jpg">
+<meta property="og:image" content="https://img.wxz.name/WX20190707-093736@2x.png">
+<meta property="og:image" content="https://img.wxz.name/aaaaaaa.jpg">
+<meta property="article:published_time" content="2019-07-06T10:12:33.000Z">
+<meta property="article:modified_time" content="2019-08-07T12:21:32.000Z">
+<meta property="article:author" content="Zander Wang">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.wxz.name/234.jpg">
+
+<link rel="canonical" href="https://www.zanderwang.com/2019/07/06/MobileApplicationInnovation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>移动应用创新赛总结 | Zander`s blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Zander`s blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.zanderwang.com/2019/07/06/MobileApplicationInnovation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zander Wang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zander`s blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          移动应用创新赛总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-06 18:12:33" itemprop="dateCreated datePublished" datetime="2019-07-06T18:12:33+08:00">2019-07-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-08-07 20:21:32" itemprop="dateModified" datetime="2019-08-07T20:21:32+08:00">2019-08-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前记"><a href="#前记" class="headerlink" title="前记"></a>前记</h1><p>  “你为什么喜欢编程”<br>  这是我常被问到的一个问题，我认为编程是现代社会中每个人都可以掌握的“魔法”，我们在生活中享受着各种各样别人写好了的魔法，比如“出门不用钱包即可付款魔法”，“饿了就有外卖送上门魔法”，“买衣服不用出门魔法”。<br>  但另一方面，不是每一件生活中不方便的事情，都有很好的魔法能够解决。但是如果学会了编程，就可以自己来创造一个更好的魔法来解决这些问题，更能够帮助到他人，这就是我喜欢编程的原因。</p>
+<h1 id="我的第一个魔法-校园助手"><a href="#我的第一个魔法-校园助手" class="headerlink" title="我的第一个魔法 - 校园助手"></a>我的第一个魔法 - 校园助手</h1><p>  2016年10月8日，这是我人生中写下第一行iOS代码的时刻，我试图在我不会一行Objective-C咒语的时候，尝试创造一个能够帮助全校学生查询课表，电费，成绩。同时能够全校学生发说说，二手交易，做网上作业等一系列综合性的一个魔法。<br>  在这之前，我们的学生查课表是去正方教务系统上打印成纸贴在宿舍墙上，查电费要用电脑上水电科的电费网站查询，做网上作业去教务处的作业平台，再加上，二手交易，说说等各种生活服务，全部都要记住不同的账号在不同的平台上才能够进行。<br>  我感觉到十分的不方便，在几个负责后端的学长下的帮助下，刚入大二刚一个月的我开始了零Objective-C基础创造iOS魔法的过程。<br>![屏幕快照 2019-07-06 下午10.13.10](<a target="_blank" rel="noopener" href="https://img.wxz.name/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7">https://img.wxz.name/屏幕快照</a> 2019-07-06 下午10.13.10.png)<br>  我花了一个星期，完成了当初的第一个版本，现在看起来界面十分稚嫩，但因为发布在了App Store，我马上迎来了我的用户们。用户们的反馈声音，让我意识到<strong>我不仅仅是在解决自己的问题，我同时也是在帮助别人</strong><br>  我开始了和实验室另一个学习UI的学姐一起合作，让App变得更加美观且实用，同时在17年5月，我恰好看到了CCCC移动应用大赛的通知，抱着想和其他同学一同进步学习的想法，我报名参加了。<br>  比赛的过程比我想象的要顺利，回想起来，我觉得<br>  1.初赛美观的设计稿，可行的方案介绍。<br>  2.复赛完整的运行视频。<br>  3.决赛可以现场演示的代码，和已经上架App Store的App<br>  是我认为的关键，此外作为前九名公开答辩，我认为很重要一点是需要准备 <strong>简洁易懂且美观</strong>的一分钟视频，因为台下评委能够对你app了解最深的就来自于这一分钟的视频。回想起，我最后虽然进入了前九名公开答辩，但只获得了全国二等奖，可能因为一是App的受众近是大学群体，甚至主要在自己学校，二是一分钟视频展示的不够完善。<br>  但我依旧比较开心，因为在我比赛的过程中，我不断完善了我的App，并且根据ITunes Connect统计，我的App“魔法”被用户累计使用了数百万次，获得了4.8星的评分。<br>  <img src="https://img.wxz.name/234.jpg" alt="234"></p>
+<h1 id="我的第二个魔法-EASY相册"><a href="#我的第二个魔法-EASY相册" class="headerlink" title="我的第二个魔法 - EASY相册"></a>我的第二个魔法 - EASY相册</h1><p>  在第一年比赛之后，我一直策划着如何去构思我的第二个魔法，我希望它首先可以帮助到我，其次它可以帮助到其他人。一天我在微信上聊天，想要找到一张很久以前的照片发给朋友，但我怎样都找不着它，我开始意识到，我如果想快速找到这张照片，我只有一种办法–给它进行分类。但当我尝试了市面上带有智能分类的一系列软件，我发现他们都不能够支持将智能识别完的类型保存到本地，这也就是说没法在例如微信，微博之类的其他App中选择这些类型。<br>  我开始构思，如何自己来实现一个这样的分类，我调研了tensorflow等一系列的市面上成熟的机器学习方案，遗憾的是如果tensorflow模型放在服务端，我需要将用户照片上传上去，这将十分不安全同时也加到了运维成本，而如果打入在App中，由于tensorflow的依赖库存在，App体积将到600mb+，这是我无论如何也无法接受的。<br>  正当我一筹莫展的时候，Apple在WWDC2018宣布了CoreML2和Create ML，这仿佛使我看到了希望。我立马升级了mac的beta系统，并安装的Xcode的beta版，接着通过python爬取了一系列用来训练的数据集，接着丢入了Create ML中，大约二十分钟后，我得到了一个不足20kb的模型，我将其放至了我的App中，它控制台中，它成功的将我照片里每张照片的类型给智能识别出来了。</p>
+<h2 id="遇到的难题"><a href="#遇到的难题" class="headerlink" title="遇到的难题"></a>遇到的难题</h2><p>  接下来我和我在学校找的另一名负责ui的队友，不断将界面完善。期间我遇到了很多技术上的问题。<br>  比如识别速度过慢,我需要通过多线程来解决，又比如识别完的照片，我需要保存到数据库，这样下次不用再次识别。<br>  其中我遇到最棘手的一个问题，是对相册地理位置的识别。在每张相片中是存取了相片拍摄时的经纬度的，但是要获取这个经纬度对应的城市，需要构造一个CLGeocoder译码器来发生网络请求来获取城市名。而复杂的情况在于这个api调用是有频率限制的，我想过了很多方案，比如维持队列每过多久请求一次，遇到请求失败后以2的次方为重试时间来重试。但是都无法在简短的时间内获取到一万多张照片的位置。<br>  后来我灵机一动，想到一个城市其实经纬度是一个很大的范围，我只要在前面每张照片请求时维持个map，来映射经纬度和城市的关系，然后将经纬度小数点范围后三位相同的照片都归类于这个城市，我就不必请求那么多次了，一个城市的所有照片请求一次即可全部完成了。</p>
+<h2 id="决赛时刻"><a href="#决赛时刻" class="headerlink" title="决赛时刻"></a>决赛时刻</h2><p>  最终我在深圳-&gt;杭州的高铁路上，将我app的所有主体界面全部完成了。我们的决赛分为两天，是摆摊的形式来各自宣传自己的app，在第一天结束时，我意识到我还需要一些东西，能够让评委们相信我做的app是可行，有价值的。我想到了一个方案–上架至App Store。但是我只有一个晚上的时间，如何能够在一个晚上就审核通过呢？<br>  我想到了apple提供给开发者们的<a target="_blank" rel="noopener" href="https://developer.apple.com/appstore/contact/appreviewteam/index.html">加速审核的通道</a>，我用英文描述了我正在中国杭州参加由apple&amp;浙大举办的CCCC比赛，为了能够展示作品，我希望能够发布到App Store上的意愿。<br>  <img src="https://img.wxz.name/WX20190707-093736@2x.png" alt="WX20190707-093736@2x"><br>  9月16日早上9点是决赛开始的时间。<br>  9月16日凌晨2：30分，我的App通过App Store最终审核发布。因为iOS 12正式版在9月18日才发布，所以我此时的状态是等待apple发布，但是已经全部可以在App Store上预约审核了，并且每一个评委可以通过Test Flight的方式体验我的App<br>  最终在决赛答辩之后，我获得了全国一等奖，超越了去年的自己。</p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>  决赛之后，我的主要精力其实依旧还是放在了开发「EASY相册」的过程上。我认为做一款App要有“工匠精神”，比赛只是一个平台，可以去引导你去和队友们一起实践、创新。但比赛获奖不是做App的最终目的，我最终是希望能让自己的App“魔法”给越来越多的人带来帮助。<br>  我希望有一天，我能够将这个app完善的足够好，然后把它带给更多需要整理相册的人。<br><img src="https://img.wxz.name/aaaaaaa.jpg" alt="aaaaaaa"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/16/fastlane-ios/" rel="prev" title="iOS Fastlane+CI自动化构建">
+      <i class="fa fa-chevron-left"></i> iOS Fastlane+CI自动化构建
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/31/summary-2020/" rel="next" title="新的开始-2020年年终总结">
+      新的开始-2020年年终总结 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">前记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%AD%94%E6%B3%95-%E6%A0%A1%E5%9B%AD%E5%8A%A9%E6%89%8B"><span class="nav-number">2.</span> <span class="nav-text">我的第一个魔法 - 校园助手</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%AD%94%E6%B3%95-EASY%E7%9B%B8%E5%86%8C"><span class="nav-number">3.</span> <span class="nav-text">我的第二个魔法 - EASY相册</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%9A%BE%E9%A2%98"><span class="nav-number">3.1.</span> <span class="nav-text">遇到的难题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%B3%E8%B5%9B%E6%97%B6%E5%88%BB"><span class="nav-number">3.2.</span> <span class="nav-text">决赛时刻</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zander Wang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zander Wang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
